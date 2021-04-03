@@ -1,4 +1,4 @@
-// api function to create link
+// api function to get links
 
 const mongoose = require("mongoose");
 
@@ -22,19 +22,11 @@ const LinkSchema = new mongoose.Schema({
 // link model
 const Link = mongoose.model("link", LinkSchema);
 
-// link creation handler
-const createLink = (req, res) => {
-    const {title, link, description } = req.body;
-    const newLink = new Link({
-        title: title,
-        link: link,
-        description: description
-    });
-
-    newLink.save((err, _link) => {
+const getLinks = (req, res) => {
+    Link.find((err, links) => {
         if (err) res.json({ Error: err })
-        res.send(_link);
-    });
+        res.json(links)
+    })
 };
 
-module.exports = createLink
+module.exports = getLinks;
