@@ -26,26 +26,6 @@ const LinkSchema = new mongoose.Schema({
 const Link = mongoose.model("link", LinkSchema);
 
 
-// LinksBook Model
-const LinksBookSchema = mongoose.Schema({
-    title: String,
-    description: String,
-    link: Array
-});
-
-const LinksBook = mongoose.model("linksbook", LinksBookSchema);
-
-// User model
-const UserSchema =  mongoose.Schema({
-    name: String,
-    email: String,
-    password: String,
-    linkBooks: Array
-});
-
-const User = mongoose.model("users", UserSchema);
-
-
 const getLinks = (req, res) => {
     Link.find((err, links) => {
         if (err) res.json({ Error: err })

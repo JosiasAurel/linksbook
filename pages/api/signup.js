@@ -1,6 +1,9 @@
 // api function to create user
 
 const mongoose = require("mongoose");
+const bcrypt = require("bcryptjs");
+
+require("dotenv").config();
 
 // db config
 const options = {
@@ -50,7 +53,7 @@ const createUser = (req, res) => {
     const newUser = new User({
         name: name,
         email: email,
-        password: password,
+        password: bcrypt.hashSync(password, process.env.PASSWORD_SECRET),
         linksBook: []
     });
 
