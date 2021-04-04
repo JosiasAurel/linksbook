@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import styles from "../styles/index.module.css";
 
 import Image from "next/image";
+
+import { createJWT } from "../utils/createToken";
 
 const Home = () => {
     return (

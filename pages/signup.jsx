@@ -9,13 +9,13 @@ const SignUp = () => {
 
     // a reusable function to handle changes on form input
     const formInputChangeHandler = (e, handler) => {
-        handler(e.target.value);
+        handler((e.target.value).trim());
     }
 
     const handleFormSubmit = event => {
         event.preventDefault();
         let n_ = createNewUser();
-        alert(n_);
+        console.log(n_);
     }
 
     const createNewUser = async () => {
@@ -24,15 +24,22 @@ const SignUp = () => {
             email: email_,
             password: password_
         }
-        let res = await fetch("/api/signup", {
+
+        let newlyCreatedUser_ = [];
+
+        fetch("/api/signup", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify(newUserCred)
-        });
-        let _user = await res.json();
-        return _user;
+        }).then(res => res.json())
+            .then(data => {
+                newlyCreatedUser_.push(data);
+                localStorage.setItem("token", `${data.name} ${data.email} ${data._id}`)
+            });
+
+            return newlyCreatedUser_[0];
     } 
 
     return (
