@@ -14,7 +14,6 @@ mongoose.connect("mongodb://localhost:27017/linksbook", options);
 const db = mongoose.connection;
 
 /* Models */
-const db = mongoose.connection;
 
 // Link model
 const LinkSchema = new mongoose.Schema({
@@ -46,8 +45,6 @@ const UserSchema =  mongoose.Schema({
 
 const User = mongoose.model("users", UserSchema);
 
-// link model
-const Link = mongoose.model("link", LinkSchema);
 
 const getLinks = (req, res) => {
     Link.find((err, links) => {

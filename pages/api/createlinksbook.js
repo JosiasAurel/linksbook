@@ -11,14 +11,12 @@ const options = {
 // connect to the database
 mongoose.connect("mongodb://localhost:27017/linksbook", options);
 
-const db = mongoose.connection;
 
 /* Models */
 const db = mongoose.connection;
 
 
 /* Models */
-const db = mongoose.connection;
 
 // Link model
 const LinkSchema = new mongoose.Schema({
@@ -57,13 +55,13 @@ const createLinksBook = (req, res) => {
     let newLinksBook = new LinksBook({
         title: title,
         description: description,
-        links: links.push(links)
+        links: []
     });
 
-    newLinksBook.save((err, linksbook_ => {
+    newLinksBook.save((err, linksbook_) => {
         if (err) res.json({Error: "Could not create links book"});
         res.json(linksbook_);
-    }));
+    });
 }
 
 module.exports = createLinksBook;

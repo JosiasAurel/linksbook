@@ -5,7 +5,7 @@ const Link = ({ title, link, description }) => {
     return (
         <div className={styles.link}>
             <h2>{title}</h2>
-            <a about="blank" href={link}>{link}</a>
+            <a target="blank" href={link}>{link}</a>
             <p>
                 { description }
             </p>
