@@ -1,4 +1,4 @@
-// api function to get links
+// api function to create user
 
 const mongoose = require("mongoose");
 
@@ -12,6 +12,10 @@ const options = {
 mongoose.connect("mongodb://localhost:27017/linksbook", options);
 
 const db = mongoose.connection;
+
+/* Models */
+const db = mongoose.connection;
+
 
 /* Models */
 const db = mongoose.connection;
@@ -31,7 +35,7 @@ const Link = mongoose.model("link", LinkSchema);
 const LinksBookSchema = mongoose.Schema({
     title: String,
     description: String,
-    link: Array
+    links: Array
 });
 
 const LinksBook = mongoose.model("linksbook", LinksBookSchema);
@@ -41,19 +45,26 @@ const UserSchema =  mongoose.Schema({
     name: String,
     email: String,
     password: String,
-    linkBooks: Array
+    linksBook: Array
 });
 
 const User = mongoose.model("users", UserSchema);
 
-// link model
-const Link = mongoose.model("link", LinkSchema);
+/* End models */
 
-const getLinks = (req, res) => {
-    Link.find((err, links) => {
-        if (err) res.json({ Error: err })
-        res.json(links)
-    })
-};
+const createUser = (req, res) => {
+    const { name, email, password } = req.body;
+    const newUser = new User({
+        name: name,
+        email: email,
+        password: password,
+        linksBook: []
+    });
 
-module.exports = getLinks;
+    newUser.save((err, user_) => {
+        if (err) res.json({Error: "Could not create user"});
+        res.json(user_);
+    });
+}
+
+module.exports = createUser;

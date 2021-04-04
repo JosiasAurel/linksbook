@@ -1,7 +1,6 @@
-// api function to get links
+// api function to get links book
 
 const mongoose = require("mongoose");
-
 // db config
 const options = {
     useNewUrlParser: true,
@@ -12,6 +11,10 @@ const options = {
 mongoose.connect("mongodb://localhost:27017/linksbook", options);
 
 const db = mongoose.connection;
+
+/* Models */
+const db = mongoose.connection;
+
 
 /* Models */
 const db = mongoose.connection;
@@ -31,7 +34,7 @@ const Link = mongoose.model("link", LinkSchema);
 const LinksBookSchema = mongoose.Schema({
     title: String,
     description: String,
-    link: Array
+    links: Array
 });
 
 const LinksBook = mongoose.model("linksbook", LinksBookSchema);
@@ -46,14 +49,14 @@ const UserSchema =  mongoose.Schema({
 
 const User = mongoose.model("users", UserSchema);
 
-// link model
-const Link = mongoose.model("link", LinkSchema);
+/* End models */
 
-const getLinks = (req, res) => {
-    Link.find((err, links) => {
-        if (err) res.json({ Error: err })
-        res.json(links)
-    })
-};
+const getLinksBook = (req, res) => {
+    let { userId } = req.body;
+    LinksBook.find((err, linksbooks_) => {
+        if (err) res.json({Error: "Could not get linksbooks"});
+        res.json(linksbooks_);
+    });
+}
 
-module.exports = getLinks;
+module.exports = getLinksBook;

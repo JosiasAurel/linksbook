@@ -11,8 +11,11 @@ const options = {
 // connect to the database
 mongoose.connect("mongodb://localhost:27017/linksbook", options);
 
+
+/* Models */
 const db = mongoose.connection;
 
+// Link model
 const LinkSchema = new mongoose.Schema({
     title: String,
     link: String,
@@ -21,6 +24,26 @@ const LinkSchema = new mongoose.Schema({
 
 // link model
 const Link = mongoose.model("link", LinkSchema);
+
+
+// LinksBook Model
+const LinksBookSchema = mongoose.Schema({
+    title: String,
+    description: String,
+    link: Array
+});
+
+const LinksBook = mongoose.model("linksbook", LinksBookSchema);
+
+// User model
+const UserSchema =  mongoose.Schema({
+    name: String,
+    email: String,
+    password: String,
+    linkBooks: Array
+});
+
+const User = mongoose.model("users", UserSchema);
 
 // link creation handler
 const createLink = (req, res) => {
