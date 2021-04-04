@@ -1,0 +1,29 @@
+{
+  "name": "linksbook-server",
+  "version": "1.0.0",
+  "description": "The official server for linksbook",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JosiasAurel/linksbook.git"
+  },
+  "keywords": [
+    "linksbook",
+    "links",
+    "organise"
+  ],
+  "author": "Josias Aurel",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/JosiasAurel/linksbook/issues"
+  },
+  "homepage": "https://github.com/JosiasAurel/linksbook#readme",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "fastify": "^3.14.1",
+    "mongoose": "^5.12.3"
+  }
+}
