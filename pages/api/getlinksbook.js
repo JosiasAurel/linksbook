@@ -10,11 +10,6 @@ const options = {
 // connect to the database
 mongoose.connect("mongodb://localhost:27017/linksbook", options);
 
-const db = mongoose.connection;
-
-/* Models */
-const db = mongoose.connection;
-
 
 /* Models */
 const db = mongoose.connection;

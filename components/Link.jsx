@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "../styles/index.module.css";
+import styles from "../styles/dash.module.css";
 
 const Link = ({ title, link, description }) => {
     return (
