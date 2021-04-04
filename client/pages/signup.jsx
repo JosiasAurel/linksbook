@@ -18,7 +18,7 @@ const SignUp = () => {
         console.log(n_);
     }
 
-    const createNewUser = async () => {
+    const createNewUser = () => {
         let newUserCred = {
             name: name_,
             email: email_,
@@ -27,7 +27,7 @@ const SignUp = () => {
 
         let newlyCreatedUser_ = [];
 
-        fetch("/api/signup", {
+        fetch("http://localhost:4000/signup", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
