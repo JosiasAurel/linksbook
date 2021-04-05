@@ -29,6 +29,9 @@ mongoose.connect("mongodb+srv://linksbook:7Xy2vTSCB3gTazd@linksbook.kt3h9.mongod
 /* Models */
 const db = mongoose.connection;
 
+app.get("/", (req, res) => {
+    res.send("Hello World")
+})
 
 app.get("/getlinks/:lkid",  (req, res) => {
     let linksbookId = req.params.lkid;

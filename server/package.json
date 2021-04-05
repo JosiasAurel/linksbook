@@ -4,7 +4,8 @@
   "description": "The official server for linksbook",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
@@ -25,7 +26,6 @@
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^5.0.0-alpha.8",
-    "fastify": "^3.14.1",
     "mongoose": "^5.12.3"
   }
 }
