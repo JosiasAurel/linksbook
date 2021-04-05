@@ -1,13 +1,16 @@
 import React from "react";
 
 import styles from "../styles/dash.module.css";
+import Link from "next/link";
 
-const LinksBook = ({title, description}) => {
+const LinksBook = ({title, description, link}) => {
     return (
-        <div className={styles.LinksBooksCard}>
+        <Link href={`/dashboard/${link}`}>
+            <div className={styles.LinksBooksCard}>
             <h2>{title}</h2>
             <p>{description}</p>
         </div>
+        </Link>
     )
 }
 

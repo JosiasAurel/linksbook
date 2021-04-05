@@ -1,66 +1,15 @@
 import React, { useState, useEffect } from "react";
-import styles from "../styles/dash.module.css";
+import styles from "../../styles/dash.module.css";
 
-import LinksBook from "../components/LinksBook";
+import LinksBook from "../../components/LinksBook";
 import Image from "next/image";
 
 const Dashboard = () => {
 
     // page variables
-    const [LinkBooksId, setLinkBooksId] = useState([]);
-    const [LinksBooks, setLinksBooks] = useState([]);
+    const [LinksBooks, setLinksBooks] = useState(false);
+    const [link, setLink] = useState(false);
     const [User, setUser] = useState({});
-    let linksbooksid_ = [];
-    let linksbooks_ = [];
-
-    useEffect(() => {
-        fetchAndSetCredentials();
-        fetchLinkBooksId();
-        fetchActualLinksBook();
-        console.log(`Ids ${LinkBooksId}`);
-        console.log(`Books ${LinksBooks}`)
-        console.log(LinksBooks)
-        console.log(linksbooks_);
-
-    // fetch links books Id
-    function fetchLinkBooksId() {
-        if (User.id !== undefined) {
-            if (LinkBooksId.length === 0) {
-            fetch(`http://localhost:4000/getlinksbookid/${User.id}`)
-            .then(res => res.json())
-            .then(data => {
-                setLinkBooksId(data);
-            })
-        } else {
-            return
-            }
-        } else {
-            setLinkBooksId([]);
-        }
-        return
-    }
-
-    // fetch links books
-    function fetchActualLinksBook() {
-        if (LinksBooks !== []) {
-            LinkBooksId.forEach(linkBookId => {
-            fetch(`http://localhost:4000/getlinksbook/${linkBookId}`)
-                .then(res => res.json())
-                .then(data => {
-                    setLinksBooks(data);
-                    linksbooks_.push(data);
-                    console.log("data")
-                    console.log(data)
-                    console.log("lk_")
-                    console.log(linksbooks_)
-                })
-        })
-        } else {
-            setLinksBooks([{title: "It doesnt work", description: "I wanna cry"}]);
-            linksbooks_.push({title: "It doesnt work", description: "I wanna cry"});
-
-        }
-    }
 
     function fetchAndSetCredentials() {
         if (User.name === undefined || User.name === "") {
@@ -76,9 +25,25 @@ const Dashboard = () => {
             return
         }
 
-        return
     }
-    }, [User])
+
+    useEffect(() => {
+        fetchAndSetCredentials();
+        fetchAndSetLinksBooks();
+    }, [link]);
+
+    useEffect(() => setLink(true))
+
+    function fetchAndSetLinksBooks() {
+        fetch(`http://localhost:4000/getlinksbook/${User.id}`)
+            .then(res => res.json())
+            .then(data => {
+                setLinksBooks(data)
+                console.log("Data")
+                console.log(data)
+                setLink(true);
+        })
+    }
 
     // variables for create linksbook modal
     const [title, setTitle] = useState("");
@@ -150,29 +115,58 @@ const Dashboard = () => {
                 </div>}
             </div>
 
+
             <h2>Here are your LinkBooks
             </h2>
 
-            
-                {linksbooks_.length === 0 ? <h3>You have no link books yet</h3> 
-                : linksbooks_.map(linkbook => {
+            <main className={styles.links}>
+                {( LinksBooks === false || LinksBooks.length === 0) ? <h3>You have no LinkBooks yet</h3> 
+                : LinksBooks.map(linkbook => {
                     return (
-                        <main className={styles.links}>
-                        <LinksBook 
-                        title={linkbook.title}
-                        description={linkbook.description}
+                        
+                            <LinksBook 
+                            title={linkbook.title}
+                            description={linkbook.description}
+                            link={linkbook._id}
                         />
-                        </main>
+                        
                     )
                 })}
-
+            </main>
+            
                 <div className={styles.actions}>
                     <button onClick={() => toggleOpen()} className={styles.createnNewLinksBookButton}>
                         New LinksBook
                     </button>
                 </div>
         </div>
-    )
+    )       
+}
+
+export async function getServerSideProps() {
+    const sampleLinksBooks = [
+        {
+            title: "YOlo",
+            description: "Absolutely nothing"
+        },
+        {
+            title: "YOlo",
+            description: "Absolutely nothing"
+        },
+        {
+            title: "YOlo",
+            description: "Absolutely nothing"
+        },
+        {
+            title: "YOlo",
+            description: "Absolutely nothing"
+        }
+    ]
+    return {
+        props: {
+            sampleLinksBooks
+        }
+    }
 }
 
 export default Dashboard;

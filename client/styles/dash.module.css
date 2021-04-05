@@ -189,4 +189,28 @@
         justify-content: space-evenly;
         align-items: center;
     }
+
+    .linksPageLinks {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        align-items: center;
+    }
+}
+
+.linksPage {
+    font-family: sans-serif;
+    text-align: center;
+}
+
+.linksPageLinksContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.linksPageLinks {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 1em;
 }
