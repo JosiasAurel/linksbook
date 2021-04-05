@@ -33,38 +33,18 @@ const db = mongoose.connection;
 app.get("/getlinks/:lkid",  (req, res) => {
     let linksbookId = req.params.lkid;
     
-    LinksBook.findById(linksbookId, (err, linksbook) => {
-        res.send(linksbook.link);
-    });
+    Link.find({linkbook: linksbookId}, (err, links) => {
+        if (err) res.send({Error: err})
+        res.send(links)
+    })
 });
 
 
-app.get("/getlinksbookid/:userId",  (req, res) => {
+app.get("/getlinksbook/:userId",  (req, res) => {
     let uId = req.params.userId; // get user id from request param
-    let finalLinkBooks = [];
-
-    /* User.findById(uId, (err, user) => {
-        if (err) res.send({Error: err});
-        let userLinkBooks = user.linkBooks;
-
-            userLinkBooks.forEach(linkbook => {
-            // fetch for linkbook matching id
-            LinksBook.findById(linkbook).exec((err, lk) => {
-                finalLinkBooks.push(lk);
-            });
-        });
-    }); */
-    async function getLinksBook() {
-            let finalLinkBooks = [];
-            let user_lk = await User.findById(uId);
-            let user_lks = user_lk.linkBooks;
-            res.send(user_lks);
-
-            let result = await user_lks.map(async (lk) => await LinksBook.findById(lk));
-            //res.send(result);
-        }
-
-    getLinksBook();
+    LinksBook.find({owner: uId}, (err, lks) => {
+        res.send(lks);
+    })
 });
 
 app.get("/getlinksbook/:id", (req, res) => {
@@ -83,18 +63,12 @@ app.post("/createlinksbook/:uid",  (req, res) => {
     let newLinksBook = new LinksBook({
         title: title,
         description: description,
-        links: []
+        links: [],
+        owner: userId
     });
 
     newLinksBook.save((err, linksbook) => {
         if (err) res.send({Error: err})
-
-
-        User.find({ _id: userId }, (err, _user) => {
-        // _user.linkBooks.push(linksbook._id);
-        _user[0].linkBooks.push(linksbook._id);
-            _user[0].save();
-        });
         res.send(linksbook);
     });
 });
@@ -106,16 +80,12 @@ app.post("/createlink/:lkid",  (req, res) => {
     let newLink = new Link({
         title: title,
         description: description,
-        link: link
+        link: link,
+        linkbook: _linksbook
     });
 
     newLink.save((err, _link) => {
         if (err) res.json({Error: err})
-
-        LinksBook.find({_id: _linksbook}, (err, linksbook_) => {
-            linksbook_[0].link.push(_link._id); // add the link in the linksbook
-            linksbook_[0].save(); // save the changes
-        })
 
         res.send(_link);
     });
