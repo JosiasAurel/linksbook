@@ -1,7 +1,7 @@
 import React from "react";
-import styles from "../styles/index.module.css";
+import styles from "../styles/dash.module.css";
 
-const Link = ({ title, link, description }) => {
+const LinkCard = ({ title, link, description }) => {
     return (
         <div className={styles.link}>
             <h2>{title}</h2>
@@ -13,4 +13,4 @@ const Link = ({ title, link, description }) => {
     )
 };
 
-export default Link;
+export default LinkCard;
