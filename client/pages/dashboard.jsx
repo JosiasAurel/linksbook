@@ -10,6 +10,8 @@ const Dashboard = () => {
     const [LinkBooksId, setLinkBooksId] = useState([]);
     const [LinksBooks, setLinksBooks] = useState([]);
     const [User, setUser] = useState({});
+    let linksbooksid_ = [];
+    let linksbooks_ = [];
 
     useEffect(() => {
         fetchAndSetCredentials();
@@ -18,6 +20,7 @@ const Dashboard = () => {
         console.log(`Ids ${LinkBooksId}`);
         console.log(`Books ${LinksBooks}`)
         console.log(LinksBooks)
+        console.log(linksbooks_);
 
     // fetch links books Id
     function fetchLinkBooksId() {
@@ -25,7 +28,9 @@ const Dashboard = () => {
             if (LinkBooksId.length === 0) {
             fetch(`http://localhost:4000/getlinksbookid/${User.id}`)
             .then(res => res.json())
-            .then(data => setLinkBooksId(data) && console.log(`LkId ${data}`))
+            .then(data => {
+                setLinkBooksId(data);
+            })
         } else {
             return
             }
@@ -37,14 +42,23 @@ const Dashboard = () => {
 
     // fetch links books
     function fetchActualLinksBook() {
-        if (LinksBooks === []) {
+        if (LinksBooks !== []) {
             LinkBooksId.forEach(linkBookId => {
             fetch(`http://localhost:4000/getlinksbook/${linkBookId}`)
                 .then(res => res.json())
-                .then(data => setLinksBooks(data) && console.log(`LinkBookA ${data}`))
+                .then(data => {
+                    setLinksBooks(data);
+                    linksbooks_.push(data);
+                    console.log("data")
+                    console.log(data)
+                    console.log("lk_")
+                    console.log(linksbooks_)
+                })
         })
         } else {
-            setLinksBooks([{title: "It doesnt work", description: "I wanna cry"}])
+            setLinksBooks([{title: "It doesnt work", description: "I wanna cry"}]);
+            linksbooks_.push({title: "It doesnt work", description: "I wanna cry"});
+
         }
     }
 
@@ -140,8 +154,8 @@ const Dashboard = () => {
             </h2>
 
             
-                {LinksBooks.length === 0 ? <h3>You have no link books yet</h3> 
-                : LinksBooks.map(linkbook => {
+                {linksbooks_.length === 0 ? <h3>You have no link books yet</h3> 
+                : linksbooks_.map(linkbook => {
                     return (
                         <main className={styles.links}>
                         <LinksBook 
