@@ -1,7 +1,6 @@
 
 // import required depedencies
 const mongoose = require("mongoose");
-const fastify = require("fastify");
 const express = require("express");
 const app = express();
 const cors = require("cors");
@@ -30,11 +29,6 @@ mongoose.connect("mongodb://localhost:27017/linksbook", options);
 /* Models */
 const db = mongoose.connection;
 
-/* const server = fastify({
-    logger: true
-}); */
-
-// server.use(require("cors"));
 
 app.get("/getlinks",  (req, res) => {
     Link.find((err, links) => {
@@ -50,7 +44,8 @@ app.get("/getlinksbook",  (req, res) => {
     });
 });
 
-app.post("/createlinksbook",  (req, res) => {
+app.post("/createlinksbook/:uid",  (req, res) => {
+    const userId = req.params.uid; // the id of the user wanting ti create a new linksbook
     const { title, description } = req.body;
 
     let newLinksBook = new LinksBook({
@@ -61,11 +56,19 @@ app.post("/createlinksbook",  (req, res) => {
 
     newLinksBook.save((err, linksbook) => {
         if (err) res.send({Error: err})
+
+
+        User.find({ _id: userId }, (err, _user) => {
+        // _user.linkBooks.push(linksbook._id);
+        _user[0].linkBooks.push(linksbook._id);
+            _user[0].save();
+        });
         res.send(linksbook);
     });
 });
 
-app.post("/createlink",  (req, res) => {
+app.post("/createlink/:lkid",  (req, res) => {
+    const _linksbook = req.params.lkid;
     const { title, description, link } = req.body;
 
     let newLink = new Link({
@@ -76,6 +79,12 @@ app.post("/createlink",  (req, res) => {
 
     newLink.save((err, _link) => {
         if (err) res.send({Error: err})
+
+        LinksBook.find({_id: _linksbook}, (err, linksbook_) => {
+            _linksbook[0].link.push(_link); // add the link in the linksbook
+            _linksbook[0].save(); // save the changes
+        })
+
         res.send(_link);
     });
 });
@@ -96,15 +105,11 @@ app.post("/signup",  (req, res) => {
     });
 });
 
-/* const start = () => {
-    try {
-         server.listen(4000);
-    } catch(err) {
-        server.log.error(err);
-        process.exit(1);
-    }
-};
+app.get("/user/:uid", (req, res) => {
+    User.find({_id: req.params.uid}, (err, u) => {
+        res.send(u);
+    });
+});
 
-start(); */
 
 app.listen(4000, () => console.log("Listening on port 4000"))
