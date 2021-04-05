@@ -35,7 +35,7 @@ const Dashboard = () => {
     useEffect(() => setLink(true))
 
     function fetchAndSetLinksBooks() {
-        fetch(`http://https://linksbook-1.josiasaurel.repl.co/getlinks/getlinksbook/${User.id}`)
+        fetch(`https://linksbook-1.josiasaurel.repl.co/getlinks/getlinksbook/${User.id}`)
             .then(res => res.json())
             .then(data => {
                 setLinksBooks(data)

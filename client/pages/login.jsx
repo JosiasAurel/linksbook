@@ -27,7 +27,7 @@ const SignUp = () => {
 
         let newlyCreatedUser_;
 
-        fetch("http://https://linksbook-1.josiasaurel.repl.co/getlinks/login", {
+        fetch("https://linksbook-1.josiasaurel.repl.co/getlinks/login", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
