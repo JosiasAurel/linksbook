@@ -5,7 +5,8 @@ const mongoose = require("mongoose");
 const LinksBookSchema = mongoose.Schema({
     title: String,
     description: String,
-    link: Array
+    links: [{type: mongoose.Schema.Types.ObjectId, ref: "links"}],
+    owner: {type: mongoose.Schema.Types.ObjectId, ref: "users"}
 });
 
 const LinksBook = mongoose.model("linksbook", LinksBookSchema);
