@@ -1,10 +1,10 @@
 import React, { useState } from "react";
+
 import Link from "next/link";
 
 const SignUp = () => {
 
     // form input values
-    const [name_, setName_] = useState("");
     const [email_, setEmail_] = useState("");
     const [password_, setPassword_] = useState("");
 
@@ -21,14 +21,13 @@ const SignUp = () => {
 
     const createNewUser = () => {
         let newUserCred = {
-            name: name_,
             email: email_,
             password: password_
         }
 
-        let newlyCreatedUser_ = [];
+        let newlyCreatedUser_;
 
-        fetch("http://localhost:4000/signup", {
+        fetch("http://localhost:4000/login", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -36,30 +35,30 @@ const SignUp = () => {
             body: JSON.stringify(newUserCred)
         }).then(res => res.json())
             .then(data => {
-                newlyCreatedUser_.push(data);
-                localStorage.setItem("token", `${data.name} ${data.email} ${data._id}`)
+                newlyCreatedUser_ = data;
+                console.log(data[0]);
+                localStorage.setItem("token", `${data[0].name} ${data[0].email} ${data[0]._id}`)
             });
 
-            return newlyCreatedUser_[0];
+            return newlyCreatedUser_;
     } 
 
     return (
-        <div className="signuppage">
+        <div className="loginpage">
             <form onSubmit={(event) => handleFormSubmit(event) } className="signupform" action="">
-                <h2>Sign Up</h2>
-                <input onChange={(e) => formInputChangeHandler(e, setName_)} value={name_} placeholder="Enter a username" type="text"/>
+                <h2>Log In</h2>
                 <input onChange={(e) => formInputChangeHandler(e, setEmail_)} value={email_} type="email" placeholder="Enter email e.g yuki@example.com" />
                 <input onChange={(e) => formInputChangeHandler(e, setPassword_)} value={password_} type="password" placeholder="Enter a password" />
                 <button>
-                    Sign Up
+                    Log In
                 </button>
                 <span>
-                    Already have an account ? <Link href="/login"> Log In </Link>
+                    Don't yet have an account ? <Link href="/signup">Create one</Link>
                 </span>
             </form>
 
             <style jsx>{`
-            .signuppage {
+            .loginpage {
                 display: flex;
                 justify-content: center;
                 align-items: center;
@@ -109,12 +108,9 @@ const SignUp = () => {
             .signupform button:active {
                 transform: scale(0.9);
             }
+
             span {
                 margin-top: 1em;
-            }
-
-            span a {
-                color: gray;
             }
             `}
             </style>
