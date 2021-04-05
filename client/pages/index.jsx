@@ -26,6 +26,9 @@ const Home = () => {
                     <Link href="/signup">
                         <button>SignUp</button>
                     </Link>
+                    <Link href="/dashboard">
+                        <button>Dashboard</button>
+                    </Link>
                 </span>
             </div>
             <style jsx>{`

@@ -214,3 +214,82 @@
     grid-template-columns: 1fr 1fr 1fr;
     grid-gap: 1em;
 }
+
+.createNewLinkContainer {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: 96vw;
+    position: fixed;
+    bottom: 2em;
+}
+
+.createNewLinkContainer button {
+    max-width: 150px;
+    max-height: 50px;
+    min-width: 150px;
+    min-height: 50px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    border: solid 2px turquoise;
+    border-radius: 8px;
+    background-color: rgba(64, 224, 208, 0.342);
+    color: rgb(0, 241, 217);
+    transition: transform 0.2s ease-in-out;
+}
+
+.createNewLinkContainer button:focus {
+    outline: none;
+}
+
+.createNewLinkContainer button:active {
+    transform: scale(0.9);
+}
+
+.newLinkModal {
+    position: fixed;
+    top: 2em;
+    width: 96vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.newLinkModal form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    background-color: white;
+    padding: 1em;
+    border-radius: 6px;
+    box-shadow: 0 0 4px 2px whitesmoke;
+    max-width: 300px;
+}
+
+.newLinkModal input, .newLinkModal button {
+    padding: 0.5em 1em 0.5em 1em;
+    margin: 0.6em;
+    border-radius: 5px;
+    border: solid 1px grey;
+}
+
+.newLinkModal button {
+    border: solid transparent !important;
+}
+
+.newLinkModal input:focus, .newLinkModal button:focus {
+    outline: none;
+}
+
+.newLinkModalClosed {
+    position: fixed;
+    top: 2em;
+    width: 96vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    display: none;
+    visibility: hidden;
+}
