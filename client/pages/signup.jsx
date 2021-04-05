@@ -28,7 +28,7 @@ const SignUp = () => {
 
         let newlyCreatedUser_ = [];
 
-        fetch("http://localhost:4000/signup", {
+        fetch("http://https://2zdsf2.deta.dev/getlinks/signup", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"

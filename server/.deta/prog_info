@@ -1,0 +1,1 @@
+{"id":"a50bb2a9-d235-40b4-8e57-ee7977c62268","space":963,"runtime":"nodejs12.x","name":"server","path":"2zdsf2","project":"a0xxjngq","account":"144798365827","region":"eu-central-1","deps":["cors@^2.8.5","dotenv@^8.2.0","express@^5.0.0-alpha.8","fastify@^3.14.1","mongoose@^5.12.3"],"envs":null,"public":true,"log_level":"debug","cron":"","reload_deps":false}
