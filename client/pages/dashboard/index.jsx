@@ -35,7 +35,7 @@ const Dashboard = () => {
     useEffect(() => setLink(true))
 
     function fetchAndSetLinksBooks() {
-        fetch(`http://https://2zdsf2.deta.dev/getlinks/getlinksbook/${User.id}`)
+        fetch(`http://https://linksbook-1.josiasaurel.repl.co/getlinks/getlinksbook/${User.id}`)
             .then(res => res.json())
             .then(data => {
                 setLinksBooks(data)
@@ -69,7 +69,7 @@ const Dashboard = () => {
             description
         }
 
-        fetch(`http://https://2zdsf2.deta.dev/getlinks/createlinksbook/${User.id}`, {
+        fetch(`http://https://linksbook-1.josiasaurel.repl.co/getlinks/createlinksbook/${User.id}`, {
             method: "POST",
             headers: {
 

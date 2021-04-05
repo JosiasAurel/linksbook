@@ -13,7 +13,7 @@ const LinksPage = (props) => {
     })
 
     function fetchLinks() {
-        fetch(`http://https://2zdsf2.deta.dev/getlinks/getlinks/${linkBookId}`)
+        fetch(`http://https://linksbook-1.josiasaurel.repl.co/getlinks/getlinks/${linkBookId}`)
             .then(res => res.json())
             .then(data => {
                 console.log(data)
@@ -38,7 +38,7 @@ const LinksPage = (props) => {
            link: link
        }
 
-       fetch(`http://https://2zdsf2.deta.dev/getlinks/createlink/${linkBookId}`, {
+       fetch(`http://https://linksbook-1.josiasaurel.repl.co/getlinks/createlink/${linkBookId}`, {
            method: "POST",
            headers: {
                "Content-Type": "application/json"
