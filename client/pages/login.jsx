@@ -27,7 +27,7 @@ const SignUp = () => {
 
         let newlyCreatedUser_;
 
-        fetch("http://localhost:4000/login", {
+        fetch("https://linksbook-server.vercel.app/login", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
