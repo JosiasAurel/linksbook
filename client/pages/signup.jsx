@@ -28,7 +28,7 @@ const SignUp = () => {
 
         let newlyCreatedUser_ = [];
 
-        fetch("http://localhost:4000/signup", {
+        fetch("https://linksbook-server.vercel.app/signup", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -63,8 +63,9 @@ const SignUp = () => {
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                height: 96vh;
+                height: 100vh;
                 font-family: monospace;
+                background-color: white;
             }
             h2 {
                     font-family: monospace;

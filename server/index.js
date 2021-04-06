@@ -1,4 +1,6 @@
 
+// Please work
+
 // import required depedencies
 const mongoose = require("mongoose");
 const express = require("express");
@@ -23,12 +25,17 @@ const options = {
 }
 
 // connect to the database
-mongoose.connect("mongodb://localhost:27017/linksbook", options);
+// mongodb+srv://linksbook:7Xy2vTSCB3gTazd@linksbook.kt3h9.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
+mongoose.connect("mongodb+srv://linksbook:7Xy2vTSCB3gTazd@linksbook.kt3h9.mongodb.net/linksbook?retryWrites=true&w=majority", options);
+// mongoose.connect("mongodb://localhost:27017/linksbook", options);
 
 
 /* Models */
 const db = mongoose.connection;
 
+app.get("/", (req, res) => {
+    res.send("Hello World")
+})
 
 app.get("/getlinks/:lkid",  (req, res) => {
     let linksbookId = req.params.lkid;
@@ -121,5 +128,6 @@ app.post("/login", (req, res) => {
     });
 });
 
+module.exports = app;
 
 app.listen(4000, () => console.log("Listening on port 4000"))

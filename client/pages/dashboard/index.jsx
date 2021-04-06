@@ -2,7 +2,9 @@ import React, { useState, useEffect } from "react";
 import styles from "../../styles/dash.module.css";
 
 import LinksBook from "../../components/LinksBook";
+import NoLinksBook from "../../components/NoLinksBook";
 import Image from "next/image";
+import Link from "next/link";
 
 const Dashboard = () => {
 
@@ -35,7 +37,7 @@ const Dashboard = () => {
     useEffect(() => setLink(true))
 
     function fetchAndSetLinksBooks() {
-        fetch(`http://localhost:4000/getlinksbook/${User.id}`)
+        fetch(`https://linksbook-server.vercel.app/getlinksbook/${User.id}`)
             .then(res => res.json())
             .then(data => {
                 setLinksBooks(data)
@@ -49,6 +51,7 @@ const Dashboard = () => {
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [open, setOpen] = useState(false);
+    const [created, setCreated] = useState(false);
 
     function toggleOpen() {
         if (open) {
@@ -63,13 +66,13 @@ const Dashboard = () => {
     }
 
     function submitNewLinksBook(event) {
-        event.preventDefault();
+        //event.preventDefault();
         const newLinksBook = {
             title: title,
             description
         }
 
-        fetch(`http://localhost:4000/createlinksbook/${User.id}`, {
+        fetch(`https://linksbook-server.vercel.app/createlinksbook/${User.id}`, {
             method: "POST",
             headers: {
 
@@ -78,14 +81,22 @@ const Dashboard = () => {
             body: JSON.stringify(newLinksBook)
         }).then(res => res.json())
             .then(data => console.log(data))
+
+        setOpen(false);
+        setCreated(true);
+        const handleThisthing = () => setCreated(false);
+        setTimeout(handleThisthing, 1500);
+        setTitle("");
+        setDescription("");
     }
 
     return (
         <div className={styles.page}>
             <header className={styles.header}>
                 <span className={styles.logo}>
-                    <h2>LinksBook</h2>
-                    <Image src="/link-2.svg" width="20" height="20" />
+                    <Link href="/">
+                        <Image src="/book.svg" width="50" height="50" />
+                    </Link>
                 </span>
 
                 <span className={styles.userThings}>
@@ -115,12 +126,17 @@ const Dashboard = () => {
                 </div>}
             </div>
 
-
-            <h2>Here are your LinkBooks
-            </h2>
+    {created ? 
+    <div className={styles.linksbookAlert}>
+        <h3>LinksBook Created</h3>
+    </div>
+    : 
+    <div className={styles.linksbookAlertClosed}>
+        <h3>LinksBook Created</h3>
+    </div>}
 
             <main className={styles.links}>
-                {( LinksBooks === false || LinksBooks.length === 0) ? <h3>You have no LinkBooks yet</h3> 
+                {( LinksBooks === false || LinksBooks.length === 0) ? <NoLinksBook  what="LinksBook" />
                 : LinksBooks.map(linkbook => {
                     return (
                         
@@ -143,30 +159,5 @@ const Dashboard = () => {
     )       
 }
 
-export async function getServerSideProps() {
-    const sampleLinksBooks = [
-        {
-            title: "YOlo",
-            description: "Absolutely nothing"
-        },
-        {
-            title: "YOlo",
-            description: "Absolutely nothing"
-        },
-        {
-            title: "YOlo",
-            description: "Absolutely nothing"
-        },
-        {
-            title: "YOlo",
-            description: "Absolutely nothing"
-        }
-    ]
-    return {
-        props: {
-            sampleLinksBooks
-        }
-    }
-}
 
 export default Dashboard;
