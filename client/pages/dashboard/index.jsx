@@ -85,6 +85,8 @@ const Dashboard = () => {
         setCreated(true);
         const handleThisthing = () => setCreated(false);
         setTimeout(handleThisthing, 1500);
+        setTitle("");
+        setDescription("");
     }
 
     return (
