@@ -13,7 +13,7 @@ const LinksPage = (props) => {
     })
 
     function fetchLinks() {
-        fetch(`https://linksbook-1.josiasaurel.repl.co/getlinks/getlinks/${linkBookId}`)
+        fetch(`https://linksbook-server.vercel.app/getlinks/${linkBookId}`)
             .then(res => res.json())
             .then(data => {
                 console.log(data)
@@ -38,7 +38,7 @@ const LinksPage = (props) => {
            link: link
        }
 
-       fetch(`http://https://linksbook-1.josiasaurel.repl.co/getlinks/createlink/${linkBookId}`, {
+       fetch(`https://linksbook-server.vercel.app/createlink/${linkBookId}`, {
            method: "POST",
            headers: {
                "Content-Type": "application/json"
