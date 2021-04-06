@@ -1,5 +1,8 @@
 
 .page {
+    background-color: coral;
+    padding-bottom: 2em;
+    padding-top: 5em;
 }
 
 .header {

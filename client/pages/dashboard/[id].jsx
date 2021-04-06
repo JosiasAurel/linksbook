@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import styles from "../../styles/dash.module.css";
 import LinkCard from "../../components/Link";
 import Link from "next/link";
+import Image from "next/image";
+import NoLinksBook from "../../components/NoLinksBook";
 
 const LinksPage = (props) => {
     const [linkBookId, setLinkBookId] = useState(props.pageProps.id.id);
@@ -10,10 +12,11 @@ const LinksPage = (props) => {
     useEffect(() => {
         console.log(linkBookId)
         fetchLinks()
-    })
+        fetchAndSetCredentials();
+    }, [])
 
     function fetchLinks() {
-        fetch(`https://linksbook-server.vercel.app/getlinks/${linkBookId}`)
+        fetch(`http://localhost:4000/getlinks/${linkBookId}`)
             .then(res => res.json())
             .then(data => {
                 console.log(data)
@@ -25,20 +28,38 @@ const LinksPage = (props) => {
    const [description, setDescription] = useState("");
    const [link, setLink] = useState("");
    const [open, setOpen] = useState(false);
+   const [created, setCreated] = useState(false);
+    const [User, setUser] = useState({});
+
+    function fetchAndSetCredentials() {
+        if (User.name === undefined || User.name === "") {
+            let user_ = localStorage.getItem("token").split(" ");
+        let userObj = {
+            name: user_[0],
+            email: user_[1],
+            id: user_[2]
+        }
+
+        setUser(userObj);
+        } else {
+            return
+        }
+
+    }
 
    function handleValuehChange(event, handler) {
         handler(event.target.value);
    }
 
    function submitNewLink(event) {
-       event.preventDefault();
+       // event.preventDefault();
        let newLinkObj = {
            title: label,
            description: description, 
            link: link
        }
 
-       fetch(`https://linksbook-server.vercel.app/createlink/${linkBookId}`, {
+       fetch(`http://localhost:4000/createlink/${linkBookId}`, {
            method: "POST",
            headers: {
                "Content-Type": "application/json"
@@ -47,6 +68,12 @@ const LinksPage = (props) => {
        })
         .then(res => res.json())
         .then(data => console.log(data))
+        setOpen(false);
+        setLabel("");
+        setDescription("");
+        setLink("");
+        setCreated(true);
+        setTimeout(() => setCreated(false), 1500);
    }
 
    function toggleModal() {
@@ -59,15 +86,20 @@ const LinksPage = (props) => {
     
     return (
         <div className={styles.linksPage}>
-            <header>
-                <Link href="/">
-                    <h3>LinksBook</h3>
-                </Link>
-                <h2>Here are your links</h2>
+            <header className={styles.header}>
+                <span className={styles.logo}>
+                    <Link href="/">
+                        <Image src="/book.svg" width="50" height="50" />
+                    </Link>
+                </span>
+
+                <span className={styles.userThings}>
+                    <h2> {User.name} </h2>
+                </span>
             </header>
             <section className={styles.linksPageLinksContainer}>
                 <main className={styles.linksPageLinks}>
-                { links.length === 0 ? <h2>You have no links </h2> 
+                { links.length === 0 ? <NoLinksBook what="Links" padLeft="25vw" />
                     :
                     links.map(link => {
                     return (
@@ -111,6 +143,15 @@ const LinksPage = (props) => {
                         Create
                     </button>
                 </form>
+            </div>}
+
+            {created ?
+            <div className={styles.linkCreated}>
+                <h2>Link Created</h2>
+            </div>
+            :
+            <div className={styles.linkCreatedClosed}>
+                <h2>Link Created</h2>
             </div>}
         </div>
     )
