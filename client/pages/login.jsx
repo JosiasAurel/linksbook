@@ -62,8 +62,9 @@ const SignUp = () => {
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                height: 96vh;
+                height: 100vh;
                 font-family: monospace;
+                background-color: white;
             }
             h2 {
                     font-family: monospace;
