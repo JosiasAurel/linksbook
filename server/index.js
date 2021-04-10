@@ -6,9 +6,11 @@ const mongoose = require("mongoose");
 const express = require("express");
 const app = express();
 const cors = require("cors");
+const morgan = require("morgan");
 
 app.use(cors());
 app.use(express.json());
+app.use(morgan("dev"));
 
 // load database schema
 const Link = require("./models/links");
@@ -26,8 +28,8 @@ const options = {
 
 // connect to the database
 // mongodb+srv://linksbook:7Xy2vTSCB3gTazd@linksbook.kt3h9.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
-mongoose.connect("mongodb+srv://linksbook:7Xy2vTSCB3gTazd@linksbook.kt3h9.mongodb.net/linksbook?retryWrites=true&w=majority", options);
-// mongoose.connect("mongodb://localhost:27017/linksbook", options);
+// mongoose.connect("mongodb+srv://linksbook:7Xy2vTSCB3gTazd@linksbook.kt3h9.mongodb.net/linksbook?retryWrites=true&w=majority", options);
+mongoose.connect("mongodb://localhost:27017/linksbook", options);
 
 
 /* Models */
