@@ -76,6 +76,14 @@ const LinksPage = (props) => {
         setTimeout(() => setCreated(false), 1500);
    }
 
+   function handleLinkCreation(event) {
+       if (label.trim() !== "" && description.trim() !== "" && link.trim() !== "") {
+           submitNewLink(event);
+       } else {
+           alert("Some fields are empty");
+       }
+   }
+
    function toggleModal() {
        if (open) {
            setOpen(false)
@@ -92,7 +100,11 @@ const LinksPage = (props) => {
                         <Image src="/book.svg" width="50" height="50" />
                     </Link>
                 </span>
-
+                    <span className={styles.toDashLinksPage}>
+                        <Link href="/dashboard">
+                            <p>Dashboard</p>
+                        </Link>
+                    </span>
                 <span className={styles.userThings}>
                     <h2> {User.name} </h2>
                 </span>
@@ -122,7 +134,7 @@ const LinksPage = (props) => {
 
             {open ? 
             <div className={styles.newLinkModal}>
-                <form onSubmit={(e) => submitNewLink(e)}>
+                <form onSubmit={(e) => handleLinkCreation(e)}>
                     <h2>Create New Link</h2>
                     <input value={label} onChange={(e) => handleValuehChange(e, setLabel)} type="text" placeholder="Label" />
                     <input value={description} onChange={(e) => handleValuehChange(e, setDescription)} type="text" placeholder="Description" />

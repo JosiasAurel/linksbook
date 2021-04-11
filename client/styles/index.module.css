@@ -3,6 +3,8 @@
     background-color: coral;
     padding-bottom: 2em;
     padding-top: 5em;
+    max-width: 100vw;
+    overflow-x: hidden;
 }
 
 .header {
@@ -14,6 +16,8 @@
     top: 0;
     backdrop-filter: blur(5px);
     width: 100vw;
+    z-index: 10;
+    border-bottom: solid 1px rgba(163, 163, 163, 0.432);
 }
 
 .pageTop {
@@ -22,7 +26,7 @@
 
 .header h2 {
     color: white;
-    font-family: cursive;
+    font-family: "Pacifico", cursive;
 }
 
 .heroMain {
@@ -144,18 +148,51 @@
 }
 
 .showers {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-gap: 1em;
-    margin: 6em 2em 1em 2em;
+    display: flex;
+    flex-direction: column;
 }
 
-.showers div {
+.shower1 {
     display: flex;
-    flex-direction: column-reverse;
     justify-content: space-between;
-    align-items: center;
-    color: cornsilk;
+    margin: 1em;
+}
+
+.shower2 {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    margin: 1em;
+}
+
+.shower1 div, .shower2 div {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    transform: rotate(12deg);
+    margin-right: 1em;
+}
+
+.shower2 div {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    transform: rotate(-12deg);
+    margin-right: 1em;
+}
+
+.showers h3 {
+    font-size: 3em;
+    color: white;
+    max-width: 400px;
+    text-align: center;
+}
+
+.hey h1 {
+
+    color: white;
+    text-align: center;
+    margin: 1em;
 }
 
 .pricing {
@@ -249,6 +286,7 @@
 }
     .menuModal {
         text-align: center;
+        z-index: 20;
     }
 
     .menuModal p {

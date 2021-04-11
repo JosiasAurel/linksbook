@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 const SignUp = () => {
 
     // form input values
     const [email_, setEmail_] = useState("");
     const [password_, setPassword_] = useState("");
+    const router = useRouter();
 
     // a reusable function to handle changes on form input
     const formInputChangeHandler = (e, handler) => {
@@ -17,6 +19,7 @@ const SignUp = () => {
         event.preventDefault();
         let n_ = createNewUser();
         console.log(n_);
+        router.replace("/dashboard")
     }
 
     const createNewUser = () => {
