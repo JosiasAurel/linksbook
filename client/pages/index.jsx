@@ -2,6 +2,9 @@ import React, { useEffect, useState } from "react";
 
 import styles from "../styles/index.module.css";
 
+import LinksBook from "../components/LinksBook";
+import LinkCard from "../components/Link";
+
 import Image from "next/image";
 import Link from "next/link";
 
@@ -83,23 +86,26 @@ const Home = () => {
             </section>
 
             <section className={styles.showers}>
-                <div>
-                    <h2>Get rid of your bookmarks</h2>
-                    <Image src="/bookmark.svg" height="150" width="150" />
+                <div className={styles.shower1}>
+                    <h3>Save your bookmarks in collections.</h3>
+                    <div>
+                        <LinksBook title="Must read books of the year" description="All the best selling books i want to read" />
+                        <LinksBook title="Resources" description="Simplified explanations to Calculus" />
+                    </div>
                 </div>
-                <div>
-                    <h2>Save your links in collections</h2>
-                    <Image src="/book-open.svg" height="150" width="150" />
-                </div>
-                <div>
-                    <h2>Share your collections with the public</h2>
-                    <Image src="/share.svg" height="150" width="150" />
-                </div>
-                <div>
-                    <h2>Know your collections</h2>
-                    <Image src="/map.svg" height="150" width="150" />
+
+                <div className={styles.shower2}>
+                    <h3>Your links more detailed</h3>
+                    <div>
+                        <LinkCard title="Albert Einstein" description="Albert Einstein's biography" link="https://en.wikipedia.org/wiki/Albert_Einstein" />
+                        <LinkCard title="Cat Photos" description="Awesome cat photos 😍" link="https://www.pexels.com/search/cat/" />
+                    </div>
                 </div>
             </section>
+
+<div className={styles.hey}>
+    <h1>Start free and Upgrade if needed</h1>
+</div>
 
             <section className={styles.pricing}>
                 <div>
