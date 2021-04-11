@@ -16,7 +16,7 @@ const LinksPage = (props) => {
     }, [])
 
     function fetchLinks() {
-        fetch(`http://localhost:4000/getlinks/${linkBookId}`)
+        fetch(`https://linksbook-server.vercel.app/getlinks/${linkBookId}`)
             .then(res => res.json())
             .then(data => {
                 console.log(data)
@@ -59,7 +59,7 @@ const LinksPage = (props) => {
            link: link
        }
 
-       fetch(`http://localhost:4000/createlink/${linkBookId}`, {
+       fetch(`https://linksbook-server.vercel.app/createlink/${linkBookId}`, {
            method: "POST",
            headers: {
                "Content-Type": "application/json"

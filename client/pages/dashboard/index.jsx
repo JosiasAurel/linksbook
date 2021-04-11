@@ -37,7 +37,7 @@ const Dashboard = () => {
     useEffect(() => setLink(true))
 
     function fetchAndSetLinksBooks() {
-        fetch(`http://localhost:4000/getlinksbook/${User.id}`)
+        fetch(`https://linksbook-server.vercel.app/getlinksbook/${User.id}`)
             .then(res => res.json())
             .then(data => {
                 setLinksBooks(data)
@@ -72,7 +72,7 @@ const Dashboard = () => {
             description
         }
 
-        fetch(`http://localhost:4000/createlinksbook/${User.id}`, {
+        fetch(`https://linksbook-server.vercel.app/createlinksbook/${User.id}`, {
             method: "POST",
             headers: {
 
