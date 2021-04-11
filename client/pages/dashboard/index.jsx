@@ -136,7 +136,7 @@ const Dashboard = () => {
     </div>}
 
             <main className={styles.links}>
-                {( LinksBooks === false || LinksBooks.length === 0) ? <NoLinksBook  what="LinksBook" />
+                {( LinksBooks === false || LinksBooks.length === 0) ? <NoLinksBook  what="Collections" />
                 : LinksBooks.map(linkbook => {
                     return (
                         

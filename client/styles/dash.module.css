@@ -4,6 +4,8 @@
     text-align: center;
     background-color: rgb(255, 168, 255);
     height: 100vh;
+    width: 100vw;
+    overflow-x: hidden;
 }
 
 .header {
@@ -107,7 +109,6 @@
     border: solid 2px transparent;
     border-radius: 8px;
     background-color: white;
-    color: rgb(0, 241, 217);
     margin-right: 2em;
     transition: transform 0.2s ease-in-out;
     box-shadow: 3px 21px 103px -9px rgba(89,89,89,0.58);

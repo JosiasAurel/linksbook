@@ -111,7 +111,7 @@ const LinksPage = (props) => {
             </header>
             <section className={styles.linksPageLinksContainer}>
                 <main className={styles.linksPageLinks}>
-                { links.length === 0 ? <NoLinksBook what="Links" padLeft="25vw" />
+                { links.length === 0 ? <NoLinksBook what="Links" padLeft="-20px" />
                     :
                     links.map(link => {
                     return (
