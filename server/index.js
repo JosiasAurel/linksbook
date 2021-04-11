@@ -7,6 +7,8 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const morgan = require("morgan");
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 
 app.use(cors());
 app.use(express.json());
@@ -106,13 +108,14 @@ app.post("/signup",  (req, res) => {
     let newUser = new User({
         name: name,
         email: email,
-        password: password,
+        password: bcrypt.hashSync(password, 9),
         linksbook: []
     });
 
     newUser.save((err, user_) => {
-        if (err) res.send({Error: err})
-        res.send(user_);
+        if (err) res.send({Error: err});
+        let token = jwt.sign({ id: user_.id, name: user_.name}, process.env.SECRET, {expiresIn: "30d", issuer: "linksbook" });
+        res.send({name: user_.name, token: token});
     });
 });
 
@@ -124,8 +127,10 @@ app.get("/user/:uid", (req, res) => {
 
 app.post("/login", (req, res) => {
     let { email, password } = req.body;
+    let hashedPass = bcrypt.hashSync(password, 8);
     User.find({email: email}, (err, u) => {
         if (err) res.json({Error: err});
+        bcrypt.compare(hashedPass, u.password);
         res.send(u);
     });
 });
