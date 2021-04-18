@@ -6,6 +6,21 @@ import NoLinksBook from "../../components/NoLinksBook";
 import Image from "next/image";
 import Link from "next/link";
 
+function ShareModal({ link }) {
+    return (
+    <div className={styles.shareModal}>
+    <div>
+        <h2>Share the following link</h2>
+        <span>
+        <a href={`https://linksbook.vercel.app/public/${link}`}>
+            {`https://linksbook.vercel.app/public/${link}`}
+        </a>
+        </span>
+    </div>
+</div>
+    )
+}
+
 const Dashboard = () => {
 
     // page variables
@@ -50,14 +65,15 @@ const Dashboard = () => {
     // variables for create linksbook modal
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
+    const [Public, setPublic] = useState(false);
     const [open, setOpen] = useState(false);
     const [created, setCreated] = useState(false);
 
-    function toggleOpen() {
-        if (open) {
-            setOpen(false);
+    function toggleOpen(value, handler) {
+        if (value) {
+            handler(false);
         } else {
-            setOpen(true);
+            handler(true);
         }
     }
 
@@ -65,11 +81,20 @@ const Dashboard = () => {
         handler(event.target.value);
     }
 
+    const viewChangeHandler = (value, handler) => {
+        if (value) {
+            handler(false);
+        } else {
+            handler(true);
+        }
+    }
+
     function submitNewLinksBook(event) {
         //event.preventDefault();
         const newLinksBook = {
             title: title,
-            description
+            description,
+            public: false
         }
 
         fetch(`https://linksbook-server.vercel.app/createlinksbook/${User.id}`, {
@@ -83,11 +108,20 @@ const Dashboard = () => {
             .then(data => console.log(data))
 
         setOpen(false);
-        setCreated(true);
-        const handleThisthing = () => setCreated(false);
-        setTimeout(handleThisthing, 1500);
         setTitle("");
         setDescription("");
+    }
+
+    // share modal
+    const [modal, setModal] = useState(false);
+
+    function toggleShareModal(link) {
+        if (modal) {
+            setModal(false);
+        } else {
+            console.log(link)
+            setModal(<ShareModal link={link} />)
+        }
     }
 
     return (
@@ -104,12 +138,14 @@ const Dashboard = () => {
                 </span>
             </header>
 
+            {/* Modal for creating a collection */}
             <div className={styles.modalContainer}>
                 {open ?
                 <div className={styles.createNewLinksBookModal}>
                     <form onSubmit={(e) => submitNewLinksBook(e)}>
                         <input value={title} onChange={(e) => valueChangeHandler(e, setTitle)} type="text" placeholder="Name" />
                         <input value={description} onChange={(e) => valueChangeHandler(e, setDescription)} type="text" placeholder="Description" />
+                        <label htmlFor="public">Public</label> <input onChange={() => viewChangeHandler(Public, setPublic)} type="checkbox"/>
                         <button>
                             Create
                         </button>
@@ -119,24 +155,23 @@ const Dashboard = () => {
                     <form>
                         <input onChange={(e) => valueChangeHandler(e, setName)} type="text" placeholder="Name" />
                         <input onChange={(e) => valueChangeHandler(e, setDescription)} type="text" placeholder="Description" />
+                        <label htmlFor="public">Public</label> <input onChange={() => viewChangeHandler(newPublic, setNewPublic)} type="checkbox"/>
                         <button>
                             Create
                         </button>
                     </form>
                 </div>}
             </div>
-
-    {created ? 
-    <div className={styles.linksbookAlert}>
-        <h3>LinksBook Created</h3>
-    </div>
-    : 
-    <div className={styles.linksbookAlertClosed}>
-        <h3>LinksBook Created</h3>
-    </div>}
+            {/* End modal for creating collection */}
+                    
+            {/* Share modal */}
+                {
+                    modal ? modal : ""
+                }
+            {/* End Share modal */}
 
             <main className={styles.links}>
-                {( LinksBooks === false || LinksBooks.length === 0) ? <NoLinksBook  what="LinksBook" />
+                {( LinksBooks === false || LinksBooks.length === 0) ? <NoLinksBook  what="Collections" />
                 : LinksBooks.map(linkbook => {
                     return (
                         
@@ -144,6 +179,8 @@ const Dashboard = () => {
                             title={linkbook.title}
                             description={linkbook.description}
                             link={linkbook._id}
+                            view={linkbook.public}
+                            shareHandler={toggleShareModal}
                         />
                         
                     )
@@ -151,7 +188,7 @@ const Dashboard = () => {
             </main>
             
                 <div className={styles.actions}>
-                    <button onClick={() => toggleOpen()} className={styles.createnNewLinksBookButton}>
+                    <button onClick={() => toggleOpen(open, setOpen)} className={styles.createnNewLinksBookButton}>
                         New LinksBook
                     </button>
                 </div>

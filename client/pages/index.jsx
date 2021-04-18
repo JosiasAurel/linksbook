@@ -75,9 +75,11 @@ const Home = () => {
             </main>
 
             <div className={styles.start}>
-                <button>
-                    Get Me Started
-                </button>
+                <Link href="/signup">
+                    <button>
+                        Get Me Started
+                    </button>
+                </Link>
             </div>
 
             <span className={styles.arrowDown}>

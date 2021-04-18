@@ -1,14 +1,9 @@
-
-// Please work
-
 // import required depedencies
 const mongoose = require("mongoose");
 const express = require("express");
 const app = express();
 const cors = require("cors");
 const morgan = require("morgan");
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
 
 app.use(cors());
 app.use(express.json());
@@ -30,8 +25,8 @@ const options = {
 
 // connect to the database
 // mongodb+srv://linksbook:7Xy2vTSCB3gTazd@linksbook.kt3h9.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
-// mongoose.connect("mongodb+srv://linksbook:7Xy2vTSCB3gTazd@linksbook.kt3h9.mongodb.net/linksbook?retryWrites=true&w=majority", options);
-mongoose.connect("mongodb://localhost:27017/linksbook", options);
+mongoose.connect("mongodb+srv://linksbook:7Xy2vTSCB3gTazd@linksbook.kt3h9.mongodb.net/linksbook?retryWrites=true&w=majority", options);
+// mongoose.connect("mongodb://localhost:27017/linksbook", options);
 
 
 /* Models */
@@ -53,54 +48,183 @@ app.get("/getlinks/:lkid",  (req, res) => {
 
 app.get("/getlinksbook/:userId",  (req, res) => {
     let uId = req.params.userId; // get user id from request param
+
     LinksBook.find({owner: uId}, (err, lks) => {
+
+        // if (err) res.send([]);
+
         res.send(lks);
     })
 });
 
-app.get("/getlinksbook/:id", (req, res) => {
-    let lkId = req.params.id;
 
-    LinksBook.findById(lkId, (err, lk) => {
-        if (err) res.json({Error: err});
-        res.send(lk);
+app.post("/createlinksbook/:uid",  (req, res) => {
+    const uid = req.params.uid; // the id of the user wanting to create a new linksbook
+    const { title, description } = req.body;
+
+        LinksBook.find({owner: uid}, (err, lkb_) => {
+            // fail safe
+            if (err) res.json({Error: "Could not find linksbook count"});
+
+            // check if load user
+            User.findById(uid, (err, user) => {
+                if (err) res.json({Error: "Could not find user"});
+
+                // check if user is on starter plan
+                if (user.plan === "Starter") {
+
+                    // if on starter plan, check collections count
+                    if (lkb_.length === 6) {
+                        // if collections count === 6, do not create new collection
+                        res.send("You have reached your Collections Limit");
+                    } else {
+                        // Otherwise
+                        // create new links book
+                        let newLinksBook = new LinksBook({
+                            title: title,
+                            description: description,
+                            links: [],
+                            owner: uid,
+                            public: false
+                            });
+                        // save new collection
+                        newLinksBook.save((err, linksbook) => {
+                            if (err) res.send({Error: err})
+                            res.send(linksbook);
+                            });
+                    }
+                } else {
+                    // if the user is not on starter plan
+                    // create new links book (collection)
+                    let newLinksBook = new LinksBook({
+                        title: title,
+                        description: description,
+                        links: [],
+                        owner: userId
+                        });
+                        // save new collection
+                        newLinksBook.save((err, linksbook) => {
+                            if (err) res.send({Error: err})
+                            res.send(linksbook);
+                        });
+                }
+            })
     })
 })
 
-app.post("/createlinksbook/:uid",  (req, res) => {
-    const userId = req.params.uid; // the id of the user wanting to create a new linksbook
-    const { title, description } = req.body;
 
-    let newLinksBook = new LinksBook({
-        title: title,
-        description: description,
-        links: [],
-        owner: userId
-    });
-
-    newLinksBook.save((err, linksbook) => {
-        if (err) res.send({Error: err})
-        res.send(linksbook);
-    });
-});
-
-app.post("/createlink/:lkid",  (req, res) => {
+app.post("/createlink/:uid/:lkid",  (req, res) => {
+    const uid = req.params.uid;
     const _linksbook = req.params.lkid;
     const { title, description, link } = req.body;
 
-    let newLink = new Link({
-        title: title,
-        description: description,
-        link: link,
-        linkbook: _linksbook
-    });
-
-    newLink.save((err, _link) => {
-        if (err) res.json({Error: err})
-
-        res.send(_link);
+    User.findById(uid, (err, user) => {
+        // check is user on starter plan
+        if (user.plan === "Starter") {
+            Link.find({linkbook: _linksbook}, (err, lks) => {
+                // fail safe
+                if (err) res.json({Error: err});
+                // check the number of links in the db
+                if (lks.length === 10) {
+                    res.send("You have reached your limit of 10");
+                } else {
+                    // otherwise, just create new link
+                    let newLink = new Link({
+                        title: title,
+                        description: description,
+                        link: link,
+                        linkbook: _linksbook
+                    });
+                    
+                    newLink.save((err, _link) => {
+                        if (err) res.json({Error: err})
+                    
+                        res.send(_link);
+                    });
+                }
+            })
+        } else {
+            // if user os not on starter plan then is on pro plan
+            let newLink = new Link({
+                title: title,
+                description: description,
+                link: link,
+                linkbook: _linksbook
+            });
+            
+                newLink.save((err, _link) => {
+            if (err) res.json({Error: err})
+            
+            res.send(_link);
+            });
+        }
     });
 });
+
+// todo
+/* let newLink = new Link({
+    title: title,
+    description: description,
+    link: link,
+    linkbook: _linksbook
+});
+
+    newLink.save((err, _link) => {
+if (err) res.json({Error: err})
+
+res.send(_link);
+} */
+
+app.put("/setlinksbook/:lkid/", (req, res) => {
+    let { isPublic, title, description } = req.body;
+    let lkid = req.params.lkid;
+
+    LinksBook.findByIdAndUpdate(lkid, { public: isPublic, title: title, description, description}, { new: true })
+        .then(lkbk => {
+            res.send(lkbk)
+        })
+        .catch(err => res.send(err)) 
+    // res.send("Updated collection");
+
+})
+
+app.put("/setlink/:lid/", (req, res) => {
+    let { title, link, description } = req.body;
+    let lkid = req.params.lid;
+
+    Link.findByIdAndUpdate(lkid, { link: link, title: title, description, description }, {new: true})
+        .then(lkbk => res.send(lkbk))
+            .catch(err => res.send(err))
+
+})
+
+app.delete("/linksbook/:lkid", (req, res) => {
+    let lkid = req.params.lkid;
+
+    // delete linksbook
+    LinksBook.findByIdAndDelete(lkid, (err, d) => {
+        if (err) res.send(err)
+    })
+    res.send(`Deleted LinksBook`)
+})
+
+app.delete("/link/:lkid", (req, res) => {
+    let lkid = req.params.lkid;
+
+    // delete link
+    Link.findByIdAndDelete(lkid, (err, l) => {
+        if (err) res.send(err);
+    })
+
+    res.send("Deleted Link")
+})
+
+app.get("/link/:linkid", (req, res) => {
+    Link.findById(req.params.linkid, (err, link) => {
+        if (err) res.send(err);
+        res.send(link);
+    })
+})
 
 app.post("/signup",  (req, res) => {
     const { name, email, password } = req.body;
@@ -108,14 +232,14 @@ app.post("/signup",  (req, res) => {
     let newUser = new User({
         name: name,
         email: email,
-        password: bcrypt.hashSync(password, 9),
-        linksbook: []
+        password: password,
+        linksbook: [],
+        plan: "Starter"
     });
 
     newUser.save((err, user_) => {
-        if (err) res.send({Error: err});
-        let token = jwt.sign({ id: user_.id, name: user_.name}, process.env.SECRET, {expiresIn: "30d", issuer: "linksbook" });
-        res.send({name: user_.name, token: token});
+        if (err) res.send({Error: err})
+        res.send(user_);
     });
 });
 
@@ -127,10 +251,8 @@ app.get("/user/:uid", (req, res) => {
 
 app.post("/login", (req, res) => {
     let { email, password } = req.body;
-    let hashedPass = bcrypt.hashSync(password, 8);
     User.find({email: email}, (err, u) => {
         if (err) res.json({Error: err});
-        bcrypt.compare(hashedPass, u.password);
         res.send(u);
     });
 });

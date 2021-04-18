@@ -58,8 +58,7 @@ const LinksPage = (props) => {
            description: description, 
            link: link
        }
-
-       fetch(`https://linksbook-server.vercel.app/createlink/${linkBookId}`, {
+       fetch(`https://linksbook-server.vercel.app/createlink/${User.id}/${linkBookId}`, {
            method: "POST",
            headers: {
                "Content-Type": "application/json"
@@ -111,7 +110,7 @@ const LinksPage = (props) => {
             </header>
             <section className={styles.linksPageLinksContainer}>
                 <main className={styles.linksPageLinks}>
-                { links.length === 0 ? <NoLinksBook what="Links" padLeft="25vw" />
+                { links.length === 0 ? <NoLinksBook what="Links" padLeft="-20px" />
                     :
                     links.map(link => {
                     return (
@@ -119,6 +118,7 @@ const LinksPage = (props) => {
                         title={link.title}
                         description={link.description}
                         link={link.link}
+                        id={link._id}
                         />
                     )
                 })  
