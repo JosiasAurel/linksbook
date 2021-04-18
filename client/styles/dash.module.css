@@ -372,3 +372,91 @@
     justify-content: center;
     align-items: center;
 }
+
+.collectionView {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.collectionView .public {
+    color: white;
+    background-color: rgba(18, 255, 10, 0.411);
+    padding: 3px 5px 3px 5px;
+    border-radius: 5px;
+}
+
+.collectionView .private {
+    color: white;
+    background-color: rgba(255, 0, 0, 0.452);
+    padding: 3px 5px 3px 5px;
+    border-radius: 5px;
+}
+
+.collectionView button {
+    border: solid transparent;
+    background-color: white;
+    padding: 2px 5px 2px 5px;
+    border-radius: 3px;
+}
+
+.editLinksBook {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 40vh;
+}
+
+.editFormContainer {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.editFormContainer form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    backdrop-filter: blur(5px);
+    box-shadow: 0 0 4px 2px rgba(245, 245, 245, 0.473);
+    background-color: rgba(255, 255, 255, 0.336);
+    padding: 1em;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.editFormContainer input, .editFormContainer button {
+    padding: 1em 2em 1em 2em;
+    border: 1px solid blue;
+    border-radius: 5px;
+    margin: 1.5em;
+    border-color: blue;
+}
+
+.editFormContainer button {
+    background-color: blue;
+    color: white;
+}
+
+.editFormContainer input:focus, .editFormContainer button:focus {
+    outline: none;
+}
+
+.editLinkControllers {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.editLinkControllers button {
+    margin: 0 3px 3px 3px;
+    border: solid transparent;
+    padding: 3px 5px 3px 5px;
+    border-radius: 5px;
+}

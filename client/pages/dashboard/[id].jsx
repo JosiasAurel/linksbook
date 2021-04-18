@@ -59,7 +59,7 @@ const LinksPage = (props) => {
            link: link
        }
 
-       fetch(`http://localhost:4000/createlink/${linkBookId}`, {
+       fetch(`http://localhost:4000/createlink/${User.id}/${linkBookId}`, {
            method: "POST",
            headers: {
                "Content-Type": "application/json"
@@ -119,6 +119,7 @@ const LinksPage = (props) => {
                         title={link.title}
                         description={link.description}
                         link={link.link}
+                        id={link._id}
                         />
                     )
                 })  

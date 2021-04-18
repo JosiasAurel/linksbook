@@ -48,8 +48,11 @@ app.get("/getlinks/:lkid",  (req, res) => {
 
 app.get("/getlinksbook/:userId",  (req, res) => {
     let uId = req.params.userId; // get user id from request param
+
     LinksBook.find({owner: uId}, (err, lks) => {
-        if (err) res.send([]);
+
+        // if (err) res.send([]);
+
         res.send(lks);
     })
 });
@@ -81,7 +84,8 @@ app.post("/createlinksbook/:uid",  (req, res) => {
                             title: title,
                             description: description,
                             links: [],
-                            owner: userId
+                            owner: uid,
+                            public: false
                             });
                         // save new collection
                         newLinksBook.save((err, linksbook) => {
@@ -170,6 +174,57 @@ if (err) res.json({Error: err})
 
 res.send(_link);
 } */
+
+app.put("/setlinksbook/:lkid/", (req, res) => {
+    let { isPublic, title, description } = req.body;
+    let lkid = req.params.lkid;
+
+    LinksBook.findByIdAndUpdate(lkid, { public: isPublic, title: title, description, description}, { new: true })
+        .then(lkbk => {
+            res.send(lkbk)
+        })
+        .catch(err => res.send(err)) 
+    // res.send("Updated collection");
+
+})
+
+app.put("/setlink/:lid/", (req, res) => {
+    let { title, link, description } = req.body;
+    let lkid = req.params.lid;
+
+    Link.findByIdAndUpdate(lkid, { link: link, title: title, description, description }, {new: true})
+        .then(lkbk => res.send(lkbk))
+            .catch(err => res.send(err))
+
+})
+
+app.delete("/linksbook/:lkid", (req, res) => {
+    let lkid = req.params.lkid;
+
+    // delete linksbook
+    LinksBook.findByIdAndDelete(lkid, (err, d) => {
+        if (err) res.send(err)
+    })
+    res.send(`Deleted LinksBook`)
+})
+
+app.delete("/link/:lkid", (req, res) => {
+    let lkid = req.params.lkid;
+
+    // delete link
+    Link.findByIdAndDelete(lkid, (err, l) => {
+        if (err) res.send(err);
+    })
+
+    res.send("Deleted Link")
+})
+
+app.get("/link/:linkid", (req, res) => {
+    Link.findById(req.params.linkid, (err, link) => {
+        if (err) res.send(err);
+        res.send(link);
+    })
+})
 
 app.post("/signup",  (req, res) => {
     const { name, email, password } = req.body;

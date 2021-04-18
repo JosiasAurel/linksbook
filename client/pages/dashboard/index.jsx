@@ -50,14 +50,15 @@ const Dashboard = () => {
     // variables for create linksbook modal
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
+    const [Public, setPublic] = useState(false);
     const [open, setOpen] = useState(false);
     const [created, setCreated] = useState(false);
 
-    function toggleOpen() {
-        if (open) {
-            setOpen(false);
+    function toggleOpen(value, handler) {
+        if (value) {
+            handler(false);
         } else {
-            setOpen(true);
+            handler(true);
         }
     }
 
@@ -65,11 +66,20 @@ const Dashboard = () => {
         handler(event.target.value);
     }
 
+    const viewChangeHandler = (value, handler) => {
+        if (value) {
+            handler(false);
+        } else {
+            handler(true);
+        }
+    }
+
     function submitNewLinksBook(event) {
         //event.preventDefault();
         const newLinksBook = {
             title: title,
-            description
+            description,
+            public: false
         }
 
         fetch(`http://localhost:4000/createlinksbook/${User.id}`, {
@@ -83,9 +93,6 @@ const Dashboard = () => {
             .then(data => console.log(data))
 
         setOpen(false);
-        setCreated(true);
-        const handleThisthing = () => setCreated(false);
-        setTimeout(handleThisthing, 1500);
         setTitle("");
         setDescription("");
     }
@@ -104,12 +111,14 @@ const Dashboard = () => {
                 </span>
             </header>
 
+            {/* Modal for creating a collection */}
             <div className={styles.modalContainer}>
                 {open ?
                 <div className={styles.createNewLinksBookModal}>
                     <form onSubmit={(e) => submitNewLinksBook(e)}>
                         <input value={title} onChange={(e) => valueChangeHandler(e, setTitle)} type="text" placeholder="Name" />
                         <input value={description} onChange={(e) => valueChangeHandler(e, setDescription)} type="text" placeholder="Description" />
+                        <label htmlFor="public">Public</label> <input onChange={() => viewChangeHandler(Public, setPublic)} type="checkbox"/>
                         <button>
                             Create
                         </button>
@@ -119,21 +128,15 @@ const Dashboard = () => {
                     <form>
                         <input onChange={(e) => valueChangeHandler(e, setName)} type="text" placeholder="Name" />
                         <input onChange={(e) => valueChangeHandler(e, setDescription)} type="text" placeholder="Description" />
+                        <label htmlFor="public">Public</label> <input onChange={() => viewChangeHandler(newPublic, setNewPublic)} type="checkbox"/>
                         <button>
                             Create
                         </button>
                     </form>
                 </div>}
             </div>
+            {/* End modal for creating collection */}
 
-    {created ? 
-    <div className={styles.linksbookAlert}>
-        <h3>LinksBook Created</h3>
-    </div>
-    : 
-    <div className={styles.linksbookAlertClosed}>
-        <h3>LinksBook Created</h3>
-    </div>}
 
             <main className={styles.links}>
                 {( LinksBooks === false || LinksBooks.length === 0) ? <NoLinksBook  what="Collections" />
@@ -144,6 +147,7 @@ const Dashboard = () => {
                             title={linkbook.title}
                             description={linkbook.description}
                             link={linkbook._id}
+                            view={linkbook.public}
                         />
                         
                     )
@@ -151,7 +155,7 @@ const Dashboard = () => {
             </main>
             
                 <div className={styles.actions}>
-                    <button onClick={() => toggleOpen()} className={styles.createnNewLinksBookButton}>
+                    <button onClick={() => toggleOpen(open, setOpen)} className={styles.createnNewLinksBookButton}>
                         New LinksBook
                     </button>
                 </div>
