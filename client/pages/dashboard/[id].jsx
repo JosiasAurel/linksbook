@@ -58,7 +58,7 @@ const LinksPage = (props) => {
            description: description, 
            link: link
        }
-       fetch(`http://localhost:4000/createlink/${User.id}/${linkBookId}`, {
+       fetch(`https://linksbook-server.vercel.app/createlink/${User.id}/${linkBookId}`, {
            method: "POST",
            headers: {
                "Content-Type": "application/json"

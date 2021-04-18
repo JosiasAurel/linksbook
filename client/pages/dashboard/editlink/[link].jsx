@@ -33,7 +33,7 @@ const EditLink = (props) => {
     }
 
     function fetchLink() {
-        fetch(`http://localhost:4000/link/${linkId}`)
+        fetch(`https://linksbook-server.vercel.app/link/${linkId}`)
             .then(res => res.json())
             .then(data => {
                 setLLink(data)
@@ -65,7 +65,7 @@ const EditLink = (props) => {
             description: description
         }
 
-        fetch(`http://localhost:4000/setlink/${linkId}`, {
+        fetch(`https://linksbook-server.vercel.app/setlink/${linkId}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json"

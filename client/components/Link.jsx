@@ -7,7 +7,7 @@ const LinkCard = ({ id, title, link, description }) => {
 
     // delete link handler
     const deleteLink = () => {
-        fetch(`http://localhost:4000/link/${id}`, {
+        fetch(`https://linksbook-server.vercel.app/link/${id}`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json"

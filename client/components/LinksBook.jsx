@@ -8,7 +8,7 @@ import Link from "next/link";
 export default function LinksBook({title, description, link, view, shareHandler })  {
 
     const deleteLinksBook = () => {
-        fetch(`http://localhost:4000/linksbook/${link}`, {
+        fetch(`https://linksbook-server.vercel.app/linksbook/${link}`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json"

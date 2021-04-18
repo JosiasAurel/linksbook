@@ -40,7 +40,7 @@ const EditLinksBook = (props) => {
             description, description,
             isPublic: Public
         }
-        fetch(`http://localhost:4000/setlinksbook/${linkid}`, {
+        fetch(`https://linksbook-server.vercel.app/setlinksbook/${linkid}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json"

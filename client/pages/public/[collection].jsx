@@ -12,7 +12,7 @@ const PublicCollection = (props) => {
     const [Coll, setColl] = useState([]);
 
     function fetchAndSetLinksBooks() {
-        fetch(`http://localhost:4000/getlinks/${collection}`)
+        fetch(`https://linksbook-server.vercel.app/getlinks/${collection}`)
             .then(res => res.json())
             .then(data => {
                 setColl(data);
