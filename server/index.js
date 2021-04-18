@@ -49,53 +49,127 @@ app.get("/getlinks/:lkid",  (req, res) => {
 app.get("/getlinksbook/:userId",  (req, res) => {
     let uId = req.params.userId; // get user id from request param
     LinksBook.find({owner: uId}, (err, lks) => {
+        if (err) res.send([]);
         res.send(lks);
     })
 });
 
-app.get("/getlinksbook/:id", (req, res) => {
-    let lkId = req.params.id;
 
-    LinksBook.findById(lkId, (err, lk) => {
-        if (err) res.json({Error: err});
-        res.send(lk);
+app.post("/createlinksbook/:uid",  (req, res) => {
+    const uid = req.params.uid; // the id of the user wanting to create a new linksbook
+    const { title, description } = req.body;
+
+        LinksBook.find({owner: uid}, (err, lkb_) => {
+            // fail safe
+            if (err) res.json({Error: "Could not find linksbook count"});
+
+            // check if load user
+            User.findById(uid, (err, user) => {
+                if (err) res.json({Error: "Could not find user"});
+
+                // check if user is on starter plan
+                if (user.plan === "Starter") {
+
+                    // if on starter plan, check collections count
+                    if (lkb_.length === 6) {
+                        // if collections count === 6, do not create new collection
+                        res.send("You have reached your Collections Limit");
+                    } else {
+                        // Otherwise
+                        // create new links book
+                        let newLinksBook = new LinksBook({
+                            title: title,
+                            description: description,
+                            links: [],
+                            owner: userId
+                            });
+                        // save new collection
+                        newLinksBook.save((err, linksbook) => {
+                            if (err) res.send({Error: err})
+                            res.send(linksbook);
+                            });
+                    }
+                } else {
+                    // if the user is not on starter plan
+                    // create new links book (collection)
+                    let newLinksBook = new LinksBook({
+                        title: title,
+                        description: description,
+                        links: [],
+                        owner: userId
+                        });
+                        // save new collection
+                        newLinksBook.save((err, linksbook) => {
+                            if (err) res.send({Error: err})
+                            res.send(linksbook);
+                        });
+                }
+            })
     })
 })
 
-app.post("/createlinksbook/:uid",  (req, res) => {
-    const userId = req.params.uid; // the id of the user wanting to create a new linksbook
-    const { title, description } = req.body;
 
-    let newLinksBook = new LinksBook({
-        title: title,
-        description: description,
-        links: [],
-        owner: userId
-    });
-
-    newLinksBook.save((err, linksbook) => {
-        if (err) res.send({Error: err})
-        res.send(linksbook);
-    });
-});
-
-app.post("/createlink/:lkid",  (req, res) => {
+app.post("/createlink/:uid/:lkid",  (req, res) => {
+    const uid = req.params.uid;
     const _linksbook = req.params.lkid;
     const { title, description, link } = req.body;
 
-    let newLink = new Link({
-        title: title,
-        description: description,
-        link: link,
-        linkbook: _linksbook
-    });
-
-    newLink.save((err, _link) => {
-        if (err) res.json({Error: err})
-
-        res.send(_link);
+    User.findById(uid, (err, user) => {
+        // check is user on starter plan
+        if (user.plan === "Starter") {
+            Link.find({linkbook: _linksbook}, (err, lks) => {
+                // fail safe
+                if (err) res.json({Error: err});
+                // check the number of links in the db
+                if (lks.length === 10) {
+                    res.send("You have reached your limit of 10");
+                } else {
+                    // otherwise, just create new link
+                    let newLink = new Link({
+                        title: title,
+                        description: description,
+                        link: link,
+                        linkbook: _linksbook
+                    });
+                    
+                    newLink.save((err, _link) => {
+                        if (err) res.json({Error: err})
+                    
+                        res.send(_link);
+                    });
+                }
+            })
+        } else {
+            // if user os not on starter plan then is on pro plan
+            let newLink = new Link({
+                title: title,
+                description: description,
+                link: link,
+                linkbook: _linksbook
+            });
+            
+                newLink.save((err, _link) => {
+            if (err) res.json({Error: err})
+            
+            res.send(_link);
+            });
+        }
     });
 });
+
+// todo
+/* let newLink = new Link({
+    title: title,
+    description: description,
+    link: link,
+    linkbook: _linksbook
+});
+
+    newLink.save((err, _link) => {
+if (err) res.json({Error: err})
+
+res.send(_link);
+} */
 
 app.post("/signup",  (req, res) => {
     const { name, email, password } = req.body;
@@ -104,7 +178,8 @@ app.post("/signup",  (req, res) => {
         name: name,
         email: email,
         password: password,
-        linksbook: []
+        linksbook: [],
+        plan: "Starter"
     });
 
     newUser.save((err, user_) => {
