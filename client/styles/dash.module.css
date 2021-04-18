@@ -460,3 +460,25 @@
     padding: 3px 5px 3px 5px;
     border-radius: 5px;
 }
+
+.shareModal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.shareModal div {
+    background-color: white;
+    padding: 1em;
+    max-width: 300px;
+    border-radius: 6px;
+    position: fixed;
+    top: 1em;
+    z-index: 20;
+    overflow-x: scroll;
+}
+
+.shareModal span {
+    max-width: 250px;
+    overflow-x: scroll;
+}

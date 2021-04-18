@@ -6,6 +6,21 @@ import NoLinksBook from "../../components/NoLinksBook";
 import Image from "next/image";
 import Link from "next/link";
 
+function ShareModal({ link }) {
+    return (
+    <div className={styles.shareModal}>
+    <div>
+        <h2>Share the following link</h2>
+        <span>
+        <a href={`https://linksbook.vercel.app/public/${link}`}>
+            {`https://linksbook.vercel.app/public/${link}`}
+        </a>
+        </span>
+    </div>
+</div>
+    )
+}
+
 const Dashboard = () => {
 
     // page variables
@@ -97,6 +112,18 @@ const Dashboard = () => {
         setDescription("");
     }
 
+    // share modal
+    const [modal, setModal] = useState(false);
+
+    function toggleShareModal(link) {
+        if (modal) {
+            setModal(false);
+        } else {
+            console.log(link)
+            setModal(<ShareModal link={link} />)
+        }
+    }
+
     return (
         <div className={styles.page}>
             <header className={styles.header}>
@@ -136,7 +163,12 @@ const Dashboard = () => {
                 </div>}
             </div>
             {/* End modal for creating collection */}
-
+                    
+            {/* Share modal */}
+                {
+                    modal ? modal : ""
+                }
+            {/* End Share modal */}
 
             <main className={styles.links}>
                 {( LinksBooks === false || LinksBooks.length === 0) ? <NoLinksBook  what="Collections" />
@@ -148,6 +180,7 @@ const Dashboard = () => {
                             description={linkbook.description}
                             link={linkbook._id}
                             view={linkbook.public}
+                            shareHandler={toggleShareModal}
                         />
                         
                     )

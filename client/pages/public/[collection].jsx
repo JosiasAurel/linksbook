@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 
-import LinkCard from "../../../components/publicLink";
+import LinkCard from "../../components/publicLink";
 
-import styles from "../../../styles/dash.module.css";
+import styles from "../../styles/dash.module.css";
 
 const PublicCollection = (props) => {
     let collection = props.pageProps.id.collection;
@@ -24,7 +24,7 @@ const PublicCollection = (props) => {
     }, [])
 
     return (
-        <div>
+        <div className={styles.linksPage}>
             <main className={styles.links}>
                 {Coll === [] ? <h2> No Links in this collection </h2>
                 : Coll.map(link => {

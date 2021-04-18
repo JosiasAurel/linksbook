@@ -5,7 +5,7 @@ import Link from "next/link";
 
 
 
-export default function LinksBook({title, description, link, view})  {
+export default function LinksBook({title, description, link, view, shareHandler })  {
 
     const deleteLinksBook = () => {
         fetch(`http://localhost:4000/linksbook/${link}`, {
@@ -32,6 +32,7 @@ export default function LinksBook({title, description, link, view})  {
                         Edit
                     </button>
                 </Link>
+                { view===true  ? <p onClick={() => shareHandler(link)} className={styles.public}>Share</p> : "" }
                 <button onClick={() => deleteLinksBook()}>
                     Delete
                 </button>
