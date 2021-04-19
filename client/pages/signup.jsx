@@ -8,6 +8,7 @@ const SignUp = () => {
     const [name_, setName_] = useState("");
     const [email_, setEmail_] = useState("");
     const [password_, setPassword_] = useState("");
+    const [pro, setPro] = useState("");
     const router = useRouter();
 
     // a reusable function to handle changes on form input
@@ -26,7 +27,8 @@ const SignUp = () => {
         let newUserCred = {
             name: name_,
             email: email_,
-            password: password_
+            password: password_,
+            pro: pro
         }
 
         let newlyCreatedUser_ = [];
@@ -53,6 +55,9 @@ const SignUp = () => {
                 <input onChange={(e) => formInputChangeHandler(e, setName_)} value={name_} placeholder="Enter a username" type="text"/>
                 <input onChange={(e) => formInputChangeHandler(e, setEmail_)} value={email_} type="email" placeholder="Enter email e.g yuki@example.com" />
                 <input onChange={(e) => formInputChangeHandler(e, setPassword_)} value={password_} type="password" placeholder="Enter a password" />
+
+                <label htmlFor="pro">Pro (Please enter license key only if you bought pro plan) <a href="https://gumroad.com/l/linksbookpro">here</a></label>
+                <input value={pro} onChange={(e) => formInputChangeHandler(e, setPro)} type="text" placeholder="Pro License Key" />
                 <button>
                     Sign Up
                 </button>

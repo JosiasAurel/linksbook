@@ -4,10 +4,14 @@ import styles from "../../../styles/dash.module.css";
 import Link from "next/link";
 import Image from "next/image";
 
+import { useRouter } from "next/router";
+
 const EditLinksBook = (props) => {
 
     //credentials
     const [User, setUser] = useState({});
+
+    const router = useRouter();
 
     function fetchAndSetCredentials() {
         if (User.name === undefined || User.name === "") {
@@ -25,13 +29,25 @@ const EditLinksBook = (props) => {
 
     }
 
-    useEffect(() => fetchAndSetCredentials(), [])
+    useEffect(() => {
+        fetchAndSetCredentials();
+        fetchLink();
+    }, [])
 
     let linkid = props.pageProps.id.linksbook;
 
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [Public, setPublic] = useState(false);
+
+    function fetchLink() {
+        fetch(`http://localhost:4000/linksbook/${linkid}`)
+            .then(res => res.json())
+            .then(data => {
+                setTitle(data.title);
+                setDescription(data.description);
+            });
+    }
 
     function submitHandler(e) {
         e.preventDefault();
@@ -47,7 +63,9 @@ const EditLinksBook = (props) => {
             },
             body: JSON.stringify(editedLinksBook)
         }).then(res => res.json())
-            .then(data => console.log(data))
+            .then(data => {
+                router.push("/dashboard")
+            })
     }
 
     const toggleView = () => {

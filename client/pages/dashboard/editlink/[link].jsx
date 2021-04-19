@@ -4,8 +4,11 @@ import styles from "../../../styles/dash.module.css";
 
 import Link from "next/link";
 import Image from "next/image";
+import { useRouter } from "next/router";
 
 const EditLink = (props) => {
+
+    const router = useRouter();
 
     let linkId = props.pageProps.id.link;
     console.log(linkId)
@@ -72,7 +75,9 @@ const EditLink = (props) => {
             },
             body: JSON.stringify(newLink)
         }).then(res => res.json())
-            .then(data => console.log(data))
+            .then(data => {
+                router.back();
+            })
     }
     
     return (

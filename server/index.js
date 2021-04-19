@@ -4,6 +4,7 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const morgan = require("morgan");
+const axios = require("axios");
 
 app.use(cors());
 app.use(express.json());
@@ -60,7 +61,7 @@ app.get("/getlinksbook/:userId",  (req, res) => {
 
 app.post("/createlinksbook/:uid",  (req, res) => {
     const uid = req.params.uid; // the id of the user wanting to create a new linksbook
-    const { title, description } = req.body;
+    const { title, description, public } = req.body;
 
         LinksBook.find({owner: uid}, (err, lkb_) => {
             // fail safe
@@ -85,7 +86,7 @@ app.post("/createlinksbook/:uid",  (req, res) => {
                             description: description,
                             links: [],
                             owner: uid,
-                            public: false
+                            public: public
                             });
                         // save new collection
                         newLinksBook.save((err, linksbook) => {
@@ -100,7 +101,7 @@ app.post("/createlinksbook/:uid",  (req, res) => {
                         title: title,
                         description: description,
                         links: [],
-                        owner: userId
+                        owner: uid
                         });
                         // save new collection
                         newLinksBook.save((err, linksbook) => {
@@ -226,22 +227,64 @@ app.get("/link/:linkid", (req, res) => {
     })
 })
 
-app.post("/signup",  (req, res) => {
-    const { name, email, password } = req.body;
+app.get("/linksbook/:lkbk", (req, res_) => {
+    LinksBook.findById(req.params.lkbk, (err, lkbk) => {
+        if (err) res.send(err);
+        res.send(lkbk);
+    })
+})
+
+app.post("/signup",  (req, res_) => {
+    let data = req.body;
+    const { name, email, password } = data;
+
+    let cred;
+
+    if (data.pro) {
+        axios.post(`https://api.gumroad.com/v2/licenses/verify?product_permalink=linksbookpro&license_key=${data.pro}`, {
+            method: "POST"
+        }).then(res => {
+            console.log(res);
+            cred = res;
+        })
+        }
+
+        // check if data is valid and metches
+    if (cred.success && cred.purchase.email === email && cred.purchase.product_id === "osvrE") {
+
+        let newUser = new User({
+            name: name,
+            email: email,
+            password: password,
+            linksbook: [],
+            plan: "Pro"
+        });
+    
+        newUser.save((err, user_) => {
+            if (err) res.send({Error: err})
+            res_.send(user_);
+        });
+
+    } else {
+        
+        res_.send("Invalid License Key")
+    }
 
     let newUser = new User({
         name: name,
         email: email,
         password: password,
         linksbook: [],
-        plan: "Starter"
+        plan: "Pro"
     });
 
     newUser.save((err, user_) => {
         if (err) res.send({Error: err})
-        res.send(user_);
+        res_.send(user_);
     });
 });
+
+
 
 app.get("/user/:uid", (req, res) => {
     User.find({_id: req.params.uid}, (err, u) => {
