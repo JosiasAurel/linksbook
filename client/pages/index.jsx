@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 
 import styles from "../styles/index.module.css";
 
-import LinksBook from "../components/LinksBook";
-import LinkCard from "../components/Link";
+import LinksBook from "../components/PublicLinksBook";
+import LinkCard from "../components/PublicLink";
 
 import Image from "next/image";
 import Link from "next/link";
@@ -90,7 +90,7 @@ const Home = () => {
             <section className={styles.showers}>
                 <div className={styles.shower1}>
                     <h3>Save your bookmarks in collections.</h3>
-                    <div>
+                    <div className={styles.rotatedLinksBooksCards}>
                         <LinksBook title="Must read books of the year" description="All the best selling books i want to read" />
                         <LinksBook title="Resources" description="Simplified explanations to Calculus" />
                     </div>
