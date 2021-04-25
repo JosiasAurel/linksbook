@@ -244,7 +244,7 @@ app.post("/signup",  (req, res_) => {
     let newUser = new User({
         name: name,
         email: email,
-        password: password,
+        password: hashPass(password),
         linksbook: [],
         plan: "Starter",
         wantPro: wantPro
@@ -269,8 +269,13 @@ app.post("/login", (req, res) => {
     let { email, password } = req.body;
     User.find({email: email}, (err, u) => {
         if (err) res.json({Error: err});
-        let uToken = genAccessToken({name: u.name, id: u._id});
-        res.send(uToken);
+        let user = u[0];
+        if (hashPass(password) === user.password) {
+            let uToken = genAccessToken({name: user.name, id: user._id});
+            res.send(uToken);
+        } else {
+            res.send("Wrong password");
+        }
     });
 });
 

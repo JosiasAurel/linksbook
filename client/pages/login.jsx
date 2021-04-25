@@ -39,7 +39,7 @@ const SignUp = () => {
         }).then(res => res.text())
             .then(data => {
                 newlyCreatedUser_ = data;
-                // console.log(data[0]);
+                console.log(data);
                 localStorage.setItem("token", `${data}`)
             });
 
