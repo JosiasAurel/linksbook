@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 
 import styles from "../styles/index.module.css";
 
-import LinksBook from "../components/PublicLinksBook";
-import LinkCard from "../components/PublicLink";
+import LinksBook from "../components/publicLinksBook";
+import LinkCard from "../components/publicLink";
 
 import Image from "next/image";
 import Link from "next/link";
