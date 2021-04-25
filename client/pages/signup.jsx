@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
+const jwt = require("jsonwebtoken");
+
 const SignUp = () => {
 
     // form input values
@@ -20,7 +22,7 @@ const SignUp = () => {
         event.preventDefault();
         let n_ = createNewUser();
         console.log(n_);
-        router.replace("/dashboard");
+        // router.replace("/dashboard");
     }
 
     const createNewUser = () => {
@@ -39,11 +41,11 @@ const SignUp = () => {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify(newUserCred)
-        }).then(res => res.json())
+        }).then(res => res.text())
             .then(data => {
-                newlyCreatedUser_.push(data);
-                localStorage.setItem("token", `${data.name} ${data.email} ${data._id}`)
-            });
+                // console.log(data);
+                localStorage.setItem("token", `${data}`)
+            })
 
             return newlyCreatedUser_[0];
     } 

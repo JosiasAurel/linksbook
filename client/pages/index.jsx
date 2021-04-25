@@ -7,6 +7,7 @@ import LinkCard from "../components/publicLink";
 
 import Image from "next/image";
 import Link from "next/link";
+import Head from "next/head";
 
 const Home = () => {
     const [menuOpen, setMenuOpen] = useState(false);
@@ -22,6 +23,25 @@ const Home = () => {
 
     return (
         <div className={styles.page}>
+            <Head>
+                <title>LinksBook - Home</title>
+<meta name="title" content="Start free and Upgrade if needed" />
+<meta name="description" content="" />
+
+
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://linksbook.vercel.app/" />
+<meta property="og:title" content="LinksBook" />
+<meta property="og:description" content="Get rid of your bookmarks and get organised" />
+<meta property="og:image" content="https://i.ibb.co/kgmTdtV/tips.png" />
+
+<meta property="twitter:card" content="summary_large_image" />
+<meta property="twitter:url" content="https://linksbook.vercel.app/" />
+<meta property="twitter:title" content="LinksBook" />
+<meta property="twitter:description" content="Get rid of your bookmarks and get organised" />
+<meta property="twitter:image" content="https://i.ibb.co/kgmTdtV/tips.png" />
+            </Head>
+
             <header className={styles.header}>
                 <h2>LinksBook</h2>
                 <div className={styles.headerOptions}>
@@ -83,7 +103,7 @@ const Home = () => {
             </div>
 
             <span className={styles.arrowDown}>
-                    <Image src="/arrow-down.svg" width="40" height="40" />
+                    <Image src="/arrow-down.svg" width="40" height="40" alt="arrow-down" />
             </span>
             </section>
 
@@ -116,21 +136,25 @@ const Home = () => {
                         <li>6 LinkBooks/Collections</li>
                         <li>10 Links per collection</li>
                     </ul>
-                    <button>
-                        Coming Soon...
-                    </button>
+                    <Link href="/signup">
+                        <button>
+                        Start Free
+                        </button>
+                    </Link>
                 </div>
 
                 <div>
                     <h2>Pro</h2>
                     <ul>
-                        <li>Unlimited LinkBooks/Collections</li>
+                        <li>Unlimited Collections</li>
                         <li>Unlimited Links per collection</li>
                         <li>Share collections to the public</li>
                     </ul>
-                    <button>
-                        Coming Soon...
-                    </button>
+                    <a href="https://flurly.com/m/linksbookpro">
+                        <button>
+                            Buy Pro
+                        </button>
+                    </a>
                 </div>
             </section>
 
