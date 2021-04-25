@@ -116,21 +116,25 @@ const Home = () => {
                         <li>6 LinkBooks/Collections</li>
                         <li>10 Links per collection</li>
                     </ul>
-                    <button>
-                        Coming Soon...
-                    </button>
+                    <Link href="/signup">
+                        <button>
+                        Start Free
+                        </button>
+                    </Link>
                 </div>
 
                 <div>
                     <h2>Pro</h2>
                     <ul>
-                        <li>Unlimited LinkBooks/Collections</li>
+                        <li>Unlimited Collections</li>
                         <li>Unlimited Links per collection</li>
                         <li>Share collections to the public</li>
                     </ul>
-                    <button>
-                        Coming Soon...
-                    </button>
+                    <a href="https://flurly.com/m/linksbookpro">
+                        <button>
+                            Buy Pro
+                        </button>
+                    </a>
                 </div>
             </section>
 
