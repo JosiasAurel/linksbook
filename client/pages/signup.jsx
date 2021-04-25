@@ -8,7 +8,7 @@ const SignUp = () => {
     const [name_, setName_] = useState("");
     const [email_, setEmail_] = useState("");
     const [password_, setPassword_] = useState("");
-    const [pro, setPro] = useState("");
+    const [pro, setPro] = useState(false);
     const router = useRouter();
 
     // a reusable function to handle changes on form input
@@ -28,7 +28,7 @@ const SignUp = () => {
             name: name_,
             email: email_,
             password: password_,
-            pro: pro
+            wantPro: pro
         }
 
         let newlyCreatedUser_ = [];
@@ -48,6 +48,14 @@ const SignUp = () => {
             return newlyCreatedUser_[0];
     } 
 
+    function toggleProBox() {
+        if (pro) {
+            setPro(false);
+        } else {
+            setPro(true);
+        }
+    }
+
     return (
         <div className="signuppage">
             <form onSubmit={(event) => handleFormSubmit(event) } className="signupform" action="">
@@ -55,9 +63,14 @@ const SignUp = () => {
                 <input onChange={(e) => formInputChangeHandler(e, setName_)} value={name_} placeholder="Enter a username" type="text"/>
                 <input onChange={(e) => formInputChangeHandler(e, setEmail_)} value={email_} type="email" placeholder="Enter email e.g yuki@example.com" />
                 <input onChange={(e) => formInputChangeHandler(e, setPassword_)} value={password_} type="password" placeholder="Enter a password" />
-
-                <label htmlFor="pro">Pro (Please enter license key only if you bought pro plan) <a href="https://gumroad.com/l/linksbookpro">here</a></label>
-                <input value={pro} onChange={(e) => formInputChangeHandler(e, setPro)} type="text" placeholder="Pro License Key" />
+                <label htmlFor="pro">
+                    Check the box below if you bought pro plan <a href="https://flurly.com/m/linksbookpro">here</a>
+                    <br/>
+                    Make sure to signup with the email you used for buying pro membership, we will activate your pro plan between 24 - 48 hours.
+                </label>
+                <span className="proToggle">
+                    <input onChange={() => toggleProBox()} type="checkbox" placeholder="I bought pro membership" />
+                </span>
                 <button>
                     Sign Up
                 </button>
@@ -124,6 +137,12 @@ const SignUp = () => {
 
             span a {
                 color: gray;
+            }
+
+            .proToggle {
+                display: flex;
+                justify-content: center;
+                align-items: center;
             }
             `}
             </style>

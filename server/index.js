@@ -236,46 +236,15 @@ app.get("/linksbook/:lkbk", (req, res_) => {
 
 app.post("/signup",  (req, res_) => {
     let data = req.body;
-    const { name, email, password } = data;
-
-    let cred;
-
-    if (data.pro) {
-        axios.post(`https://api.gumroad.com/v2/licenses/verify?product_permalink=linksbookpro&license_key=${data.pro}`, {
-            method: "POST"
-        }).then(res => {
-            console.log(res);
-            cred = res;
-        })
-        }
-
-        // check if data is valid and metches
-    if (cred.success && cred.purchase.email === email && cred.purchase.product_id === "osvrE") {
-
-        let newUser = new User({
-            name: name,
-            email: email,
-            password: password,
-            linksbook: [],
-            plan: "Pro"
-        });
-    
-        newUser.save((err, user_) => {
-            if (err) res.send({Error: err})
-            res_.send(user_);
-        });
-
-    } else {
-        
-        res_.send("Invalid License Key")
-    }
+    const { name, email, password, wantPro } = data;
 
     let newUser = new User({
         name: name,
         email: email,
         password: password,
         linksbook: [],
-        plan: "Pro"
+        plan: "Starter",
+        wantPro: wantPro
     });
 
     newUser.save((err, user_) => {
