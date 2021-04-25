@@ -4,7 +4,10 @@ import "../styles/global.css"
 
 const App = ({Component, ...pageProps}) => {
     return (
-            <Component {...pageProps} />
+            <div>
+                <Component {...pageProps} />
+                <script src="/gtag.js"></script>
+            </div>
     )
 }
 
