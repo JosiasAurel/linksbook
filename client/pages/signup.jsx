@@ -22,7 +22,7 @@ const SignUp = () => {
         event.preventDefault();
         let n_ = createNewUser();
         console.log(n_);
-        // router.replace("/dashboard");
+        router.replace("/dashboard");
     }
 
     const createNewUser = () => {
