@@ -7,6 +7,7 @@ const UserSchema =  mongoose.Schema({
     email: String,
     password: String,
     linkBooks: [{type: mongoose.Schema.Types.ObjectId, ref: "linksbooks"}],
+    wantPro: String,
     plan: String
 });
 

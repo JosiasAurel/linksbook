@@ -293,3 +293,7 @@
         margin-top: 18px;
     }
 }
+
+.rotatedLinksBooksCards h2, .rotatedLinksBooksCards p {
+    transform: rotate(-12deg);
+}

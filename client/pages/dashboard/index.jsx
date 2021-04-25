@@ -67,7 +67,6 @@ const Dashboard = () => {
     const [description, setDescription] = useState("");
     const [Public, setPublic] = useState(false);
     const [open, setOpen] = useState(false);
-    const [created, setCreated] = useState(false);
 
     function toggleOpen(value, handler) {
         if (value) {
@@ -94,7 +93,7 @@ const Dashboard = () => {
         const newLinksBook = {
             title: title,
             description,
-            public: false
+            public: Public
         }
 
         fetch(`https://linksbook-server.vercel.app/createlinksbook/${User.id}`, {
