@@ -192,7 +192,7 @@ const Dashboard = () => {
             
                 <div className={styles.actions}>
                     <button onClick={() => toggleOpen(open, setOpen)} className={styles.createnNewLinksBookButton}>
-                        New LinksBook
+                        New Collection
                     </button>
                 </div>
         </div>
