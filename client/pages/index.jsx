@@ -144,7 +144,7 @@ const Home = () => {
                 </div>
 
                 <div>
-                    <h2>Pro</h2>
+                    <h2>Pro ($5)</h2>
                     <ul>
                         <li>Unlimited Collections</li>
                         <li>Unlimited Links per collection</li>
