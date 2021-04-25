@@ -5,6 +5,9 @@ import Link from "next/link";
 import Image from "next/image";
 import NoLinksBook from "../../components/NoLinksBook";
 
+const jwt = require("jsonwebtoken");
+const SECRET = "dbc14b4421adca6801ec245c47659da6a9537dbb4993056f92fab26696190de452afd85e1a75b64953d04a58a9ad6230b3963c1c6074c786509936ec6a11bec4";
+
 const LinksPage = (props) => {
     const [linkBookId, setLinkBookId] = useState(props.pageProps.id.id);
     const [links, setLinks] = useState([]);
@@ -33,11 +36,10 @@ const LinksPage = (props) => {
 
     function fetchAndSetCredentials() {
         if (User.name === undefined || User.name === "") {
-            let user_ = localStorage.getItem("token").split(" ");
+            let user_ = jwt.verify(localStorage.getItem("token"), SECRET);
         let userObj = {
-            name: user_[0],
-            email: user_[1],
-            id: user_[2]
+            name: user_.name,
+            id: user_.id
         }
 
         setUser(userObj);

@@ -36,11 +36,11 @@ const SignUp = () => {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify(newUserCred)
-        }).then(res => res.json())
+        }).then(res => res.text())
             .then(data => {
                 newlyCreatedUser_ = data;
-                console.log(data[0]);
-                localStorage.setItem("token", `${data[0].name} ${data[0].email} ${data[0]._id}`)
+                // console.log(data[0]);
+                localStorage.setItem("token", `${data}`)
             });
 
             return newlyCreatedUser_;

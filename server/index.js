@@ -4,7 +4,8 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const morgan = require("morgan");
-const axios = require("axios");
+const jwt = require("jsonwebtoken");
+const crypto = require("crypto");
 
 app.use(cors());
 app.use(express.json());
@@ -18,6 +19,9 @@ const LinksBook = require("./models/linksbook");
 // load environment variables
 require("dotenv").config();
 
+// secret
+const SECRET = process.env.SECRET;
+
 // db config
 const options = {
     useNewUrlParser: true,
@@ -28,6 +32,19 @@ const options = {
 // mongodb+srv://linksbook:7Xy2vTSCB3gTazd@linksbook.kt3h9.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
 // mongoose.connect("mongodb+srv://linksbook:7Xy2vTSCB3gTazd@linksbook.kt3h9.mongodb.net/linksbook?retryWrites=true&w=majority", options);
 mongoose.connect("mongodb://localhost:27017/linksbook", options);
+
+// password hashing function
+function hashPass(pass) {
+    let hash = crypto.createHash("sha256")
+                        .update(pass)
+                            .digest("hex");
+    return hash;
+}
+
+function genAccessToken(user) {
+    let token = jwt.sign({name: user.name, id: user.id}, SECRET, {expiresIn: "465d"});
+    return token;
+}
 
 
 /* Models */
@@ -162,20 +179,6 @@ app.post("/createlink/:uid/:lkid",  (req, res) => {
     });
 });
 
-// todo
-/* let newLink = new Link({
-    title: title,
-    description: description,
-    link: link,
-    linkbook: _linksbook
-});
-
-    newLink.save((err, _link) => {
-if (err) res.json({Error: err})
-
-res.send(_link);
-} */
-
 app.put("/setlinksbook/:lkid/", (req, res) => {
     let { isPublic, title, description } = req.body;
     let lkid = req.params.lkid;
@@ -230,7 +233,7 @@ app.get("/link/:linkid", (req, res) => {
 app.get("/linksbook/:lkbk", (req, res_) => {
     LinksBook.findById(req.params.lkbk, (err, lkbk) => {
         if (err) res.send(err);
-        res.send(lkbk);
+        res_.send(lkbk);
     })
 })
 
@@ -249,7 +252,8 @@ app.post("/signup",  (req, res_) => {
 
     newUser.save((err, user_) => {
         if (err) res.send({Error: err})
-        res_.send(user_);
+        let uToken = genAccessToken({name: user_.name, id : user_._id});
+        res_.send(uToken);
     });
 });
 
@@ -265,7 +269,8 @@ app.post("/login", (req, res) => {
     let { email, password } = req.body;
     User.find({email: email}, (err, u) => {
         if (err) res.json({Error: err});
-        res.send(u);
+        let uToken = genAccessToken({name: u.name, id: u._id});
+        res.send(uToken);
     });
 });
 
