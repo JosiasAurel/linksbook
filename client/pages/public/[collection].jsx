@@ -23,7 +23,7 @@ const PublicCollection = (props) => {
     }
 
     function getLinksBookData() {
-        fetch(`https://linksbook-server.vercel.app/linksbookdata/${collection}`)
+        fetch(`https://linksbook-server.vercel.app/linksbook/${collection}`)
             .then(res => res.json())
             .then(data => {
                 setLk(data);
@@ -33,7 +33,7 @@ const PublicCollection = (props) => {
     useEffect(() => {
         getLinksBookData();
         fetchAndSetLinksBooks();
-    }, [lk])
+    }, [])
 
     return (
         <div className={styles.linksPage}>
@@ -46,14 +46,14 @@ const PublicCollection = (props) => {
 <meta property="og:url" content="https://linksbook.me/" />
 <meta property="og:title" content={lk.title} />
 <meta property="og:description" content={lk.description} />
-<meta property="og:image" content={`https://og-image-delta-one.vercel.app/${(lk.title).split(" ").join("%20")}.png`} />
+<meta property="og:image" content="https://i.ibb.co/q0yxJ6Y/ogf.png" />
 
 
 <meta property="twitter:card" content="summary_large_image" />
 <meta property="twitter:url" content="https://linksbook.me/" />
 <meta property="twitter:title" content={lk.title} />
 <meta property="twitter:description" content={lk.description} />
-<meta property="twitter:image" content={`https://og-image-delta-one.vercel.app/${(lk.title).split(" ").join("%20")}.png`}></meta>
+<meta property="twitter:image" content="https://i.ibb.co/q0yxJ6Y/ogf.png"></meta>
             </Head>
             <main className={styles.links}>
                 {Coll === [] ? <h2> No Links in this collection </h2>
