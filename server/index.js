@@ -30,8 +30,8 @@ const options = {
 
 // connect to the database
 // mongodb+srv://linksbook:7Xy2vTSCB3gTazd@linksbook.kt3h9.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
-mongoose.connect("mongodb+srv://linksbook:7Xy2vTSCB3gTazd@linksbook.kt3h9.mongodb.net/linksbook?retryWrites=true&w=majority", options);
-// mongoose.connect("mongodb://localhost:27017/linksbook", options);
+//mongoose.connect("mongodb+srv://linksbook:7Xy2vTSCB3gTazd@linksbook.kt3h9.mongodb.net/linksbook?retryWrites=true&w=majority", options);
+mongoose.connect("mongodb://localhost:27017/linksbook", options);
 
 // password hashing function
 function hashPass(pass) {
