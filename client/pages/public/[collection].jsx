@@ -31,9 +31,9 @@ const PublicCollection = (props) => {
     }
 
     useEffect(() => {
-        fetchAndSetLinksBooks();
         getLinksBookData();
-    }, [])
+        fetchAndSetLinksBooks();
+    }, [lk])
 
     return (
         <div className={styles.linksPage}>
