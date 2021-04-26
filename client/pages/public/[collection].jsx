@@ -56,6 +56,8 @@ const PublicCollection = (props) => {
 <meta property="twitter:image" content="https://i.ibb.co/q0yxJ6Y/ogf.png"></meta>
             </Head> 
             <main className={styles.links}>
+               <h2> {lk.title} </h2>
+               <p> {lk.description} </p>
                 {Coll === [] ? <h2> No Links in this collection </h2>
                 : Coll.map(link => {
                     return (
