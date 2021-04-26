@@ -137,6 +137,7 @@ const Home = () => {
                     <ul>
                         <li>6 LinkBooks/Collections</li>
                         <li>10 Links per collection</li>
+                        <li>Share collections to the public</li>
                     </ul>
                     <Link href="/signup">
                         <button>
