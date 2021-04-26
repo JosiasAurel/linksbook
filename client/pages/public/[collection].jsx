@@ -69,6 +69,7 @@ const PublicCollection = (props) => {
                     )
                 })}
             </main>
+        <p> Created with <a href="https://LinksBook.me"> LinksBook </a> </p>
         </div>
     )
 }
