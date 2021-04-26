@@ -12,7 +12,7 @@ const PublicCollection = (props) => {
     console.log(collection);
 
     const [Coll, setColl] = useState([]);
-    // const [lk, setLk] = useState({});
+    const [lk, setLk] = useState({});
 
     function fetchAndSetLinksBooks() {
         fetch(`https://linksbook-server.vercel.app/getlinks/${collection}`)
@@ -22,22 +22,22 @@ const PublicCollection = (props) => {
         })
     }
 
-    /* function getLinksBookData() {
+    function getLinksBookData() {
         fetch(`https://linksbook-server.vercel.app/linksbook/${collection}`)
             .then(res => res.json())
             .then(data => {
                 setLk(data);
             })
     }
- */
+
     useEffect(() => {
-        // getLinksBookData();
+        getLinksBookData();
         fetchAndSetLinksBooks();
     }, [])
 
     return (
         <div className={styles.linksPage}>
-{/*             <Head>
+           <Head>
 <title>LinksBook - {lk.title}</title>
 <meta name="title" content={lk.title} />
 <meta name="description" content={lk.description} />
@@ -54,7 +54,7 @@ const PublicCollection = (props) => {
 <meta property="twitter:title" content={lk.title} />
 <meta property="twitter:description" content={lk.description} />
 <meta property="twitter:image" content="https://i.ibb.co/q0yxJ6Y/ogf.png"></meta>
-            </Head> */}
+            </Head> 
             <main className={styles.links}>
                 {Coll === [] ? <h2> No Links in this collection </h2>
                 : Coll.map(link => {
