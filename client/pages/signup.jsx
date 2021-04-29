@@ -66,7 +66,7 @@ const SignUp = () => {
                 <input onChange={(e) => formInputChangeHandler(e, setEmail_)} value={email_} type="email" placeholder="Enter email e.g yuki@example.com" />
                 <input onChange={(e) => formInputChangeHandler(e, setPassword_)} value={password_} type="password" placeholder="Enter a password" />
                 <label htmlFor="pro">
-                    Check the box below if you bought pro plan <a href="https://flurly.com/m/linksbookpro">here</a>
+                    Check the box below if you bought pro plan <a href="https://gum.co/linksbookpro">here</a>
                     <br/>
                     Make sure to signup with the email you used for buying pro membership, we will activate your pro plan between 24 - 48 hours.
                 </label>
