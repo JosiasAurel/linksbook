@@ -81,6 +81,10 @@ const EditLink = (props) => {
                 router.back();
             })
     }
+
+    function logOut() {
+        localStorage.removeItem("token");
+    }
     
     return (
         <div>
@@ -99,6 +103,7 @@ const EditLink = (props) => {
 
                 <span className={styles.userThings}>
                     <h2> {User.name} </h2>
+                    <button onClick={() => logOut()} className={styles.logOutButton}>Log Out</button>
                 </span>
             </header>
     <div className={styles.editFormContainer}>

@@ -101,7 +101,9 @@ const Home = () => {
                     </button>
                 </Link>
             </div>
-
+            <div className={styles.ph}>
+                <a href="https://www.producthunt.com/posts/linksbook?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-linksbook" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=293640&theme=light" alt="Linksbook - Get rid of your bookmarks | Product Hunt" style={{width: "250px", height: "54px"}} width="250" height="54" /></a>
+            </div>
             <span className={styles.arrowDown}>
                     <Image src="/arrow-down.svg" width="40" height="40" alt="arrow-down" />
             </span>
@@ -135,6 +137,7 @@ const Home = () => {
                     <ul>
                         <li>6 LinkBooks/Collections</li>
                         <li>10 Links per collection</li>
+                        <li>Share collections to the public</li>
                     </ul>
                     <Link href="/signup">
                         <button>
@@ -144,13 +147,13 @@ const Home = () => {
                 </div>
 
                 <div>
-                    <h2>Pro</h2>
+                    <h2>Pro ($3)</h2>
                     <ul>
                         <li>Unlimited Collections</li>
                         <li>Unlimited Links per collection</li>
                         <li>Share collections to the public</li>
                     </ul>
-                    <a href="https://flurly.com/m/linksbookpro">
+                    <a href="https://gum.co/linksbookpro">
                         <button>
                             Buy Pro
                         </button>

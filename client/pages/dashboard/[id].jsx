@@ -92,6 +92,10 @@ const LinksPage = (props) => {
            setOpen(true)
        }
    }
+
+   function logOut() {
+        localStorage.removeItem("token");
+    }
     
     return (
         <div className={styles.linksPage}>
@@ -108,6 +112,7 @@ const LinksPage = (props) => {
                     </span>
                 <span className={styles.userThings}>
                     <h2> {User.name} </h2>
+                    <button onClick={() => logOut()} className={styles.logOutButton}>Log Out</button>
                 </span>
             </header>
             <section className={styles.linksPageLinksContainer}>
