@@ -153,7 +153,7 @@ const Home = () => {
                         <li>Unlimited Links per collection</li>
                         <li>Share collections to the public</li>
                     </ul>
-                    <a href="https://flurly.com/m/linksbookpro">
+                    <a href="https://gum.co/linksbookpro">
                         <button>
                             Buy Pro
                         </button>
