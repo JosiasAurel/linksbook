@@ -142,7 +142,7 @@ const Dashboard = () => {
     }
 
     // localStorage.getItem("token") !== {} || "" || " " || undefined
-    if (isAuthe === false) {
+    if (isAuth === false) {
         return (
             <div className={styles.notAuthPage}>
             <h1>You are not authenticated</h1>
