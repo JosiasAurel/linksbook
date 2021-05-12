@@ -32,9 +32,18 @@ const Dashboard = () => {
     const [LinksBooks, setLinksBooks] = useState(false);
     const [link, setLink] = useState(false);
     const [User, setUser] = useState({});
+    const [isAuth, setisAuth] = useState(false);
+
+    function isAuthe() {
+        if (localStorage.getItem("token")) {
+            setisAuth(true)
+        } else {
+            false
+        }
+    }
 
     function fetchAndSetCredentials() {
-        if (User.name === undefined || User.name === "") {
+        if (User.name === undefined || User.name === "" && isAuth === true) {
             let user_ = jwt.verify(localStorage.getItem("token"), SECRET);
         let userObj = {
             name: user_.name,
@@ -51,6 +60,7 @@ const Dashboard = () => {
     useEffect(() => {
         fetchAndSetCredentials();
         fetchAndSetLinksBooks();
+        isAuthe();
     }, [link]);
 
     useEffect(() => setLink(true))
@@ -127,9 +137,35 @@ const Dashboard = () => {
         }
     }
 
+    function logOut() {
+        localStorage.removeItem("token");
+    }
+
+    // localStorage.getItem("token") !== {} || "" || " " || undefined
+    if (isAuthe === false) {
+        return (
+            <div className={styles.notAuthPage}>
+            <h1>You are not authenticated</h1>
+                    <div className={styles.notAuthPageAuth}>
+                    <Link href="/login">
+                        <button>
+                            Log-In
+                        </button>
+                    </Link>
+                    <Link href="signup">
+                        <button>
+                            Sign-Up
+                        </button>
+                    </Link>
+                </div>
+            </div> 
+            
+        )
+    }
+
     return (
         <div className={styles.page}>
-            <header className={styles.header}>
+                <header className={styles.header}>
                 <span className={styles.logo}>
                     <Link href="/">
                         <Image src="/book.svg" width="50" height="50" />
@@ -138,11 +174,11 @@ const Dashboard = () => {
 
                 <span className={styles.userThings}>
                     <h2> {User.name} </h2>
+                    <button onClick={() => logOut()} className={styles.logOutButton}>Log Out</button>
                 </span>
             </header>
 
-            {/* Modal for creating a collection */}
-            <div className={styles.modalContainer}>
+                <div className={styles.modalContainer}>
                 {open ?
                 <div className={styles.createNewLinksBookModal}>
                     <form onSubmit={(e) => submitNewLinksBook(e)}>
@@ -165,13 +201,10 @@ const Dashboard = () => {
                     </form>
                 </div>}
             </div>
-            {/* End modal for creating collection */}
-                    
-            {/* Share modal */}
+            
                 {
                     modal ? modal : ""
                 }
-            {/* End Share modal */}
 
             <main className={styles.links}>
                 {( LinksBooks === false || LinksBooks.length === 0) ? <NoLinksBook  what="Collections" />
