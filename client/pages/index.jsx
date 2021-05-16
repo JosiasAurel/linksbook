@@ -90,7 +90,7 @@ const Home = () => {
             </div>
             <main className={styles.heroMain}>
                 <article className={styles.copy}>
-                    <p>Get rid of your bookmarks and get organised.</p>
+                    <p>I’m just a bookmark utility that makes all your bookmarks easy to find and organise. Bookmark me!.</p>
                 </article>
             </main>
 
