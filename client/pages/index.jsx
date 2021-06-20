@@ -147,13 +147,13 @@ const Home = () => {
                 </div>
 
                 <div>
-                    <h2>Pro ($3)</h2>
+                    <h2>Pro ($5)</h2>
                     <ul>
                         <li>Unlimited Collections</li>
                         <li>Unlimited Links per collection</li>
                         <li>Share collections to the public</li>
                     </ul>
-                    <a href="https://gum.co/linksbookpro">
+                    <a href="https://gum.co/WNmvx">
                         <button>
                             Buy Pro
                         </button>
