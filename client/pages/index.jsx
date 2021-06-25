@@ -30,13 +30,13 @@ const Home = () => {
 
 
 <meta property="og:type" content="website" />
-<meta property="og:url" content="https://linksbook.vercel.app/" />
+<meta property="og:url" content="https://linksbook.me/" />
 <meta property="og:title" content="LinksBook" />
 <meta property="og:description" content="Get rid of your bookmarks and get organised" />
 <meta property="og:image" content="https://i.ibb.co/kgmTdtV/tips.png" />
 
 <meta property="twitter:card" content="summary_large_image" />
-<meta property="twitter:url" content="https://linksbook.vercel.app/" />
+<meta property="twitter:url" content="https://linksbook.me/" />
 <meta property="twitter:title" content="LinksBook" />
 <meta property="twitter:description" content="Get rid of your bookmarks and get organised" />
 <meta property="twitter:image" content="https://i.ibb.co/kgmTdtV/tips.png" />
@@ -90,7 +90,7 @@ const Home = () => {
             </div>
             <main className={styles.heroMain}>
                 <article className={styles.copy}>
-                    <p>Get rid of your bookmarks and get organised.</p>
+                    <p>Organise your browser bookmarks into collections</p>
                 </article>
             </main>
 
