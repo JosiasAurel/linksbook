@@ -72,3 +72,8 @@ def update_collection(owner: str, title: str = None, image: str = None) -> dict:
         }
     else:
         return {"status": False}
+
+
+def fetch_all(owner: str) -> list:
+    collections__ = db.fetch({"owner": owner})
+    return collections__
