@@ -13,9 +13,10 @@ class Collection(BaseModel):
     title: str
     image: str
     date: str
+    owner: str
 
 
-def create_collection(title: str, image: str = None) -> dict:
+def create_collection(owner: str, title: str, image: str = None) -> dict:
 
     state = {"status": False}  # default is false
 
@@ -24,7 +25,8 @@ def create_collection(title: str, image: str = None) -> dict:
             "title": title,
             "image": image,
             "date": get_date(),
-            "key": gen_id()
+            "key": gen_id(),
+            "owner": owner
         }
 
         # save new collection to the database
@@ -35,7 +37,8 @@ def create_collection(title: str, image: str = None) -> dict:
             "title": title,
             "image": image,  # replace with an image link,
             "date": get_date(),
-            "key": gen_id()
+            "key": gen_id(),
+            "owner": owner
         }
 
         # save new collection to the database
@@ -53,7 +56,7 @@ def delete_collection(collectionid: str) -> dict:
         return {"status": False}
 
 
-def update_collection(title: str = None, image: str = None) -> dict:
+def update_collection(owner: str, title: str = None, image: str = None) -> dict:
     if title and image != None:
         updated_collection = {
             "title": title,
