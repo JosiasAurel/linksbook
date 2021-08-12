@@ -1,3 +1,4 @@
+from os import stat
 from deta import Base
 from index import db
 from dbutils import get_date, gen_id
@@ -14,7 +15,7 @@ class Collection(BaseModel):
     date: str
 
 
-def create_collection(title, image: str = None):
+def create_collection(title, image: str = None) -> dict:
 
     state = {"status": False}  # default is false
 
@@ -28,6 +29,7 @@ def create_collection(title, image: str = None):
 
         # save new collection to the database
         db.put(new_collection)
+        state["status"] = True
     else:
         new_collection = {
             "title": title,
@@ -38,8 +40,17 @@ def create_collection(title, image: str = None):
 
         # save new collection to the database
         db.put(new_collection)
+        state["status"] = True
 
     return state
 
 
-print(get_date())
+def delete_collection(collectionid: str) -> dict:
+    state = {"status": False}  # default is false
+    try:
+        db.delete(collectionid)
+        state["status"] = True
+    except:
+        state["status"] = False  # even though already false it is better
+
+    return state
