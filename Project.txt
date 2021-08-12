@@ -1,5 +1,10 @@
 This will be version 2 of LinksBook app but much better.
 
+[][][][][][][][][][][][][][]
+Project key : a0ojq87u_xgq3dQQLkXj3YBsJ5iJKZ5MTAtYmCLoF
+Project ID : a0ojq87u
+[][][][][][][][][][][][][][]
+
 ## Old Version Features
 - Create a collection
 - Create a link under a collection
@@ -16,6 +21,7 @@ This will be version 2 of LinksBook app but much better.
 - PWA
 - Share link to public
 - Custom OG image for public collection -> custom image placeholder for collection
+- Add search (where result can contain both collections and links)
 - + Chrome Extensiom
 	- Create a link under a collection
 	- Create a collection
