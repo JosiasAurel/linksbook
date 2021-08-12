@@ -1,6 +1,4 @@
-from os import stat
-from deta import Base
-from index import db
+from index import deta
 from dbutils import get_date, gen_id
 from pydantic import BaseModel
 from datetime import datetime
@@ -8,15 +6,18 @@ import dateparser
 
 parsedate = dateparser.parse
 
+db = deta.Base("collections")
+
 
 class Collection(BaseModel):
     title: str
     image: str
     date: str
+    description: str
     owner: str
 
 
-def create_collection(owner: str, title: str, image: str = None) -> dict:
+def create_collection(owner: str, title: str, description: str, image: str = None) -> dict:
 
     state = {"status": False}  # default is false
 
@@ -26,7 +27,8 @@ def create_collection(owner: str, title: str, image: str = None) -> dict:
             "image": image,
             "date": get_date(),
             "key": gen_id(),
-            "owner": owner
+            "owner": owner,
+            "description": description
         }
 
         # save new collection to the database
@@ -38,7 +40,8 @@ def create_collection(owner: str, title: str, image: str = None) -> dict:
             "image": image,  # replace with an image link,
             "date": get_date(),
             "key": gen_id(),
-            "owner": owner
+            "owner": owner,
+            "description": description
         }
 
         # save new collection to the database
@@ -56,22 +59,13 @@ def delete_collection(collectionid: str) -> dict:
         return {"status": False}
 
 
-def update_collection(owner: str, title: str = None, image: str = None) -> dict:
-    if title and image != None:
-        updated_collection = {
-            "title": title,
-            "image": image
-        }
-    elif title != None and image == None:
-        updated_collection = {
-            "title": title
-        }
-    elif title == None and image != None:
-        updated_collection = {
-            "image": image
-        }
-    else:
-        return {"status": False}
+def update_collection(owner: str, title: str = None, image: str = None, description: str = None) -> dict:
+    updated_collection = {
+        "title": title,
+        "image": image,
+        "description": description
+    }
+    return {"status": False}
 
 
 def fetch_all(owner: str) -> list:
