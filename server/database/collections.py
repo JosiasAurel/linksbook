@@ -1,7 +1,6 @@
 from index import deta
 from dbutils import get_date, gen_id
 from pydantic import BaseModel
-from datetime import datetime
 import dateparser
 
 parsedate = dateparser.parse
@@ -68,6 +67,6 @@ def update_collection(owner: str, title: str = None, image: str = None, descript
     return {"status": False}
 
 
-def fetch_all(owner: str) -> list:
+def fetch_all_collections(owner: str) -> list:
     collections__ = db.fetch({"owner": owner})
     return collections__
