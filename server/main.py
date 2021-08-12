@@ -1,4 +1,5 @@
 from fastapi import FastAPI, Request
+from deta import Deta
 
 app = FastAPI()
 
