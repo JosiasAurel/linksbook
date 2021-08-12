@@ -15,11 +15,11 @@ class Collection(BaseModel):
     date: str
 
 
-def create_collection(title, image: str = None) -> dict:
+def create_collection(title: str, image: str = None) -> dict:
 
     state = {"status": False}  # default is false
 
-    if image is not None:
+    if image != None:
         new_collection = {
             "title": title,
             "image": image,
@@ -46,11 +46,26 @@ def create_collection(title, image: str = None) -> dict:
 
 
 def delete_collection(collectionid: str) -> dict:
-    state = {"status": False}  # default is false
     try:
         db.delete(collectionid)
-        state["status"] = True
+        return {"status": True}
     except:
-        state["status"] = False  # even though already false it is better
+        return {"status": False}
 
-    return state
+
+def update_collection(title: str = None, image: str = None) -> dict:
+    if title and image != None:
+        updated_collection = {
+            "title": title,
+            "image": image
+        }
+    elif title != None and image == None:
+        updated_collection = {
+            "title": title
+        }
+    elif title == None and image != None:
+        updated_collection = {
+            "image": image
+        }
+    else:
+        return {"status": False}
