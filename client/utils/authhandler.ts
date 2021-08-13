@@ -22,13 +22,26 @@ const fireBaseConfig: IfirebaseConfig = {
     measurementId: process.env.NEXT_PUBLIC_MEASURE
 }
 
-// instancing firebase app
-const firebaseApp = initializeApp(fireBaseConfig);
+// firease config
+const fireBaseConfig_: IfirebaseConfig = {
+    apiKey: "cowbvv8f9h34f8h3ffr30hfh",
+    authDomain: "",
+    projectId: "",
+    storageBucket: "",
+    messagingSenderId: "",
+    appId: "123456",
+    measurementId: "537875835"
+}
+
+const firebaseApp = initializeApp(fireBaseConfig_);
 
 const auth: any = getAuth(firebaseApp);
 
-function signUser(email, password) {
+connectAuthEmulator(auth, "http://localhost:9000");
 
+async function signUser(email: string, password: string) {
+    const signUpResult = await createUserWithEmailAndPassword(auth, email, password);
+    return signUpResult;
 }
 
-export {};
+export { signUser };
