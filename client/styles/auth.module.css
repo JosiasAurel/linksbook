@@ -1,0 +1,16 @@
+/* Styles for auth pages */
+
+/* SignUp Page */
+.signUpPage {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.signUpForm {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+}
+/* End Sign Up Page */
