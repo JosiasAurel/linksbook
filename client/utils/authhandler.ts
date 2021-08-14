@@ -1,5 +1,7 @@
 import { initializeApp } from "firebase/app";
-import { getAuth, createUserWithEmailAndPassword, connectAuthEmulator, signInWithEmailAndPassword, GoogleAuthProvider } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, connectAuthEmulator, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, onAuthStateChanged } from "firebase/auth";
+
+import { setCredentials } from "./misc";
 
 interface IfirebaseConfig {
     apiKey: string,
@@ -37,6 +39,8 @@ const firebaseApp = initializeApp(fireBaseConfig_);
 
 const auth: any = getAuth(firebaseApp);
 
+const googleProvider = new GoogleAuthProvider();
+
 connectAuthEmulator(auth, "http://localhost:9000");
 
 async function signUser(email: string, password: string) {
@@ -44,4 +48,39 @@ async function signUser(email: string, password: string) {
     return signUpResult;
 }
 
-export { signUser };
+function signWithGoogle() {
+    let status: string;
+
+    signInWithPopup(auth, googleProvider)
+        .then(res => {
+            const credentials = GoogleAuthProvider.credentialFromResult(res);
+            const token: string = credentials.accessToken;
+            const name: string = res.user.displayName;
+            const email: string = res.user.email;
+
+            // save the user credentials in localStorage
+            setCredentials(name, email, token);
+            status = "success";
+        }).catch(error => {
+            status = "error";
+        });
+
+        return status;
+}
+
+function getUser() {
+    let uid: string;
+    onAuthStateChanged(auth, user => {
+        if (user) {
+            uid = user.uid;
+        } else {
+            return;
+        }
+        
+    }); 
+
+    return uid;
+}
+
+
+export { signUser, signWithGoogle, getUser };
