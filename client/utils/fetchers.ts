@@ -51,4 +51,17 @@ async function createCollection(owner: string, title: string, description: strin
     return createdCollection;
 }
 
+async function deleteCollection(collectionId: string): Promise<any> {
+
+    // request headers
+    const requestHeaders: HeadersInit = {
+        "Content-Type": "application/json"
+    }
+
+    const deletedCollectionResponse = await fetch(`${SERVER_URI}/collections/delete`);
+    const deletedCollection = await deletedCollectionResponse.json();
+
+    return deletedCollection;
+}
+
 export { saveUser, fetchAllCollection };
