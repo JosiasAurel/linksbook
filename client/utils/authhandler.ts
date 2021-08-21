@@ -24,6 +24,7 @@ const fireBaseConfig: IfirebaseConfig = {
     measurementId: process.env.NEXT_PUBLIC_MEASURE
 }
 
+console.log(process.env.NEXT_PUBLIC_AUTH_DOMAIN)
 // firease config
 const fireBaseConfig_: IfirebaseConfig = {
     apiKey: "cowbvv8f9h34f8h3ffr30hfh",
@@ -83,4 +84,4 @@ function getUser() {
 }
 
 
-export { signUser, signWithGoogle, getUser };
+export { signUser, signWithGoogle, auth };
