@@ -1,6 +1,6 @@
 
 from database.user import create_user
-from database.collections import create_collection, fetch_all_collections
+from database.collections import create_collection, delete_collection, fetch_all_collections, delete_collection
 from fastapi import FastAPI, Request
 from deta import Deta
 from fastapi.middleware.cors import CORSMiddleware
@@ -44,3 +44,12 @@ async def _create_collection(request: Request):
     new_collection = create_collection(
         collection_data["owner"], collection_data["title"], collection_data["description"])
     return new_collection
+
+
+@app.post("/collections/delete")
+async def _delete_collection(request: Request):
+    collection_id = await request.json()["collectionId"]  # get collection ID
+
+    deleted_collection = delete_collection(collection_id)
+
+    return deleted_collection
