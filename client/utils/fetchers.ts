@@ -38,4 +38,17 @@ async function fetchAllCollection(owner: string): Promise<any> {
     return fetchedCollections;
 }
 
-export { saveUser };
+async function createCollection(owner: string, title: string, description: string): Promise<any> {
+
+    // request headers
+    const requestHeaders: HeadersInit = {
+        "Content-Type": "application/json"
+    }
+
+    const createdCollectionResponse = await fetch(`${SERVER_URI}/collections/create`);
+    const createdCollection = await createdCollectionResponse.json();
+
+    return createdCollection;
+}
+
+export { saveUser, fetchAllCollection };
