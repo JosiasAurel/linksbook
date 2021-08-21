@@ -1,5 +1,5 @@
-from index import deta
-from dbutils import get_date, gen_id
+from .index import deta
+from .dbutils import get_date, gen_id
 from pydantic import BaseModel
 
 
