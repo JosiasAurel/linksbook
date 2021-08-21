@@ -11,21 +11,25 @@ import { onAuthStateChanged } from "firebase/auth";
 
 interface IuserData {
     name: string
-    uid: string
+    email: string
 }
 
 const DashboardIndex: FunctionComponent = (): JSX.Element => {
 
-    // const [user, setUser] = useState<IuserData>();
+    const [user, setUser] = useState<IuserData>();
+    const [loading, setLoading] = useState<boolean>(true);
 
-    /* useEffect(() => {
-        const user_: any = getUser();
+    useEffect(() => {
+        const name: string = localStorage.getItem("name") ?? undefined;
+        const email: string = localStorage.getItem("email") ?? undefined;
 
-        if (user_ !== undefined) {
-            setUser(user_);
-            console.log(user);
+        if (name !== undefined && email !== undefined) {
+            setUser({ name, email });
+            setLoading(false);
+        } else {
+            return;
         }
-    }, []); */
+    }, [loading]);
 
     useEffect(() => {
         onAuthStateChanged(auth, user => {
@@ -37,9 +41,17 @@ const DashboardIndex: FunctionComponent = (): JSX.Element => {
         });
     }, []);
 
+    if (loading) {
+        return (
+            <div>
+                <h1>Loading...</h1>
+            </div>
+        )
+    }
+
     return (
         <div>
-            <DashboardHeader profileName={"Josias"} />
+            <DashboardHeader profileName={user.name} />
             <Divider />
         </div>
     )
