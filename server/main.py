@@ -1,6 +1,6 @@
-import collections
+
 from database.user import create_user
-from database.collections import create_collection
+from database.collections import create_collection, fetch_all_collections
 from fastapi import FastAPI, Request
 from deta import Deta
 from fastapi.middleware.cors import CORSMiddleware
@@ -29,7 +29,16 @@ async def _save_user(request: Request):
     return status
 
 
-@app.post("/create-collection")
+@app.post("/collection")
+async def _get_all_collection(request: Request):
+    collections_owner = await request.json()["owner"]
+
+    # collecitions owned by user u
+    u_collections = fetch_all_collections(collections_owner)
+    return u_collections
+
+
+@app.post("/collections/create")
 async def _create_collection(request: Request):
     collection_data = await request.json()  # extract collection props
     new_collection = create_collection(
