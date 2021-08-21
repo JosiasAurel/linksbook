@@ -24,4 +24,18 @@ async function saveUser(name: string, email: string, uid: string): Promise<any> 
     return saveUserResponse.json();
 }
 
+// get all collections
+async function fetchAllCollection(owner: string): Promise<any> {
+
+    // request headers
+    const requestHeaders: HeadersInit = {
+        "Content-Type": "application/json"
+    }
+
+    const fetchedCollectionsResponse = await fetch(`${SERVER_URI}/collections`);
+    const fetchedCollections = await fetchedCollectionsResponse.json();
+
+    return fetchedCollections;
+}
+
 export { saveUser };
