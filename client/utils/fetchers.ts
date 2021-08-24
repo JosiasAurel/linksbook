@@ -45,7 +45,17 @@ async function createCollection(owner: string, title: string, description: strin
         "Content-Type": "application/json"
     }
 
-    const createdCollectionResponse = await fetch(`${SERVER_URI}/collections/create`);
+    const createItem = {
+        title, 
+        description,
+        owner
+    };
+
+    const createdCollectionResponse = await fetch(`${SERVER_URI}/collections/create`, {
+        method: "POST",
+        headers: requestHeaders,
+        body: JSON.stringify(createItem)
+    });
     const createdCollection = await createdCollectionResponse.json();
 
     return createdCollection;
@@ -64,4 +74,4 @@ async function deleteCollection(collectionId: string): Promise<any> {
     return deletedCollection;
 }
 
-export { saveUser, fetchAllCollection };
+export { saveUser, fetchAllCollection, createCollection, deleteCollection };
