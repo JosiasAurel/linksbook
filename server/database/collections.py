@@ -1,4 +1,4 @@
-from .index import deta
+from .index import deta, auth
 from .dbutils import get_date, gen_id
 from pydantic import BaseModel
 import dateparser
@@ -17,7 +17,6 @@ class Collection(BaseModel):
 
 
 def create_collection(owner: str, title: str, description: str, image: str = None) -> dict:
-
     state = {"status": False}  # default is false
 
     if image != None:
