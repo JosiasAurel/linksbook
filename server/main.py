@@ -41,6 +41,7 @@ async def _get_all_collection(request: Request):
 @app.post("/collections/create")
 async def _create_collection(request: Request):
     collection_data = await request.json()  # extract collection props
+    print(collection_data)
     new_collection = create_collection(
         collection_data["owner"], collection_data["title"], collection_data["description"])
     return new_collection

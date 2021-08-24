@@ -1,2 +1,4 @@
 fastapi
 deta
+firebase-admin
+python-dotenv
