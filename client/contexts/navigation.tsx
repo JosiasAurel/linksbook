@@ -4,6 +4,8 @@ interface ApplicationNavigations {
     children: JSX.Element
 }
 
+// navigation context
+const NavigationContext: React.Context<Array<any>> = createContext([]);
 
 const ApplicationNavigation: FunctionComponent<ApplicationNavigations> = ({ children }): JSX.Element => {
 
@@ -46,4 +48,5 @@ const ApplicationNavigation: FunctionComponent<ApplicationNavigations> = ({ chil
     )
 }
 
-export { ApplicationNavigation };
+
+export { NavigationContext, ApplicationNavigation };
