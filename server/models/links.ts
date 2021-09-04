@@ -3,13 +3,23 @@ import { deta, generateModelKey } from "./index";
 
 const db = deta.Base("links");
 
-async function createLink(annotation: string, url: string, tags: Array<string>): Promise<string> {
+async function getAllLinks(owner: string): Promise<any> {
+    try {
+        const fetchLinks = await db.fetch({owner});
+        return fetchLinks;
+    } catch (error: any) {
+        return "Error";
+    }
+}
+
+async function createLink(annotation: string, url: string, tags: Array<string>, owner: string): Promise<string> {
     
     try {
         const newLink = await db.put({
             annotation,
             url,
-            tags
+            tags, 
+            owner
         }, generateModelKey());
 
         return "Success";
