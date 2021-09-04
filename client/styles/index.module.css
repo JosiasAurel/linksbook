@@ -1,0 +1,99 @@
+@import url("https://fonts.googleapis.com/css2?family=PT+Sans&display=swap");
+
+.homePage {
+  font-family: "PT Sans", sans-serif;
+  text-align: center;
+}
+
+.header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.formContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.main {
+  font-size: 2rem;
+  margin: 0 2em;
+  text-align: center;
+}
+
+.earyForm {
+  margin-top: 2em;
+}
+
+.formContainer form {
+  width: 60%;
+  height: 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: solid 2px blue;
+  padding: 0.2em;
+  border-radius: 4px;
+}
+
+.formContainer form input {
+  border: solid transparent;
+  border-radius: 4px;
+  height: 90%;
+  min-width: 80%;
+  max-width: 80%;
+}
+
+.formContainer form button {
+  text-align: center;
+  border: solid transparent;
+  background-color: blue;
+  border-radius: 4px;
+  min-height: 100%;
+}
+
+.formContainer form button svg {
+  fill: white;
+  width: 20px;
+}
+
+.formContainer form input:focus {
+  outline: none;
+}
+
+.footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  position: absolute;
+  bottom: 0;
+  width: 90vw;
+}
+
+.footer h2 {
+  font-size: 1em;
+}
+
+.footer h2 a,
+.footer a {
+  color: grey;
+}
+
+@media screen and (max-width: 500px) {
+  .main {
+    font-size: 1.5em;
+  }
+}
+
+@media screen and (max-width: 366px) {
+  .main {
+    font-size: 1.3em;
+  }
+
+  .formContainer form {
+    width: 70%;
+  }
+}
