@@ -3,6 +3,15 @@ import { deta, generateModelKey } from "./index";
 
 const db = deta.Base("links");
 
+async function getLink(linkId: string): Promise<any> {
+    try {
+        const link = await db.get(linkId);
+        return link;
+    } catch (error: any) {
+        return "Failed";
+    }
+}
+
 async function getAllLinks(owner: string): Promise<any> {
     try {
         const fetchLinks = await db.fetch({owner});
