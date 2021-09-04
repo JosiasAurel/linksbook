@@ -5,7 +5,7 @@ interface ApplicationNavigations {
 }
 
 // navigation context
-const NavigationContext: React.Context<Array<any>> = createContext([]);
+const NavigationContext: React.Context<any> = createContext([]);
 
 const ApplicationNavigation: FunctionComponent<ApplicationNavigations> = ({ children }): JSX.Element => {
 
@@ -14,32 +14,24 @@ const ApplicationNavigation: FunctionComponent<ApplicationNavigations> = ({ chil
         Also used when fetching notes associated with the link
         It is as context for masking the link ID from the user
     */
-    const [currentLink, setCurrentLink] = useState<string>();
+    const [currentLink, setCurrentLink] = useState<string>("");
 
     /*
         This is the ID of the link used to for every operation on that group
         Also used when fetching links associated with the group
         It is as context for masking the group ID from the user
     */
-    const [currentGroup, setCurrentGroup] = useState<string>();
+    const [currentGroup, setCurrentGroup] = useState<string>("");
 
     const setNavigationLink = (linkId: string) => setCurrentLink(linkId);
     const setNavigationGroup = (groupId: string) => setCurrentGroup(groupId);
-
-    // navigation context
-    const NavigationContext: React.Context<Array<any>> = createContext([
-        currentLink,
-        currentGroup,
-        setCurrentLink,
-        setNavigationGroup
-    ]);
 
     return (
         <NavigationContext.Provider value={
             [
                 currentLink,
                 currentGroup,
-                setCurrentLink,
+                setNavigationLink,
                 setNavigationGroup
             ]
         }>
