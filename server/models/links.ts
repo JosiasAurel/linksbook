@@ -117,3 +117,5 @@ async function deleteLink(linkId: string): Promise<string> {
         return "Failed"
     }
 }
+
+export { createLink, deleteLink, updateLink, getLink, getAllLinks, searchLinks };
