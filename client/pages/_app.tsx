@@ -1,5 +1,7 @@
 import React, { FunctionComponent } from "react";
 
+import "../styles/global.css";
+
 import { AppProps } from "next/app";
 
 /* // the navigation context
