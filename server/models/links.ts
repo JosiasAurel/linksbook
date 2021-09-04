@@ -19,7 +19,7 @@ async function createLink(annotation: string, url: string, tags: Array<string>):
 
 }
 
-async function updateLink(linkId: string, annotation: string, url: string, tags: Array<string>): Promise<any> {
+async function updateLink(linkId: string, annotation: string, url: string, tags: Array<string>): Promise<string> {
     try {
         await db.update({
             annotation,
@@ -29,5 +29,15 @@ async function updateLink(linkId: string, annotation: string, url: string, tags:
         return "Success";
     } catch(error: any) {
         return "Failed";
+    }
+}
+
+async function deleteLink(linkId: string): Promise<string> {
+    try {
+        await db.delete(linkId);
+
+        return "Success";
+    } catch(error: any) {
+        return "Failed"
     }
 }
