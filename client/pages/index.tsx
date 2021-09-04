@@ -2,6 +2,8 @@ import React, { FunctionComponent, useState } from "react";
 
 import styles from "../styles/index.module.css";
 
+import router from "next/router";
+
 const HomePage: FunctionComponent = (): JSX.Element => {
 
     const [email, setEmail] = useState<string>("");
@@ -23,7 +25,7 @@ const HomePage: FunctionComponent = (): JSX.Element => {
 
         const result = await requestPost.json();
 
-        console.log(result);
+        router.replace("/thanks");
     }
     return (
         <div className={styles.homePage}>

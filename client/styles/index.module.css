@@ -1,8 +1,18 @@
 @import url("https://fonts.googleapis.com/css2?family=PT+Sans&display=swap");
 
-.homePage {
+.homePage,
+.page {
   font-family: "PT Sans", sans-serif;
   text-align: center;
+}
+
+.page {
+  height: 90vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  margin: 0 2em;
 }
 
 .header {
