@@ -103,3 +103,34 @@
   border-radius: 1.5px;
 }
 /* End Tag styles */
+
+/* CopyLink styles */
+.copyLink {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  max-width: 400px;
+}
+
+.copyLink p {
+  color: white;
+  background-color: black;
+  padding: 4px 6px;
+  border-radius: 2px;
+  max-width: 70%;
+  min-width: 70%;
+}
+
+.copyLink button {
+  min-width: 20%;
+  max-width: 20%;
+  padding: 0.4em 0;
+  border-radius: 2px;
+  border: solid transparent;
+  background-color: rgb(57, 57, 255);
+  color: white;
+  position: relative;
+  left: -10px;
+}
+/* End CopyLink */

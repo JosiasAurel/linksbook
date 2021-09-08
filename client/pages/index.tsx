@@ -5,6 +5,7 @@ import styles from "../styles/index.module.css";
 import User from "../components/User";
 import ColorToggle from "../components/colorToggle";
 import Tag from "../components/Tag";
+import CopyLink from "../components/CopyLink";
 
 const HomePage: FunctionComponent = (): JSX.Element => {
 
@@ -21,6 +22,10 @@ const HomePage: FunctionComponent = (): JSX.Element => {
             </div>
             <div>
                 <Tag name="Hello" />
+            </div>
+
+            <div>
+                <CopyLink link="https://hello.world" />
             </div>
 
         </div>
