@@ -6,6 +6,7 @@ import User from "../components/User";
 import ColorToggle from "../components/colorToggle";
 import Tag from "../components/Tag";
 import CopyLink from "../components/CopyLink";
+import Folder from "../components/Folder";
 
 const HomePage: FunctionComponent = (): JSX.Element => {
 
@@ -28,6 +29,9 @@ const HomePage: FunctionComponent = (): JSX.Element => {
                 <CopyLink link="https://hello.world" />
             </div>
 
+            <div>
+                <Folder type="parent" label="Mobile" />
+            </div>
         </div>
     )
 }
