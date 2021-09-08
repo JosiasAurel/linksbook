@@ -7,10 +7,16 @@ interface CopyLinkProps {
 }
 
 const CopyLink: React.FC<CopyLinkProps> = ({ link }): JSX.Element => {
+
+    function copyToClipboard(): void {
+        // copy the link to the clipboard
+        navigator.clipboard.writeText(link);
+    }
+
     return (
         <div className={styles.copyLink}>
             <p> {link} </p>
-            <button>
+            <button onClick={e => copyToClipboard()}>
                 copy
             </button>
         </div>
