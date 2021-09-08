@@ -1,0 +1,75 @@
+.userButton {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  border: solid transparent;
+  background-color: transparent;
+  transition: all 0.2s ease-in-out;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.userButton .profileButton {
+  max-width: 130%;
+  max-height: 130%;
+  border-radius: 50%;
+}
+
+.userButton:focus {
+  background-size: 2px;
+  background-color: rgba(128, 128, 128, 0.493);
+}
+
+.settingsTooltip {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 110px;
+  border: solid 1px rgba(128, 128, 128, 0.582);
+  border-radius: 10px;
+  background-color: white;
+  box-shadow: 0 2px 2px 2px whitesmoke;
+}
+
+.settingsTooltip button {
+  padding: 2px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent;
+  border: solid transparent;
+  border-radius: 8px;
+  height: 100%;
+}
+.settingsTooltip img {
+  max-width: 25px;
+  max-height: 25px;
+}
+
+.settingsTooltip button:hover {
+  background-color: rgba(128, 128, 128, 0.205);
+}
+
+/* Color Toggle Styles */
+.colorToggle {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  border: solid 1px black;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.colorToggle div {
+  width: 20px;
+  height: 50%;
+  border-radius: 40px 40px 0 0;
+  margin-top: 2px;
+  background-color: black;
+}
+
+/* Color Toggle End */

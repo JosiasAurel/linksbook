@@ -1,16 +1,32 @@
-import React, { FunctionComponent } from "react";
+import React from "react";
 
-import { useUser, UserButton } from "@clerk/nextjs";
+import styles from "../styles/components.module.css";
 
-import styles from "../styles/auth.module.css";
+import ColorToggle from "./colorToggle";
 
-const User: FunctionComponent = (): JSX.Element => {
-    const { firstName } = useUser();
+interface UserButtonProps {
+    profile: string
+    name: string
+}
+
+const User: React.FC<UserButtonProps> = ({ profile, name }): JSX.Element => {
     return (
-        <div className={styles.userButton}>
-            <UserButton />
-            <h2> {firstName} </h2>
-        </div>
+        <>
+            <button className={styles.userButton}>
+                <img className={styles.profileButton} src={profile} alt={name} />
+            </button>
+            <div className={styles.settingsTooltip}>
+                <button>
+                    <img src="/edit.png" alt="edit" />
+                </button>
+                <button>
+                    <ColorToggle />
+                </button>
+                <button>
+                    <img src="/log-out.png" alt="log-out" />
+                </button>
+            </div>
+        </>
     )
 }
 
