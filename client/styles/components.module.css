@@ -89,3 +89,17 @@
 }
 
 /* Color Toggle End */
+
+/* Tag styles */
+.tag {
+  background-color: rgba(151, 151, 151, 0.411);
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: fit-content;
+  height: 23px;
+  padding: 0 4px;
+  border-radius: 1.5px;
+}
+/* End Tag styles */
