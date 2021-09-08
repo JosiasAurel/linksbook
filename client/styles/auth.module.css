@@ -1,0 +1,31 @@
+/* This file contains all styles related to authentication */
+/* User, SignIn, SignOut, SignUp... */
+
+/* User Card Section */
+.userButton {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  max-width: 150px;
+}
+
+.completeAccountPage {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.completeAccountPage main {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  margin-top: 20vh;
+}
+
+.completeAccountPage .cl-component.cl-user-button {
+  height: 4em !important;
+  width: 4em !important;
+}

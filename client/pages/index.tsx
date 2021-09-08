@@ -2,7 +2,7 @@ import React, { FunctionComponent, useState, useContext, useEffect } from "react
 
 import styles from "../styles/index.module.css";
 
-import { useUser, UserButton } from "@clerk/nextjs";
+import User from "../components/User";
 
 const HomePage: FunctionComponent = (): JSX.Element => {
 
@@ -10,14 +10,12 @@ const HomePage: FunctionComponent = (): JSX.Element => {
     const handleChange: Function = (event, handler) => {
         handler(event.target.value);
     }
-    const { firstName } = useUser();
 
     return (
         <div>
 
             <div>
-                <p>Name : {firstName} </p>
-                <UserButton />
+                <User />
             </div>
 
         </div>

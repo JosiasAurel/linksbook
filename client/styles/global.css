@@ -1,0 +1,6 @@
+@import url("https://fonts.googleapis.com/css2?family=PT+Sans&display=swap");
+
+* {
+  transition: all 0.2s ease-in-out;
+  font-family: "PT Sans", sans-serif;
+}
