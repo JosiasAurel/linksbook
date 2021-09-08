@@ -31,6 +31,10 @@
   border-radius: 10px;
   background-color: white;
   box-shadow: 0 2px 2px 2px whitesmoke;
+  animation-name: showTooltip;
+  animation-duration: 0.2s;
+  animation-fill-mode: forwards;
+  position: relative;
 }
 
 .settingsTooltip button {
@@ -50,6 +54,18 @@
 
 .settingsTooltip button:hover {
   background-color: rgba(128, 128, 128, 0.205);
+}
+
+@keyframes showTooltip {
+  from {
+    top: 10px;
+    opacity: 0;
+  }
+
+  to {
+    top: 0px;
+    opacity: 1;
+  }
 }
 
 /* Color Toggle Styles */

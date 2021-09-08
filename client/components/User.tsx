@@ -10,12 +10,16 @@ interface UserButtonProps {
 }
 
 const User: React.FC<UserButtonProps> = ({ profile, name }): JSX.Element => {
+    const [menu, setMenu] = React.useState<boolean>(false);
+
+    const toggleMenu: Function = () => setMenu(!menu);
+
     return (
         <>
-            <button className={styles.userButton}>
+            <button onClick={e => toggleMenu()} className={styles.userButton}>
                 <img className={styles.profileButton} src={profile} alt={name} />
             </button>
-            <div className={styles.settingsTooltip}>
+            <div className={styles.settingsTooltip} style={menu ? { display: "flex" } : { display: "none" }}>
                 <button>
                     <img src="/edit.png" alt="edit" />
                 </button>
