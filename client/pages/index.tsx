@@ -30,7 +30,8 @@ const HomePage: FunctionComponent = (): JSX.Element => {
             </div>
 
             <div>
-                <Folder type="parent" label="Mobile" />
+                <Folder type="Parent" label="Mobile" />
+                <Folder type="Child" label="Mobile" />
             </div>
         </div>
     )
