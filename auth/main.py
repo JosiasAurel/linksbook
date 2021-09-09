@@ -9,7 +9,6 @@ deta = Deta("a0ojq87u_xgq3dQQLkXj3YBsJ5iJKZ5MTAtYmCLoF")
 
 # create the different database tables
 usersdb = deta.Base("users")
-pinsdb = deta.Base("pins")
 tokensdb = deta.Base("tokens")
 
 # custom library
