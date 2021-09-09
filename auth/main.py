@@ -1,5 +1,6 @@
 from .config import SECRET
 from lib.mail import send_mail_to
+from lib.genid import generate_id
 from fastapi import FastAPI, Request
 import jwt
 from deta import Deta
@@ -32,3 +33,22 @@ def _send_mail():
 async def _register_user(request: Request):
     body = await request.json()
     user = {"email": body["email"], "name": body["name"]}
+    user_id = generate_id()
+
+    does_email_exist = usersdb.fetch({"email": body["email"]})
+
+    if (len(does_email_exist) > 0):
+        return {"status": "Failed", "type": "Email Exists"}
+    else:
+        try:
+            usersdb.put(user, user_id)
+            # ...generate unique pin for auth...
+        except:
+            return {"Status": "Failed", "type": "Create Account"}
+
+
+@app.post("/login")
+async def _login_user(request: Request):
+    body = await request.json()
+    # ...generate unique pin...
+    # ...send auth token...
