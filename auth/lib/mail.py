@@ -19,24 +19,9 @@ def send_mail_to(receiver: str, subject: str, body: str):
     message["From"] = "linksbook00@gmail.com"
     message["To"] = receiver
 
-    text = "This is part 2"
-    html = """  
-    <html>
-    <body>
-        <p>Hi,<br>
-        How are you?<br>
-        <a href="http://www.realpython.com">Real Python</a> 
-        has many great tutorials.
-        </p>
-    </body>
-    </html>
-    """
+    body_ = MIMEText(body, "html")
 
-    p1 = MIMEText(text, "plain")
-    p2 = MIMEText(html, "html")
-
-    message.attach(p1)
-    message.attach(p2)
+    message.attach(body_)
 
     # create secure SSL connection context
     ctx = ssl.create_default_context()
