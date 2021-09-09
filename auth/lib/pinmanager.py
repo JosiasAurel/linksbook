@@ -18,3 +18,12 @@ def create_pin() -> str:
         return {"status": "Success", "pin": new_pin}
     except:
         return {"status": "Failed", "type": "CreatePin"}
+
+
+def revoke_pin(pin: str) -> any:
+    # revoke the pin straight away
+    try:
+        pinsdb.delete(pin)
+        return {"status": "Success", "type": "RevokePin"}
+    except:
+        return {"status": "Failed", "type": "RevokePin"}
