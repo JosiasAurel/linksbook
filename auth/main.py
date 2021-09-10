@@ -1,7 +1,9 @@
 from .config import SECRET
 from lib.mail import send_mail_to
 from lib.genid import generate_id
-from lib.pinmanager import create_pin, revoke_pin
+from lib.pinmanager import create_pin, verify_and_revoke_pin
+from lib.tokenmanager import save_token
+from models.user import get_user_by_email
 from fastapi import FastAPI, Request
 from deta import Deta
 
@@ -64,3 +66,24 @@ async def _login_user(request: Request):
 
     else:
         return {"status": "Failed", "type": "UserDoesNotExist"}
+
+
+@app.post("/complete-login")
+async def _complete_user_login(request: Request):
+    # get the temporal pin
+    body = await request.json()
+    pin = body["pin"]
+    email = body["email"]
+    # revoke pin
+    verify_and_revoke_pin(pin)
+
+    # fetch current user info
+    user = get_user_by_email(email)
+
+    # generate token using user info
+    user_token = save_token(user["name"], user["email"])
+
+    if user_token["status"] == "Success":
+        return {"status": "Success", "token": user_token["token"]}
+    else:
+        {"status": "Failed"}
