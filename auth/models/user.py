@@ -12,3 +12,10 @@ def create_user(name: str, email: str) -> T.Dict[str, str]:
         return {"status": "Success"}
     except:
         return {"status": "Failed", "type": "CreateUser"}
+
+
+def update_user(name: str, email: str) -> T.Dict[str, str]:
+    try:
+        usersdb.update({"name": name}, email)
+    except:
+        return {"status": "Failed", "type": "UpdateUser"}
