@@ -1,6 +1,5 @@
 from deta import Deta
 import secrets
-from .genid import generate_id
 import typing as T
 
 deta = Deta("a0ojq87u_xgq3dQQLkXj3YBsJ5iJKZ5MTAtYmCLoF")
