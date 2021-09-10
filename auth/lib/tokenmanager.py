@@ -1,6 +1,7 @@
 from deta import Deta
 import jwt
 import datetime
+import typing as T
 
 deta = Deta("a0ojq87u_xgq3dQQLkXj3YBsJ5iJKZ5MTAtYmCLoF")
 
@@ -24,4 +25,10 @@ def create_token(name, email) -> str:
     return auth_token
 
 
-print(days(30))
+def save_token(name: str, email: str) -> T.Dict[str, str]:
+    new_token = create_token(name, email)
+    try:
+        tokensdb.put(new_token, new_token)
+        return {"status": "Success"}
+    except:
+        return {"status": "Failed"}
