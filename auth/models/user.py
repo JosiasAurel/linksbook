@@ -1,3 +1,4 @@
+from lib.genid import generate_id
 from deta import Deta
 import typing as T
 
@@ -7,11 +8,20 @@ usersdb = deta.Base("users")
 
 
 def create_user(name: str, email: str) -> T.Dict[str, str]:
-    try:
-        usersdb.put({"name": name, "email": email}, key=email)
-        return {"status": "Success"}
-    except:
-        return {"status": "Failed", "type": "CreateUser"}
+
+    user_id = generate_id()
+
+    does_email_exist = usersdb.fetch({"email": email}).items
+
+    if (len(does_email_exist) > 0):
+        return {"status": "Failed", "type": "Email Exists"}
+    else:
+        try:
+            user = {"email": email, "name": name}
+            usersdb.put(user, user_id)
+            # ...generate unique pin for auth...
+        except:
+            return {"Status": "Failed", "type": "Create Account"}
 
 
 def update_user(name: str, email: str) -> T.Dict[str, str]:
@@ -33,6 +43,6 @@ def get_user_by_email(email: str) -> any:
 def get_user_id_by_email(email: str) -> str:
     user = get_user_by_email(email)
     if user["status"] != "Failed":
-        return user["userId"]
+        return user["key"]
     else:
         return None
