@@ -32,3 +32,29 @@ def save_token(name: str, email: str) -> T.Dict[str, str]:
         return {"status": "Success"}
     except:
         return {"status": "Failed"}
+
+
+def verify_token(token: str) -> str:
+    decoded_token = jwt.decode(token, "SECRET")
+    current_date = datetime.datetime.utcnow()
+    iat = datetime.datetime.fromtimestamp(decoded_token["iat"])
+    # find the difference between issue time and expiration time
+    diff_ = current_date - iat
+    diff = diff_.days  # get the difference as days
+
+    if diff <= 0:
+        return "TokenInvalid"
+    else:
+        # token is still within expiration period
+        # check if token is in database
+        token_in_db = tokensdb.get(token)  # will return none if not found
+        if token_in_db != None:
+            return "ValidToken"
+        else:
+            return "TokenInvalid"
+
+
+""" res = create_token("Josias", "josias@josiasw.dev")
+print(res)
+print(verify_token(res))
+ """
