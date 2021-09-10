@@ -3,7 +3,7 @@ from lib.mail import send_mail_to
 from lib.genid import generate_id
 from lib.pinmanager import create_pin, verify_and_revoke_pin
 from lib.tokenmanager import save_token
-from models.user import get_user_by_email
+from models.user import get_user_by_email, create_user
 from fastapi import FastAPI, Request
 from deta import Deta
 
@@ -31,19 +31,11 @@ def _send_mail():
 @app.post("/register")
 async def _register_user(request: Request):
     body = await request.json()
-    user = {"email": body["email"], "name": body["name"]}
-    user_id = generate_id()
 
-    does_email_exist = usersdb.fetch({"email": body["email"]})
+    # create new user
+    new_user = create_user(body["name"], body["email"])
 
-    if (len(does_email_exist) > 0):
-        return {"status": "Failed", "type": "Email Exists"}
-    else:
-        try:
-            usersdb.put(user, user_id)
-            # ...generate unique pin for auth...
-        except:
-            return {"Status": "Failed", "type": "Create Account"}
+    return new_user  # op status
 
 
 @app.post("/create-login")
