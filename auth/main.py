@@ -1,15 +1,13 @@
 from .config import SECRET
 from lib.mail import send_mail_to
 from lib.genid import generate_id
+from lib.pinmanager import create_pin, revoke_pin
 from fastapi import FastAPI, Request
-import jwt
 from deta import Deta
 
 deta = Deta("a0ojq87u_xgq3dQQLkXj3YBsJ5iJKZ5MTAtYmCLoF")
 
-# create the different database tables
 usersdb = deta.Base("users")
-tokensdb = deta.Base("tokens")
 
 # custom library
 
@@ -46,8 +44,23 @@ async def _register_user(request: Request):
             return {"Status": "Failed", "type": "Create Account"}
 
 
-@app.post("/login")
+@app.post("/create-login")
 async def _login_user(request: Request):
     body = await request.json()
-    # ...generate unique pin...
-    # ...send auth token...
+    # get user's email
+    email = body["email"]  # get the user email
+    user = usersdb.fetch({"email": email}).items
+    if len(user) == 1:
+        # ...generate unique pin and email [email]...
+        # ...generate unique pin...
+        new_pin = create_pin()
+        if new_pin["status"] == "Success":
+            pin = new_pin["pin"]
+            message = f"Hey, here is your linksbook temporal login pin : {pin} "
+            send_mail_to(email, "LinksBook Login", message)
+            return {"status": "Success"}
+        else:
+            return {"status": "Failed", "type": "CreatePinError"}
+
+    else:
+        return {"status": "Failed", "type": "UserDoesNotExist"}
