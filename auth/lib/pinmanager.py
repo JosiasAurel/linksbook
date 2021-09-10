@@ -20,10 +20,13 @@ def create_pin() -> T.Dict[str, str]:
         return {"status": "Failed", "type": "CreatePin"}
 
 
-def revoke_pin(pin: str) -> T.Dict[str, str]:
-    # revoke the pin straight away
-    try:
+def verify_and_revoke_pin(pin: str) -> T.Dict[str, str]:
+    # check id the pin exists
+    does_pin_exist = pinsdb.fetch({"pin": pin}).items
+
+    if len(does_pin_exist) == 1:
+        # if pin exist, revoke
         pinsdb.delete(pin)
         return {"status": "Success", "type": "RevokePin"}
-    except:
-        return {"status": "Failed", "type": "RevokePin"}
+
+    return {"status": "Failed", "type": "RevokePin"}
