@@ -2,7 +2,7 @@ from .config import SECRET
 from lib.mail import send_mail_to
 from lib.genid import generate_id
 from lib.pinmanager import create_pin, verify_and_revoke_pin
-from lib.tokenmanager import save_token
+from lib.tokenmanager import save_token, verify_token
 from models.user import get_user_by_email, create_user
 from fastapi import FastAPI, Request
 from deta import Deta
@@ -79,3 +79,9 @@ async def _complete_user_login(request: Request):
         return {"status": "Success", "token": user_token["token"]}
     else:
         {"status": "Failed"}
+
+
+@app.post("/is-authenticated")
+async def _check_is_auth(request: Request):
+    auth_token = await request.json()["token"]
+    return verify_token(auth_token)
