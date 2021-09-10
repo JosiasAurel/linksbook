@@ -42,9 +42,9 @@ def verify_token(token: str) -> str:
         # check if token is in database
         token_in_db = tokensdb.get(token)  # will return none if not found
         if token_in_db != None:
-            return "ValidToken"
+            return "Valid"
     except jwt.ExpiredSignatureError:
-        return "TokenInvalid"
+        return "Invalid"
 
 
 """ res = create_token("Josias", "josias@josiasw.dev")
