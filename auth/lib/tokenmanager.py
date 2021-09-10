@@ -17,15 +17,11 @@ def set_token_expiry_date_to(days: int) -> datetime:
 
 
 def create_token(name, email) -> str:
-    auth_token = jwt.encode({"name": name, "email": email}, "SECRET")
-    return ""
-
-
-def days(num_days: int) -> int:
-    min = 60*60
-    hour = 60*min
-    day = hour * 24
-    return num_days * day
+    expiry_date = set_token_expiry_date_to(29)
+    issue_time = datetime.datetime.utcnow()
+    auth_token = jwt.encode(
+        {"name": name, "email": email, "exp": expiry_date, "iat": issue_time, "iss": "LinksBook"}, "SECRET")
+    return auth_token
 
 
 print(days(30))
