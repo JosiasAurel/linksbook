@@ -1,4 +1,4 @@
-from .config import SECRET
+from config import SECRET
 from lib.mail import send_mail_to
 from lib.genid import generate_id
 from lib.pinmanager import create_pin, verify_and_revoke_pin
@@ -43,7 +43,7 @@ async def _login_user(request: Request):
     body = await request.json()
     # get user's email
     email = body["email"]  # get the user email
-    user = usersdb.fetch({"email": email}).items
+    user = usersdb.fetch({"email": email}).__next__()
     if len(user) == 1:
         # ...generate unique pin and email [email]...
         # ...generate unique pin...
@@ -67,18 +67,23 @@ async def _complete_user_login(request: Request):
     pin = body["pin"]
     email = body["email"]
     # revoke pin
-    verify_and_revoke_pin(pin)
+    # has pin verification and revoke pass or fail ?
+    pin_ = verify_and_revoke_pin(pin)
 
-    # fetch current user info
-    user = get_user_by_email(email)
+    if (pin_["status"] == "Success"):
 
-    # generate token using user info
-    user_token = save_token(user["name"], user["email"])
+        # fetch current user info
+        user = get_user_by_email(email)
 
-    if user_token["status"] == "Success":
-        return {"status": "Success", "token": user_token["token"]}
-    else:
-        {"status": "Failed"}
+        # generate token using user info
+        user_token = save_token(user["name"], user["email"])
+
+        if user_token["status"] == "Success":
+            return {"status": "Success", "token": user_token["token"]}
+        else:
+            {"status": "Failed", "type": "AuthenticationFail"}
+
+    return {"status": "Failed", "type": "PinDoesNotExist"}
 
 
 @app.post("/is-authenticated")
