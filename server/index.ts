@@ -24,7 +24,8 @@ app.get("/", (req: Request, res: Response) => {
     res.send("LinksBook server working");
 });
 
-// mount apollo server on express application
+
+// Create apollo server
 const apolloServer = new ApolloServer({
     typeDefs: typeDefinitions,
     resolvers,
@@ -44,5 +45,9 @@ const apolloServer = new ApolloServer({
     }
 })
 
+// mount apollo server on express
+apolloServer.start().then(_ => apolloServer.applyMiddleware({ app }));
 
 app.listen(port, () => console.log(`Server working on port ${port}`));
+
+module.exports = app;
