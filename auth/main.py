@@ -2,7 +2,7 @@ from config import SECRET
 from lib.mail import send_mail_to
 from lib.genid import generate_id
 from lib.pinmanager import create_pin, verify_and_revoke_pin
-from lib.tokenmanager import save_token, verify_token
+from lib.tokenmanager import save_token, verify_token, revoke_token
 from models.user import get_user_by_email, create_user
 from fastapi import FastAPI, Request
 from deta import Deta
@@ -76,7 +76,7 @@ async def _complete_user_login(request: Request):
         user = get_user_by_email(email)
 
         # generate token using user info
-        user_token = save_token(user["name"], user["email"])
+        user_token = save_token(user["name"], user["email"], user["key"])
 
         if user_token["status"] == "Success":
             return {"status": "Success", "token": user_token["token"]}
@@ -88,5 +88,23 @@ async def _complete_user_login(request: Request):
 
 @app.post("/is-authenticated")
 async def _check_is_auth(request: Request):
-    auth_token = await request.json()["token"]
-    return verify_token(auth_token)
+    req_body = await request.json()
+    user_email = req_body["email"]
+    auth_token = req_body["token"]
+
+    user = get_user_by_email(user_email)
+
+    return verify_token(auth_token, user["key"])
+
+
+@app.post("/sign-out")
+async def _sign_out_user(request: Request):
+    req_body = await request.json()
+    user_email = req_body["email"]
+
+    user = get_user_by_email(user_email)
+
+    # delete token owned by the owner
+    revoke_token(user["key"])
+
+    return {"status": "Done"}

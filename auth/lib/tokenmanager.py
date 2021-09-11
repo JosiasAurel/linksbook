@@ -25,26 +25,30 @@ def create_token(name, email) -> str:
     return auth_token
 
 
-def save_token(name: str, email: str) -> T.Dict[str, str]:
+def save_token(name: str, email: str, owner: str) -> T.Dict[str, str]:
     new_token = create_token(name, email)
     try:
-        tokensdb.put(f" {new_token} ")
+        tokensdb.put(f" {new_token} ", key=owner)
         return {"status": "Success", "token": new_token}
     except:
         return {"status": "Failed"}
 
 
-def verify_token(token: str) -> str:
-
+def verify_token(token: str, owner: str) -> str:
     try:
         jwt.decode(token, "SECRET")
 
         # check if token is in database
-        token_in_db = tokensdb.get(token)  # will return none if not found
+        token_in_db = tokensdb.get(owner)  # will return none if not found
         if token_in_db != None:
             return "Valid"
     except jwt.ExpiredSignatureError:
         return "Invalid"
+
+
+def revoke_token(owner: str) -> bool:
+    tokensdb.delete(owner)  # remove token with ID of owner
+    return True
 
 
 """ res = create_token("Josias", "josias@josiasw.dev")
