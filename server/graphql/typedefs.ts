@@ -20,6 +20,7 @@ type Collection {
     children: [Collection]
     createdAt: String!
     type: String!
+    owner: String!
 }
 
 

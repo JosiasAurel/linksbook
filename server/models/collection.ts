@@ -3,12 +3,23 @@ import { deta, generateModelKey } from "./index";
 // collections database table
 const collections = deta.Base("collections");
 
+// Collection __ Types
+interface CollectionData {
+    name: string
+    links: [string]
+    children: [string]
+    type: string
+    id: string
+}
+
 async function createCollection(name: string, type: string, owner: string, parent?: string): Promise<any> {
     try {
         const newCollection = collections.put({
             name,
             type: (!parent && type === "Parent") ? "Parent" : "Child",
-            owner
+            owner,
+            links: [],
+            children: []
         }, generateModelKey());
 
             return {status: "Success"};
@@ -37,4 +48,21 @@ async function getAllCollections(owner: string): Promise<any> {
         return {status: "Failed"};
     }
     
+}
+
+async function updateCollection({name, links, children, id}: CollectionData): Promise<any> {
+
+    // first get the collection
+    const thisCollection = await getCollection(id);
+
+    try {
+        collections.update({
+            name: name && name !== "" ? name : thisCollection.name,
+            links: links && (links.length > 0) ? links : thisCollection.links,
+            children: children && (children.length > 0) ? children : thisCollection.children
+        }, id);
+    } catch(error: any) {
+        return;
+    }
+
 }
