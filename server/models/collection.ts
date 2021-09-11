@@ -3,11 +3,12 @@ import { deta, generateModelKey } from "./index";
 // collections database table
 const collections = deta.Base("collections");
 
-async function createCollection(name: string, type: string, parent?: string): Promise<any> {
+async function createCollection(name: string, type: string, owner: string, parent?: string): Promise<any> {
     try {
         const newCollection = collections.put({
             name,
-            type: (!parent && type === "Parent") ? "Parent" : "Child"
+            type: (!parent && type === "Parent") ? "Parent" : "Child",
+            owner
         }, generateModelKey());
 
             return {status: "Success"};
