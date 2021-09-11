@@ -29,6 +29,16 @@ const resolvers = {
             } else {
                 return [];
             }
+        },
+
+        searchLinks: async (parent: any, args: any): Promise<any> => {
+            const searchedLinks = await searchLinks(args.search, args.type);
+
+            if (typeof searchLinks !== "string") {
+                return [];
+            } else {
+                return searchLinks;
+            }
         }
     }
 }
