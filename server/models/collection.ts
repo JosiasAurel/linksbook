@@ -17,8 +17,15 @@ async function createCollection(name: string, type: string, parent?: string): Pr
     
 }
 
+async function getCollection(collectionId: string): Promise<any> {
+    // get collection with ID collectionId
+    const collection = await collections.get(collectionId);
+    return collection;
+}
+
 async function getAllCollections(): Promise<any> {
     // returns collections in nested format
+
 
     
 }
