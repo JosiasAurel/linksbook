@@ -4,30 +4,15 @@ import { deta, generateModelKey } from "./index";
 const collections = deta.Base("collections");
 
 async function createCollection(name: string, type: string, parent?: string): Promise<any> {
-
-    if (!parent && type === "Parent") {
-        try {
-            const newCollection = collections.put({
-                name,
-                type: "Parent",
-                parent
-            }, generateModelKey());
+    try {
+        const newCollection = collections.put({
+            name,
+            type: (!parent && type === "Parent") ? "Parent" : "Child"
+        }, generateModelKey());
 
             return {status: "Success"};
-        } catch (error: any) {
-            return {status: "Failed"};
-        }
-    } else {
-        try {
-            const newCollection = collections.put({
-                name,
-                type: "Child"
-            }, generateModelKey());
-
-            return {status: "Success"};
-        } catch (error: any) {
-            return {status: "Failed"};
-        }
+    } catch (error: any) {
+        return {status: "Failed"};
     }
     
 }
