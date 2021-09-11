@@ -1,17 +1,27 @@
 
 // import model CRUD handlers
+import {} from "../models/links";
+import {} from "../models/collection";
 
 // import link handlers
 import { getLink, getAllLinks, createLink, updateLink, deleteLink, searchLinks } from "../models/links";
 
 const resolvers = {
     Query: {
-        getLink: async (parent: any, args: any, context: any) => {
-            // get the link ID from args
-            const { linkId } = args;
-            const link = await getLink(linkId);
+        hello: () => {
+            return "Hello World"
+        },
+        user: async (_parent: any, _args: any, context: any): Promise<any> => {
+            const { name, email } = context;
 
-            return link;
+            return {name, email};
+        }
+    },
+    User: {
+        links: async (parent: any, _args: any): Promise<any> => {
+            return {};
         }
     }
 }
+
+export { resolvers };

@@ -49,3 +49,5 @@ type Mutation {
     deleteCollection(collectionId: String): ActionStatus
 }
 `;
+
+export { typeDefinitions };

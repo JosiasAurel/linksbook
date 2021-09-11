@@ -69,3 +69,5 @@ async function updateCollection({name, links, children, id}: CollectionData): Pr
 async function deleteCollection(collectionId: string): Promise<any> {
     await collections.delete(collectionId);
 }
+
+export { createCollection, getCollection, getAllCollections, updateCollection, deleteCollection };
