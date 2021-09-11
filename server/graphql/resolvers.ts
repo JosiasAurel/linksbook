@@ -19,6 +19,7 @@ const resolvers = {
     },
     User: {
         links: async (parent: any, _args: any): Promise<any> => {
+            console.log(parent);
             return {};
         }
     }

@@ -38,6 +38,7 @@ type ActionStatus {
 type Query {
     user: User
     searchLinks(search: String!): ActionStatus
+    hello: String!
 }
 
 type Mutation {
