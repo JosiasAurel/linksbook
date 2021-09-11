@@ -3,6 +3,13 @@ import { gql } from "apollo-server-express";
 
 const typeDefinitions: any = gql`
 
+type User {
+    name: String!
+    email: String!
+    links: [Link]!
+    collections: [Collection]!
+}
+
 type Link {
     annotation: String
     tags: [String]
@@ -29,12 +36,8 @@ type ActionStatus {
 }
 
 type Query {
-    getLink(linkResolver: String!): Link!
-    getCollection(collectionResolver: String!): Collection!
-    getLinks: [Link]!
-    getCollections: [Group]!
-    searchLinks(search: String): [Link]
-    searchCollections(search: String): [Link]
+    user: User
+    searchLinks(search: String!): ActionStatus
 }
 
 type Mutation {
