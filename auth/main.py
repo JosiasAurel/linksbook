@@ -94,7 +94,9 @@ async def _check_is_auth(request: Request):
 
     user = get_user_by_email(user_email)
 
-    return verify_token(auth_token, user["key"])
+    result = verify_token(auth_token, user.get("key"))
+
+    return {"status": "Done", "info": result}
 
 
 @app.post("/sign-out")
