@@ -28,7 +28,7 @@ def create_token(name, email) -> str:
 def save_token(name: str, email: str) -> T.Dict[str, str]:
     new_token = create_token(name, email)
     try:
-        tokensdb.put(new_token, new_token)
+        tokensdb.put(f" {new_token} ")
         return {"status": "Success", "token": new_token}
     except:
         return {"status": "Failed"}

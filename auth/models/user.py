@@ -11,7 +11,7 @@ def create_user(name: str, email: str) -> T.Dict[str, str]:
 
     user_id = generate_id()
 
-    does_email_exist = usersdb.fetch({"email": email}).items
+    does_email_exist = usersdb.fetch({"email": email}).__next__()
 
     if (len(does_email_exist) > 0):
         return {"status": "Failed", "type": "Email Exists"}
@@ -19,7 +19,7 @@ def create_user(name: str, email: str) -> T.Dict[str, str]:
         try:
             user = {"email": email, "name": name}
             usersdb.put(user, user_id)
-            # ...generate unique pin for auth...
+            return {"status": "Success"}
         except:
             return {"Status": "Failed", "type": "Create Account"}
 
@@ -33,7 +33,7 @@ def update_user(name: str, email: str) -> T.Dict[str, str]:
 
 def get_user_by_email(email: str) -> any:
     try:
-        users = usersdb.fetch({"email": email}).items
+        users = usersdb.fetch({"email": email}).__next__()
         users[0]["status"] = "Success"
         return users[0]
     except:
