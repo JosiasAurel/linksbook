@@ -64,5 +64,8 @@ async function updateCollection({name, links, children, id}: CollectionData): Pr
     } catch(error: any) {
         return;
     }
+}
 
+async function deleteCollection(collectionId: string): Promise<any> {
+    await collections.delete(collectionId);
 }
