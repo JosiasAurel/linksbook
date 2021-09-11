@@ -13,11 +13,13 @@ type Link {
     createdAt: String!
 }
 
-type Group {
+type Collection {
     id: ID!
     links: [Link]
     name: String!
+    children: [Collection]
     createdAt: String!
+    type: String!
 }
 
 
@@ -27,19 +29,19 @@ type ActionStatus {
 
 type Query {
     getLink(linkResolver: String!): Link!
-    getGroup(groupResolver: String!): Group!
+    getCollection(collectionResolver: String!): Collection!
     getLinks: [Link]!
-    getGroups: [Group]!
+    getCollections: [Group]!
     searchLinks(search: String): [Link]
-    searchGroups(search: String): [Link]
+    searchCollections(search: String): [Link]
 }
 
 type Mutation {
     createLink(annotation: String!, url: String!, tags: [String]!): ActionStatus
     updateLink(annotation: String, url: String, tags: [String]): ActionStatus
     deleteLink(linkId: String!): ActionStatus
-    createGroup(name: String!, tags: [String], links: [String]): ActionStatus
-    updateGroup(name: String, tags: [String], links: [String]): ActionStatus
-    deleteGroup(groupId: String): ActionStatus
+    createCollection(name: String!, tags: [String], links: [String]): ActionStatus
+    updateCollection(name: String, tags: [String], links: [String]): ActionStatus
+    deleteCollection(collectionId: String): ActionStatus
 }
 `;
