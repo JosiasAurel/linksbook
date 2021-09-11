@@ -19,18 +19,25 @@ const HomePage: FunctionComponent = (): JSX.Element => {
         <div>
 
             <div>
+                Profile
                 <User profile="/josias.jpg" name="Josias" />
             </div>
             <div>
+                Tag
                 <Tag name="Hello" />
             </div>
 
             <div>
+                Copy Link
                 <CopyLink link="https://hello.world" />
             </div>
 
             <div>
+                Folders
+                ------
+                Parent Type Folder
                 <Folder type="Parent" label="Mobile" />
+                Child Type Folder
                 <Folder type="Child" label="Mobile" />
             </div>
         </div>
