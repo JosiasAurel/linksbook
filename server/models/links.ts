@@ -14,23 +14,24 @@ async function getLink(linkId: string): Promise<any> {
 
 async function getAllLinks(owner: string): Promise<any> {
     try {
-        const fetchLinks = await db.fetch({owner});
+        const fetchLinks = await (await db.fetch({owner})).items;
         return fetchLinks;
     } catch (error: any) {
         return "Failed";
     }
 }
 
-async function searchLinks(searchParam: string, type: string): Promise<any> {
+async function searchLinks(searchParam: string, type: string, owner: string): Promise<any> {
 
     switch (type) {
         case "all":
             try {
-                const byAnnotation = await (await db.fetch({"annotation?contains": searchParam})).items;
-                const byURL = await (await db.fetch({"url?contains": searchParam})).items;
-                const byTags = await (await db.fetch({"tags?contains": searchParam})).items;
-                const byNote = await (await db.fetch({"note?contains": searchParam})).items;
+                const byAnnotation = await (await db.fetch({"annotation?contains": searchParam, owner})).items;
+                const byURL = await (await db.fetch({"url?contains": searchParam, owner})).items;
+                const byTags = await (await db.fetch({"tags?contains": searchParam, owner})).items;
+                const byNote = await (await db.fetch({"note?contains": searchParam, owner})).items;
 
+                console.log([...byAnnotation, ...byURL, ...byTags, ...byNote])
                 return [...byAnnotation, ...byURL, ...byTags, ...byNote];
             } catch(error: any) {
                 return "Failed";
@@ -39,7 +40,7 @@ async function searchLinks(searchParam: string, type: string): Promise<any> {
         // search by tags
         case "tags":
             try {
-                const byTags = await (await db.fetch({"tags?contains": searchParam})).items;
+                const byTags = await (await db.fetch({"tags?contains": searchParam, owner})).items;
 
                 return byTags;
             } catch(error: any) {
@@ -49,7 +50,7 @@ async function searchLinks(searchParam: string, type: string): Promise<any> {
         // search by annotation
         case "annotation":
             try {
-                const byAnnotation = await (await db.fetch({"annotation?contains": searchParam})).items;
+                const byAnnotation = await (await db.fetch({"annotation?contains": searchParam, owner})).items;
 
                 return byAnnotation;
             } catch(error: any) {
@@ -59,7 +60,7 @@ async function searchLinks(searchParam: string, type: string): Promise<any> {
         // by url
         case "url":
             try {
-               const byURL = await (await db.fetch({"url?contains": searchParam})).items;
+               const byURL = await (await db.fetch({"url?contains": searchParam, owner})).items;
 
                 return byURL;
             } catch(error: any) {
@@ -69,7 +70,7 @@ async function searchLinks(searchParam: string, type: string): Promise<any> {
         // by note
         case "note":
             try {
-               const byNote = await (await db.fetch({"note?contains": searchParam})).items;
+               const byNote = await (await db.fetch({"note?contains": searchParam, owner})).items;
 
                 return byNote;
             } catch(error: any) {

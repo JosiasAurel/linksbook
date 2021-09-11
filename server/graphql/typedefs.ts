@@ -4,6 +4,7 @@ import { gql } from "apollo-server-express";
 const typeDefinitions: any = gql`
 
 type User {
+    id: ID!
     name: String!
     email: String!
     links: [Link]!
@@ -37,7 +38,7 @@ type ActionStatus {
 
 type Query {
     user: User
-    searchLinks(search: String!): ActionStatus
+    searchLinks(search: String!, type: String!): [Link]
     hello: String!
 }
 

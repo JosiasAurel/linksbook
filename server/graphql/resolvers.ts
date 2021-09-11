@@ -14,6 +14,16 @@ const resolvers = {
             const { name, email, key } = context;
 
             return {name, email, id: key};
+        },
+        searchLinks: async (parent: any, args: any, context: any): Promise<any> => {
+
+            const searchedLinks = await searchLinks(args.search, args.type, context.key);
+
+            if (typeof searchLinks !== "string") {
+                return searchedLinks;
+            } else {
+                return [];
+            }
         }
     },
     User: {
@@ -28,16 +38,6 @@ const resolvers = {
                 return allCollections.objects;
             } else {
                 return [];
-            }
-        },
-
-        searchLinks: async (parent: any, args: any): Promise<any> => {
-            const searchedLinks = await searchLinks(args.search, args.type);
-
-            if (typeof searchLinks !== "string") {
-                return [];
-            } else {
-                return searchLinks;
             }
         }
     }
