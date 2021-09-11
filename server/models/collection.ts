@@ -23,9 +23,17 @@ async function getCollection(collectionId: string): Promise<any> {
     return collection;
 }
 
-async function getAllCollections(): Promise<any> {
+async function getAllCollections(owner: string): Promise<any> {
     // returns collections in nested format
 
+    try {
+        const fetchedCollectionsRes = await collections.fetch({"owner": owner});
+        const fetchedCollectionsItems = await fetchedCollectionsRes.items;
+        const fetchedCollectionsCount = await fetchedCollectionsRes.count;
 
+        return {status: "Success", objectCount: fetchedCollectionsCount, objects: fetchedCollectionsItems};
+    } catch(error: any) {
+        return {status: "Failed"};
+    }
     
 }
