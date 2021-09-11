@@ -26,6 +26,12 @@ Project ID : a0ojq87u
 	- Create a link under a collection
 	- Create a collection
 	- Convert link or collection with QR code scanning to share with people
+- Handle broken links
+- Capture preview of the link that has been saved, used to preview it
+- User can set custom thumbnail for collection
+- Email us link with subject(as annotation) and link in body used to set the link of the bookmark
+You can optionally note something under the link which will be used as note on the bookmark.
+- Internal links in bookmark  notes so you can reference one to another and create a knowledge cycle
 
 How can I install a Chrome extension myself  from my own site automatically ?
 pro features might be access to Chrome extension `\o/`
