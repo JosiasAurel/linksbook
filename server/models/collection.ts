@@ -61,13 +61,15 @@ async function updateCollection({name, links, children, id}: CollectionData): Pr
             links: links && (links.length > 0) ? links : thisCollection.links,
             children: children && (children.length > 0) ? children : thisCollection.children
         }, id);
+        return "Success";
     } catch(error: any) {
-        return;
+        return "Failed";
     }
 }
 
-async function deleteCollection(collectionId: string): Promise<any> {
+async function deleteCollection(collectionId: string): Promise<string> {
     await collections.delete(collectionId);
+    return "Done";
 }
 
 export { createCollection, getCollection, getAllCollections, updateCollection, deleteCollection };

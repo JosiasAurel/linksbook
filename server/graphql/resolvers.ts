@@ -67,12 +67,12 @@ const resolvers = {
             const result = deleteLink(args.linkId);
             return {status: result};
         },
-        createCollection: async (parent: any, args: any, ctx: any): Promise<void> => {
+        createCollection: async (parent: any, args: any, ctx: any): Promise<any> => {
             const newCollection = await createCollection(args.name, args.type, ctx.key, args.parent);
 
             return newCollection;
         },
-        updateCollection: async (parent: any, args: any, ctx: any): Promise<void> => {
+        updateCollection: async (parent: any, args: any, ctx: any): Promise<any> => {
             const result = await updateCollection({
                 name: args.name,
                 links: args.links,
@@ -80,12 +80,12 @@ const resolvers = {
                 id: args.collectionId
             });
 
-            return result;
+            return {status: result};
         },
-        deleteCollection: async (parent: any, args: any): Promise<any> => {
+        deleteCollection: async (_parent: any, args: any): Promise<any> => {
             const result = await deleteCollection(args.collectionId);
 
-            return result;
+            return {status: result};
         }
     }
 }
