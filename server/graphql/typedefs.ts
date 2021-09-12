@@ -47,7 +47,7 @@ type Mutation {
     updateLink(linkdId: String!, annotation: String, url: String, tags: [String]): ActionStatus
     deleteLink(linkId: String!): ActionStatus
     createCollection(name: String!, type: String!, parent: String): ActionStatus
-    updateCollection(name: String, tags: [String], links: [String]): ActionStatus
+    updateCollection(collectionId: String!, name: String, tags: [String], links: [String]): ActionStatus
     deleteCollection(collectionId: String): ActionStatus
 }
 `;

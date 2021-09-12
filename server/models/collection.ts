@@ -8,7 +8,6 @@ interface CollectionData {
     name: string
     links: [string]
     children: [string]
-    type: string
     id: string
 }
 
