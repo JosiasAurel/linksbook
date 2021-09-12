@@ -110,13 +110,8 @@ async function updateLink(linkId: string, annotation: string, url: string, tags:
 }
 
 async function deleteLink(linkId: string): Promise<string> {
-    try {
-        await db.delete(linkId);
-
-        return "Success";
-    } catch(error: any) {
-        return "Failed"
-    }
+    await db.delete(linkId);
+    return "Done";
 }
 
 export { createLink, deleteLink, updateLink, getLink, getAllLinks, searchLinks };
