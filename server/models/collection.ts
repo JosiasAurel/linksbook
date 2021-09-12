@@ -19,7 +19,8 @@ async function createCollection(name: string, type: string, owner: string, paren
             type: (!parent && type === "Parent") ? "Parent" : "Child",
             owner,
             links: [],
-            children: []
+            children: [],
+            parent: parent ? parent : false
         }, generateModelKey());
 
             return {status: "Success"};

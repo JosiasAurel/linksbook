@@ -62,6 +62,11 @@ const resolvers = {
         deleteLink: async (_parent: any, args: any, _ctx: any): Promise<any> => {
             const result = deleteLink(args.linkId);
             return result;
+        },
+        createCollection: async (parent: any, args: any, ctx: any): Promise<void> => {
+            const newCollection = await createCollection(args.name, args.type, ctx.key, args.parent);
+
+            return newCollection;
         }
     }
 }
