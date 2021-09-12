@@ -48,16 +48,20 @@ const resolvers = {
             let url: string = args.url;
             const newLink = createLink(annotation, url, tags, context.key);
 
-            return newLink;
+            return {status: newLink};
         },
         updateLink: async (_parent: any, args: any, _ctx: any): Promise<any> => {
 
             // fetch old link
-            const oldLink = await getLink(args.linkId);
+            const oldLink = await getLink(args.linkdId);
 
-            const result = await updateLink(args.linkId, args.annotation ? args.annotation : oldLink.annotation, args.url ? args.url : oldLink.url, args.tags ? args.tags : oldLink.tags);
+            if (oldLink !== "Failed") {
+                const result = await updateLink(args.linkId, args.annotation ? args.annotation : oldLink.annotation, args.url ? args.url : oldLink.url, args.tags ? args.tags : oldLink.tags);
 
-            return result;
+                return {status: "Success"};
+            }
+
+            return {status: "Failed"};
         },
         deleteLink: async (_parent: any, args: any, _ctx: any): Promise<any> => {
             const result = deleteLink(args.linkId);
