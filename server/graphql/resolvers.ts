@@ -40,6 +40,16 @@ const resolvers = {
                 return [];
             }
         }
+    },
+    Mutation: {
+        createLink: async (parent: any, args: any, context: any): Promise<any> => {
+            let annotation: string = args.annotation;
+            let tags: Array<string> = args.tags;
+            let url: string = args.url;
+            const newLink = createLink(annotation, url, tags, context.key);
+
+            return newLink;
+        }
     }
 }
 
