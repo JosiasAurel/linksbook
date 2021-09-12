@@ -53,12 +53,12 @@ const resolvers = {
         updateLink: async (_parent: any, args: any, _ctx: any): Promise<any> => {
 
             // fetch old link
-            const oldLink = await getLink(args.linkdId);
+            const oldLink = await getLink(args.linkId);
 
             if (oldLink !== "Failed") {
                 const result = await updateLink(args.linkId, args.annotation ? args.annotation : oldLink.annotation, args.url ? args.url : oldLink.url, args.tags ? args.tags : oldLink.tags);
 
-                return {status: "Success"};
+                return {status: result};
             }
 
             return {status: "Failed"};

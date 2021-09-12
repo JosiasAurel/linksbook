@@ -44,7 +44,7 @@ type Query {
 
 type Mutation {
     createLink(annotation: String!, url: String!, tags: [String]!): ActionStatus
-    updateLink(linkdId: String!, annotation: String, url: String, tags: [String]): ActionStatus
+    updateLink(linkId: String!, annotation: String, url: String, tags: [String]): ActionStatus
     deleteLink(linkId: String!): ActionStatus
     createCollection(name: String!, type: String!, parent: String): ActionStatus
     updateCollection(collectionId: String!, name: String, tags: [String], links: [String]): ActionStatus
