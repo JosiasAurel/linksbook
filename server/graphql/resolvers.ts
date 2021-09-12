@@ -1,6 +1,6 @@
 
 // import model CRUD handlers
-import { createCollection, getAllCollections, updateCollection } from "../models/collection";
+import { createCollection, deleteCollection, getAllCollections, updateCollection } from "../models/collection";
 
 // import link handlers
 import { getLink, getAllLinks, createLink, updateLink, deleteLink, searchLinks } from "../models/links";
@@ -75,6 +75,11 @@ const resolvers = {
                 children: args.children,
                 id: args.collectionId
             });
+
+            return result;
+        },
+        deleteCollection: async (parent: any, args: any): Promise<any> => {
+            const result = await deleteCollection(args.collectionId);
 
             return result;
         }
