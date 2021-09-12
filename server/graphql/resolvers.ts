@@ -50,13 +50,17 @@ const resolvers = {
 
             return newLink;
         },
-        updateLink: async (parent: any, args: any, ctx: any): Promise<any> => {
+        updateLink: async (_parent: any, args: any, _ctx: any): Promise<any> => {
 
             // fetch old link
             const oldLink = await getLink(args.linkId);
 
             const result = await updateLink(args.linkId, args.annotation ? args.annotation : oldLink.annotation, args.url ? args.url : oldLink.url, args.tags ? args.tags : oldLink.tags);
 
+            return result;
+        },
+        deleteLink: async (_parent: any, args: any, _ctx: any): Promise<any> => {
+            const result = deleteLink(args.linkId);
             return result;
         }
     }
