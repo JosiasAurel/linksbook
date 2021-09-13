@@ -79,7 +79,22 @@ async function dropLinkToCollection(collectionId: string, linkId: string): Promi
         return "Success";
     }
 
-    let newLinksList: Array<string> = [...currentCollection.links, linkId];
+    try {
+        // Update only the list of links
+        collections.update({
+            links: collections.util.append(linkId)
+        }, collectionId);
+
+        return "Success";
+    } catch {
+        return "Failed";
+    }
+}
+
+async function removeLink(collectionId: string, linkId: string): Promise<string> {
+    const currentCollection = await getCollection(collectionId);
+
+    let newLinksList: Array<string> = currentCollection.links.filter((link: string) => link !== linkId);
 
     try {
         // Update only the list of links
