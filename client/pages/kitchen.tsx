@@ -7,6 +7,7 @@ import ColorToggle from "../components/colorToggle";
 import Tag from "../components/Tag";
 import CopyLink from "../components/CopyLink";
 import Folder from "../components/Folder";
+import LinkCard from "../components/LinkCard";
 
 const KitchenSinkPage: FunctionComponent = (): JSX.Element => {
 
@@ -39,6 +40,11 @@ const KitchenSinkPage: FunctionComponent = (): JSX.Element => {
                 <Folder type="Parent" label="Mobile" />
                 Child Type Folder
                 <Folder type="Child" label="Mobile" />
+            </div>
+
+            <div>
+                Link Card
+                <LinkCard name="The DAO of DAOs" url="https://somepost.com/dao-of-dao" />
             </div>
         </div>
     )
