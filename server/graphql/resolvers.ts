@@ -92,7 +92,7 @@ const resolvers = {
 
             return {status: result};
         },
-        removeLink: async (_parent: any, args: any): Promise<any> {
+        removeLink: async (_parent: any, args: any): Promise<any> => {
             const result = await removeLink(args.collectionId, args.linkId);
 
             return {status: result};
