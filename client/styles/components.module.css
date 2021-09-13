@@ -192,7 +192,24 @@
   box-shadow: 0 2px 2px 2px whitesmoke;
 }
 
+.linkCard .actions {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.linkCard .actions > * {
+  margin: 0 1em;
+}
+
 .linkCard > * {
   margin: 0 1em;
+}
+
+.linkCard svg {
+  fill: black;
+  width: 25px;
+  height: 25px;
 }
 /* End Link Card */

@@ -11,7 +11,7 @@ const LinkCard: React.FC<LinkCardProps> = ({ name, url }): JSX.Element => {
     return (
         <div className={styles.linkCard}>
             <p> {name} </p>
-            <div>
+            <div className={styles.actions}>
                 {/* Copy Icon */}
                 <div className={styles.copyIcon}>
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
