@@ -1,6 +1,23 @@
-.homePage,
-.page {
-  text-align: center;
+.dashboardPage {
+  display: flex;
+  flex-direction: column;
+}
+
+.dashboardSections {
+  display: flex;
+  flex-direction: row;
+  height: 86vh;
+}
+
+.foldersSection {
+  height: 100%;
+  min-width: 20%;
+  max-width: 20%;
+  border-right: solid 1px grey;
+}
+
+.linksSection {
+  height: 100%;
 }
 
 .page {
