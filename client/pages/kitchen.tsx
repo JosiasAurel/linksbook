@@ -9,6 +9,8 @@ import CopyLink from "../components/CopyLink";
 import Folder from "../components/Folder";
 import LinkCard from "../components/LinkCard";
 
+let sampleTags: Array<string> = ["DAO", "Crpyto", "Ethereum"];
+
 const KitchenSinkPage: FunctionComponent = (): JSX.Element => {
 
     const [name, setName] = useState<string>("");
@@ -44,7 +46,7 @@ const KitchenSinkPage: FunctionComponent = (): JSX.Element => {
 
             <div>
                 Link Card
-                <LinkCard name="The DAO of DAOs" url="https://somepost.com/dao-of-dao" />
+                <LinkCard name="The DAO of DAOs" url="https://somepost.com/dao-of-dao" tags={sampleTags} />
             </div>
         </div>
     )

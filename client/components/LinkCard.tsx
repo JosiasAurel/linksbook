@@ -1,16 +1,25 @@
 import React from "react";
 
 import styles from "../styles/components.module.css";
+import Tag from "./Tag";
 
 interface LinkCardProps {
     name: string
     url: string
+    tags: Array<string>
 }
 
-const LinkCard: React.FC<LinkCardProps> = ({ name, url }): JSX.Element => {
+const LinkCard: React.FC<LinkCardProps> = ({ name, url, tags }): JSX.Element => {
     return (
         <div className={styles.linkCard}>
             <p> {name} </p>
+            <div className={styles.linkTags}>
+                {tags.map(tag => {
+                    return (
+                        <Tag name={tag} key={tag} />
+                    )
+                })}
+            </div>
             <div className={styles.actions}>
                 {/* Copy Icon */}
                 <div className={styles.copyIcon}>

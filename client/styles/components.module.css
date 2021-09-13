@@ -103,6 +103,7 @@
   height: 23px;
   padding: 0 4px;
   border-radius: 1.5px;
+  margin: 0 0.5em;
 }
 /* End Tag styles */
 
@@ -192,11 +193,19 @@
   box-shadow: 0 2px 2px 2px whitesmoke;
 }
 
+.linkCard .linkTags {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .linkCard .actions {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  margin: 0 6% 0 0;
 }
 
 .linkCard .actions > * {
