@@ -49,6 +49,8 @@ type Mutation {
     createCollection(name: String!, type: String!, parent: String): ActionStatus
     updateCollection(collectionId: String!, name: String, tags: [String], links: [String]): ActionStatus
     deleteCollection(collectionId: String!): ActionStatus
+    dropLinkToCollection(collectionId: String!, linkId: String!): ActionStatus
+    removeLinkFromCollection(collectionId: String!, linkId: String!): ActionStatus
 }
 `;
 
