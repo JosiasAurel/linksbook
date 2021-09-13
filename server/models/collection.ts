@@ -6,8 +6,8 @@ const collections = deta.Base("collections");
 // Collection __ Types
 interface CollectionData {
     name: string
-    links: [string]
-    children: [string]
+    links: Array<string>
+    children: Array<string>
     id: string
 }
 
@@ -70,6 +70,30 @@ async function updateCollection({name, links, children, id}: CollectionData): Pr
 async function deleteCollection(collectionId: string): Promise<string> {
     await collections.delete(collectionId);
     return "Done";
+}
+
+async function dropLinkToCollection(collectionId: string, linkId: string): Promise<string> {
+    const currentCollection = await getCollection(collectionId);
+
+    if (linkId in currentCollection.links) {
+        return "Success";
+    }
+
+    let newLinksList: Array<string> = [...currentCollection.links, linkId];
+
+    try {
+        // Update only the list of links
+        await updateCollection({
+            name: "",
+            children: [],
+            id: collectionId,
+            links: newLinksList
+        });
+
+        return "Success";
+    } catch {
+        return "Failed";
+    }
 }
 
 export { createCollection, getCollection, getAllCollections, updateCollection, deleteCollection };
