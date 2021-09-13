@@ -91,6 +91,11 @@ const resolvers = {
             const result = await dropLinkToCollection(args.collectionId, args.linkId);
 
             return {status: result};
+        },
+        removeLink: async (_parent: any, args: any): Promise<any> {
+            const result = await removeLink(args.collectionId, args.linkId);
+
+            return {status: result};
         }
     }
 }
