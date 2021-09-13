@@ -4,6 +4,7 @@
   justify-content: space-between;
   align-items: center;
   border-bottom: solid 1px grey;
+  max-height: 8vh;
 }
 
 /* Search Form */
