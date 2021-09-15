@@ -81,8 +81,10 @@ async function dropLinkToCollection(collectionId: string, linkId: string): Promi
 
     try {
         // Update only the list of links
+        const thisCollection = await collections.get(collectionId);
+        const newLinks: Array<any> = [...new Set([...thisCollection?.links as Array<string>, linkId])];
         collections.update({
-            links: collections.util.append(linkId)
+            links: newLinks
         }, collectionId);
 
         return "Success";
@@ -111,4 +113,12 @@ async function removeLink(collectionId: string, linkId: string): Promise<string>
     }
 }
 
-export { createCollection, getCollection, getAllCollections, updateCollection, deleteCollection };
+export { 
+    createCollection, 
+    getCollection, 
+    getAllCollections, 
+    updateCollection, 
+    deleteCollection, 
+    dropLinkToCollection, 
+    removeLink 
+};
