@@ -1,7 +1,9 @@
 {
   "dependencies": {
+    "@apollo/client": "^3.4.11",
     "@clerk/nextjs": "^1.2.1",
     "deta": "^1.0.0",
+    "graphql": "^15.5.3",
     "next": "^11.1.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
