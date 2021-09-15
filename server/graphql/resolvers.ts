@@ -29,6 +29,9 @@ const resolvers = {
     User: {
         links: async (parent: any, _args: any): Promise<any> => {
             const allLinks = await getAllLinks(parent.id);
+
+            // change link key to link.id to match typedef
+            allLinks.map((link: any) => link.id = link.key);
             return allLinks;
         },
         collections: async (parent: any, _args: any): Promise<any> => {
