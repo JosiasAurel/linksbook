@@ -35,13 +35,12 @@ const resolvers = {
             return allLinks;
         },
         collections: async (parent: any, _args: any): Promise<any> => {
-            const allCollections: any = getAllCollections(parent.id);
+            const allCollections: any = await getAllCollections(parent.id);
+            
+            // set collection.id to value of collection.key
+            allCollections.map((col: any) => col.id = col.key);
 
-            if (allCollections.status === "Success") {
-                return allCollections.objects;
-            } else {
-                return [];
-            }
+            return allCollections;
         }
     },
     Mutation: {
