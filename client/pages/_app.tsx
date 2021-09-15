@@ -5,12 +5,19 @@ import "../styles/global.css";
 import { AppProps } from "next/app";
 
 /* Init Apollo Client */
-import { } from "@apollo/client";
+import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
+
+const client = new ApolloClient({
+    uri: "http://localhost:5000/graphql",
+    cache: new InMemoryCache()
+});
 
 const LinksBookApp: FunctionComponent<AppProps> = ({ Component, pageProps }): JSX.Element => {
 
     return (
-        <Component {...pageProps} />
+        <ApolloProvider client={client}>
+            <Component {...pageProps} />
+        </ApolloProvider>
     )
 }
 
