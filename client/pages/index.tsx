@@ -11,7 +11,7 @@ import styles from "../styles/index.module.css";
 import toast, { Toaster } from "react-hot-toast";
 import { Loading, Button, Tooltip, Spacer } from '@nextui-org/react';
 
-import { Modal } from "@geist-ui/react";
+import { Modal, Input } from "@geist-ui/react";
 
 function CreateToolTipBody(): JSX.Element {
     return (
@@ -32,6 +32,10 @@ const HomePage: FunctionComponent = (): JSX.Element => {
     /* Create Link/Collection Modal states */
     const [createLink, setCreateLink] = useState<boolean>(false);
     const [createCollection, setCreateCollection] = useState<boolean>(false);
+    function toggleModal(state, handler): void {
+        handler(!state);
+    }
+    /*  */
 
     const Hello = gql`
     query {
@@ -129,7 +133,16 @@ const HomePage: FunctionComponent = (): JSX.Element => {
 
             {/* Create Link Modal */}
             <Modal visible={createLink}>
-
+                <Modal.Title>
+                    Create Link
+                </Modal.Title>
+                <Modal.Content>
+                    <form>
+                        <Input placeholder="URL e.g https://twitter.com" />
+                        <Input placeholder="Annotation e.g Thread on mental health" />
+                        <Input placeholder="Tags, separate the tags by commas e.g brain, health" />
+                    </form>
+                </Modal.Content>
             </Modal>
 
             {/* Create collection Modal */}
