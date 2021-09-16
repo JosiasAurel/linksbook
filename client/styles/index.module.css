@@ -21,6 +21,14 @@
   width: 75%;
 }
 
+.linksSection__loading {
+  height: 100%;
+  width: 75%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .links {
   width: 100%;
   display: flex;

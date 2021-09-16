@@ -9,6 +9,7 @@ import LinkCard from "../components/LinkCard";
 import styles from "../styles/index.module.css";
 
 import toast, { Toaster } from "react-hot-toast";
+import { Loading } from '@nextui-org/react';
 
 const HomePage: FunctionComponent = (): JSX.Element => {
     const Hello = gql`
@@ -38,8 +39,8 @@ const HomePage: FunctionComponent = (): JSX.Element => {
                     </section>
 
 
-                    <section className={styles.linksSection}>
-                        <h2>Loading...</h2>
+                    <section className={styles.linksSection__loading}>
+                        <Loading />
                     </section>
                 </div>
                 <Toaster />
