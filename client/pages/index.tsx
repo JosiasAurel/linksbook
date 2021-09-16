@@ -13,20 +13,6 @@ import { Loading, Button, Tooltip, Spacer } from '@nextui-org/react';
 
 import { Modal, Input } from "@geist-ui/react";
 
-function CreateToolTipBody(): JSX.Element {
-    return (
-        <div style={{ display: "flex", flexDirection: "column" }}>
-            <Button>
-                Create Link
-            </Button>
-            <Spacer />
-            <Button>
-                Create Collection
-            </Button>
-        </div>
-    )
-}
-
 const HomePage: FunctionComponent = (): JSX.Element => {
 
     /* Create Link/Collection Modal states */
@@ -36,6 +22,23 @@ const HomePage: FunctionComponent = (): JSX.Element => {
         handler(!state);
     }
     /*  */
+
+    /* Tooltip Body */
+    function CreateToolTipBody(): JSX.Element {
+        return (
+            <div style={{ display: "flex", flexDirection: "column" }}>
+                <Button onClick={e => toggleModal(createLink, setCreateLink)}>
+                    Create Link
+                </Button>
+                <Spacer />
+                <Button onClick={e => toggleModal(createCollection, setCreateCollection)}>
+                    Create Collection
+                </Button>
+            </div>
+        )
+    }
+
+    /* End Tooltip body */
 
     const Hello = gql`
     query {
