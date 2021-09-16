@@ -7,6 +7,10 @@
   max-height: 8vh;
 }
 
+.header > * {
+  margin: 0 0.5em;
+}
+
 /* Search Form */
 .searchForm {
   display: flex;

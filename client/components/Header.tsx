@@ -2,7 +2,8 @@ import React from "react";
 
 import styles from "../styles/components.module.css";
 
-import User from "./User";
+
+import { Avatar, Spacer } from "@nextui-org/react";
 
 const Header: React.FC = (): JSX.Element => {
     return (
@@ -10,7 +11,9 @@ const Header: React.FC = (): JSX.Element => {
             <div>
                 <h1>Star</h1>
             </div>
-            <User name={"Josias"} profile="/josias.jpg" />
+            <div>
+                <Avatar text={"Josias"} />
+            </div>
         </header>
     )
 }
