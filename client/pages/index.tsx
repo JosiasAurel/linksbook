@@ -4,6 +4,7 @@ import { useQuery, gql } from "@apollo/client";
 
 import Header from "../components/Header";
 import Search from "../components/Search";
+import LinkCard from "../components/LinkCard";
 
 import styles from "../styles/index.module.css";
 
@@ -81,7 +82,18 @@ const HomePage: FunctionComponent = (): JSX.Element => {
 
 
                 <section className={styles.linksSection}>
-
+                    <div className={styles.links}>
+                        {data.user.links.map(link => {
+                            return (
+                                <LinkCard
+                                    key={link.id}
+                                    name={link.annotation}
+                                    url={link.url}
+                                    tags={link.tags}
+                                />
+                            )
+                        })}
+                    </div>
                 </section>
             </div>
             <Toaster
