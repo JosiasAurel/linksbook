@@ -29,7 +29,8 @@ const HomePage: FunctionComponent = (): JSX.Element => {
                 annotation,
                 tags,
                 note,
-                id
+                id,
+                url
             }
         }
     }
@@ -98,6 +99,7 @@ const HomePage: FunctionComponent = (): JSX.Element => {
                 <section className={styles.linksSection}>
                     <div className={styles.links}>
                         {data.user.links.map(link => {
+                            console.log({ link: link })
                             return (
                                 <LinkCard
                                     key={link.id}
