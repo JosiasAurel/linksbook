@@ -110,9 +110,28 @@ const HomePage: FunctionComponent = (): JSX.Element => {
                     </div>
                 </section>
             </div>
+            {/* Everything Else */}
+
+
+            {/* Toasts */}
             <Toaster
                 position="bottom-right"
             />
+            {/* End Toasts */}
+
+            {/* Modals */}
+
+            {/* Create Link Modal */}
+            <Modal visible={createLink}>
+
+            </Modal>
+
+            {/* Create collection Modal */}
+            <Modal visible={createCollection}>
+
+            </Modal>
+
+            {/* End Modals */}
         </div>
     )
 }
