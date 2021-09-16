@@ -9,10 +9,23 @@ import LinkCard from "../components/LinkCard";
 import styles from "../styles/index.module.css";
 
 import toast, { Toaster } from "react-hot-toast";
-import { Loading, Button } from '@nextui-org/react';
+import { Loading, Button, Tooltip, Spacer } from '@nextui-org/react';
 
 import { Modal } from "@geist-ui/react";
-import { Plus } from "@geist-ui/react-icons";
+
+function CreateToolTipBody(): JSX.Element {
+    return (
+        <div style={{ display: "flex", flexDirection: "column" }}>
+            <Button>
+                Create Link
+            </Button>
+            <Spacer />
+            <Button>
+                Create Collection
+            </Button>
+        </div>
+    )
+}
 
 const HomePage: FunctionComponent = (): JSX.Element => {
 
@@ -62,24 +75,13 @@ const HomePage: FunctionComponent = (): JSX.Element => {
         toast.error("Could not load data.");
         return (
             <div className={styles.dashboardPage}>
-                <Header />
-                <div className={styles.dashboardSections}>
-                    <section className={styles.foldersSection}>
-                        <Search searchAction={(() => undefined)} />
-                    </section>
-
-
-                    <section className={styles.linksSection}>
-                        <h2>An Error Ocurred</h2>
-                    </section>
-                </div>
+                <h2>Something Wrong Ocurred.</h2>
             </div>
         )
     }
 
     if (data) {
         toast.success("Data Loaded Successfully");
-        console.log(data)
     }
 
     return (
@@ -89,9 +91,11 @@ const HomePage: FunctionComponent = (): JSX.Element => {
                 <section className={styles.foldersSection}>
                     <Search searchAction={(() => undefined)} />
                     <div className={styles.center}>
-                        <Button>
-                            Create
-                        </Button>
+                        <Tooltip position="right" trigger="click" text={<CreateToolTipBody />}>
+                            <Button>
+                                Create
+                            </Button>
+                        </Tooltip>
                     </div>
                 </section>
 
