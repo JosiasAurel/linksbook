@@ -7,16 +7,70 @@ import Search from "../components/Search";
 
 import styles from "../styles/index.module.css";
 
+import toast, { Toaster } from "react-hot-toast";
+
 const HomePage: FunctionComponent = (): JSX.Element => {
     const Hello = gql`
     query {
-        hello
+        user {
+            name, 
+            email,
+            links {
+                annotation,
+                tags,
+                note,
+                id
+            }
+        }
     }
     `;
-
     const { loading, error, data } = useQuery(Hello);
 
-    console.log(data);
+    if (loading) {
+        toast.promise(new Promise((resolve, reject) => setTimeout(() => resolve("Hello"), Math.floor(Math.random() * 4000))), { loading: "Fetching Latest Data...", success: "Done", error: "Something Wrong Occurred" });
+        return (
+            <div className={styles.dashboardPage}>
+                <Header />
+                <div className={styles.dashboardSections}>
+                    <section className={styles.foldersSection}>
+                        <Search searchAction={(() => undefined)} />
+                    </section>
+
+
+                    <section className={styles.linksSection}>
+                        <h2>Loading...</h2>
+                    </section>
+                </div>
+                <Toaster />
+            </div>
+        )
+    }
+
+    if (error) {
+        toast.error("Something Wrong Ocurred.");
+        toast.error("Could not load data.");
+        return (
+            <div className={styles.dashboardPage}>
+                <Header />
+                <div className={styles.dashboardSections}>
+                    <section className={styles.foldersSection}>
+                        <Search searchAction={(() => undefined)} />
+                    </section>
+
+
+                    <section className={styles.linksSection}>
+                        <h2>An Error Ocurred</h2>
+                    </section>
+                </div>
+            </div>
+        )
+    }
+
+    if (data) {
+        toast.success("Data Loaded Successfully");
+        console.log(data)
+    }
+
     return (
         <div className={styles.dashboardPage}>
             <Header />
@@ -30,6 +84,9 @@ const HomePage: FunctionComponent = (): JSX.Element => {
 
                 </section>
             </div>
+            <Toaster
+                position="bottom-right"
+            />
         </div>
     )
 }
