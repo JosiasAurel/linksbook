@@ -3,6 +3,7 @@ import React from "react";
 import styles from "../styles/components.module.css";
 import Tag from "./Tag";
 
+import toast, { Toaster } from "react-hot-toast";
 import { Copy, Edit2, ArrowUpRight, Archive } from "@geist-ui/react-icons";
 
 interface LinkCardProps {
@@ -11,7 +12,15 @@ interface LinkCardProps {
     tags: Array<string>
 }
 
+
 const LinkCard: React.FC<LinkCardProps> = ({ name, url, tags }): JSX.Element => {
+
+    function copyToClipboard(): void {
+        // copy the link to the clipboard
+        navigator.clipboard.writeText(url);
+        toast.success("Copied Link to Clipboard", { position: "bottom-right", icon: "🔗" });
+    }
+
     return (
         <div className={styles.linkCard}>
             <p> {name} </p>
@@ -24,13 +33,13 @@ const LinkCard: React.FC<LinkCardProps> = ({ name, url, tags }): JSX.Element => 
             </div>
             <div className={styles.actions}>
                 {/* Navigate To */}
-                <div>
+                <a href={url} target="_blank">
                     <ArrowUpRight />
-                </div>
+                </a>
                 {/* End Navigate To */}
 
                 {/* Copy Icon */}
-                <div className={styles.copyIcon}>
+                <div onClick={e => copyToClipboard()} className={styles.copyIcon}>
                     {/* <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                         <g data-name="Layer 2">
                             <g data-name="copy">
