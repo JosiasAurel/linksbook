@@ -3,6 +3,17 @@
   flex-direction: column;
 }
 
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.center button {
+  margin-top: 1em;
+  width: 90%;
+}
+
 .dashboardSections {
   display: flex;
   flex-direction: row;
