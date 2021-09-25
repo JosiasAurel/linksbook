@@ -82,3 +82,30 @@
   justify-content: space-evenly;
   align-items: center;
 }
+
+/* Side Pop Page  */
+.sidePopPage {
+  border-left: solid 1px grey;
+  transition: all 0.2s ease-in-out;
+  animation-name: pop-out;
+  animation-duration: 0.5s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes pop-out {
+  from {
+    right: 50px;
+    width: 10px;
+    height: 10px;
+  }
+
+  to {
+    width: 500px;
+    height: 91vh;
+  }
+}
+
+.sidePopPageHide {
+  display: none;
+}
+/* End Side Pop Page */
