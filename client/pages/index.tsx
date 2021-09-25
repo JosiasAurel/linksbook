@@ -38,6 +38,9 @@ const HomePage: FunctionComponent = (): JSX.Element => {
         setSPTitle(annotation);
         setSPLink(link);
         setSPTags(tags);
+
+        // set pop page visible
+        setPopPage(!showPopPage);
     }
     /* link card edit action - end */
 
@@ -143,6 +146,7 @@ const HomePage: FunctionComponent = (): JSX.Element => {
                                     name={link.annotation}
                                     url={link.url}
                                     tags={link.tags}
+                                    editAction={() => editActionHandler(link.annotation, link.url, link.tags)}
                                 />
                             )
                         })}
@@ -151,16 +155,20 @@ const HomePage: FunctionComponent = (): JSX.Element => {
                 <section style={showPopPage ? { display: "flex" } : { display: "none" }} className={styles.sidePopPage}>
                     <div className={styles.showPopPageContent}>
                         <div className={styles.showPopPageContentTitle}>
-                            <h1>The DAO of DAOs</h1>
-                            <CopyLink link="https://www.notboring.co/p/the-dao-of-daos" />
-                            <div className={styles.showPopPageTags}>
-                                <Tag name="DAO" />
-                                <Tag name="Crypto" />
-                                <Tag name="Organisation" />
-                                <Tag name="Efficient" />
+                            <div className={styles.closeShowPopPage}>
+                                <p onClick={() => togglePopPage()}> X </p>
                             </div>
-                            <div className={styles.showPopPageNotes}>
+                            <div className={styles.showPopPageContentTitle}>
+                                <h1> {spTitle} </h1>
+                                <CopyLink link={spLink} />
+                                <div className={styles.showPopPageTags}>
+                                    {spTags.map(tag => {
+                                        return <Tag key={tag} name={tag} />
+                                    })}
+                                </div>
+                                <div className={styles.showPopPageNotes}>
 
+                                </div>
                             </div>
                         </div>
                     </div>

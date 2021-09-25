@@ -119,7 +119,7 @@
 
   to {
     width: 60%;
-    height: 91vh;
+    height: 91.5vh;
   }
 }
 
@@ -148,5 +148,21 @@
   display: flex;
   flex-direction: row;
   align-items: center;
+}
+
+.closeShowPopPage {
+  position: relative;
+  top: -15px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.closeShowPopPage p {
+  padding: 1px 10px;
+  border: solid 1px grey;
+  cursor: pointer;
 }
 /* End Side Pop Page */
