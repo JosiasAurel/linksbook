@@ -27,6 +27,24 @@
   border-right: solid 1px grey;
 }
 
+.foldersSectionHide {
+  animation-name: hide-folders;
+  animation-duration: 0.5s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes hide-folders {
+  from {
+    min-width: 20%;
+    max-width: 20%;
+  }
+
+  to {
+    min-width: 0%;
+    max-width: 0%;
+  }
+}
+
 .linksSection {
   height: 100%;
   width: 75%;
@@ -46,7 +64,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: space-evenly;
-  margin: 1em;
+  margin: 1em 1em 1em 0.5em;
 }
 
 .page {
@@ -100,7 +118,7 @@
   }
 
   to {
-    width: 500px;
+    width: 60%;
     height: 91vh;
   }
 }
