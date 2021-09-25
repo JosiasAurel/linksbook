@@ -221,8 +221,8 @@
 
 /* Start Link Card */
 .linkCard {
-  max-width: 100%;
-  min-width: 100%;
+  max-width: 93%;
+  min-width: 93%;
   max-height: 50px;
   min-height: 50px;
   border-radius: 5px;
