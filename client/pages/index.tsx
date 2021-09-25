@@ -25,6 +25,22 @@ const HomePage: FunctionComponent = (): JSX.Element => {
     }
     /*  */
 
+    /* link card edit button action handle */
+    /* Show Pop page props; abbreviated 'sp' */
+
+    const [spTitle, setSPTitle] = useState<string>("");
+    const [spLink, setSPLink] = useState<string>("");
+    const [spTags, setSPTags] = useState<Array<string>>([""]);
+
+    function editActionHandler(annotation: string, link: string, tags: Array<string>): void {
+        // All this function does is replace the 
+        // state of show pop page
+        setSPTitle(annotation);
+        setSPLink(link);
+        setSPTags(tags);
+    }
+    /* link card edit action - end */
+
     /* Side Pop Page */
     const [showPopPage, setPopPage] = useState<boolean>(false);
 
