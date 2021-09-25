@@ -23,6 +23,15 @@ const HomePage: FunctionComponent = (): JSX.Element => {
     }
     /*  */
 
+    /* Side Pop Page */
+    const [showPopPage, setPopPage] = useState<boolean>(false);
+
+    function togglePopPage(): void {
+        setPopPage(!showPopPage);
+    }
+
+    /* End side pop page */
+
     /* Tooltip Body */
     function CreateToolTipBody(): JSX.Element {
         return (
@@ -104,6 +113,9 @@ const HomePage: FunctionComponent = (): JSX.Element => {
                             </Button>
                         </Tooltip>
                     </div>
+                    <button onClick={() => togglePopPage()}>
+                        Show Pop
+                    </button>
                 </section>
 
 
@@ -122,6 +134,12 @@ const HomePage: FunctionComponent = (): JSX.Element => {
                         })}
                     </div>
                 </section>
+                <section>
+                    <section style={showPopPage ? { display: "flex" } : { display: "none" }} className={styles.sidePopPage}>
+                        <h1>Something...</h1>
+                    </section>
+                </section>
+
             </div>
             {/* Everything Else */}
 
@@ -140,10 +158,13 @@ const HomePage: FunctionComponent = (): JSX.Element => {
                     Create Link
                 </Modal.Title>
                 <Modal.Content>
-                    <form>
+                    <form className={styles.createLinkForm}>
                         <Input placeholder="URL e.g https://twitter.com" />
                         <Input placeholder="Annotation e.g Thread on mental health" />
                         <Input placeholder="Tags, separate the tags by commas e.g brain, health" />
+                        <Button>
+                            Save Link
+                        </Button>
                     </form>
                 </Modal.Content>
             </Modal>
@@ -154,7 +175,7 @@ const HomePage: FunctionComponent = (): JSX.Element => {
             </Modal>
 
             {/* End Modals */}
-        </div>
+        </div >
     )
 }
 
