@@ -134,10 +134,8 @@ const HomePage: FunctionComponent = (): JSX.Element => {
                         })}
                     </div>
                 </section>
-                <section>
-                    <section style={showPopPage ? { display: "flex" } : { display: "none" }} className={styles.sidePopPage}>
-                        <h1>Something...</h1>
-                    </section>
+                <section style={showPopPage ? { display: "flex" } : { display: "none" }} className={styles.sidePopPage}>
+                    <h1>Something...</h1>
                 </section>
 
             </div>
