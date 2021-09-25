@@ -235,6 +235,7 @@
   justify-content: space-between;
   align-items: center;
   transition: all 0.2s ease-in-out;
+  margin: 0.5em 0;
 }
 
 .linkCard:hover {

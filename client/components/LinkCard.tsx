@@ -10,10 +10,11 @@ interface LinkCardProps {
     name: string
     url: string
     tags: Array<string>
+    editAction?: Function
 }
 
 
-const LinkCard: React.FC<LinkCardProps> = ({ name, url, tags }): JSX.Element => {
+const LinkCard: React.FC<LinkCardProps> = ({ name, url, tags, editAction }): JSX.Element => {
 
     function copyToClipboard(): void {
         // copy the link to the clipboard
@@ -55,7 +56,7 @@ const LinkCard: React.FC<LinkCardProps> = ({ name, url, tags }): JSX.Element => 
 
 
                 {/* Edit Icon */}
-                <div className={styles.editIcon}>
+                <div onClick={() => editAction()} className={styles.editIcon}>
                     {/* <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                         <g data-name="Layer 2">
                             <g data-name="edit">
