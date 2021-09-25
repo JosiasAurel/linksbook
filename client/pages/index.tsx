@@ -5,6 +5,8 @@ import { useQuery, gql } from "@apollo/client";
 import Header from "../components/Header";
 import Search from "../components/Search";
 import LinkCard from "../components/LinkCard";
+import CopyLink from "../components/CopyLink";
+import Tag from "../components/Tag";
 
 import styles from "../styles/index.module.css";
 
@@ -96,10 +98,6 @@ const HomePage: FunctionComponent = (): JSX.Element => {
         )
     }
 
-    if (data) {
-        toast.success("Data Loaded Successfully");
-    }
-
     return (
         <div className={styles.dashboardPage}>
             <Header />
@@ -135,7 +133,21 @@ const HomePage: FunctionComponent = (): JSX.Element => {
                     </div>
                 </section>
                 <section style={showPopPage ? { display: "flex" } : { display: "none" }} className={styles.sidePopPage}>
-                    <h1>Something...</h1>
+                    <div className={styles.showPopPageContent}>
+                        <div className={styles.showPopPageContentTitle}>
+                            <h1>The DAO of DAOs</h1>
+                            <CopyLink link="https://www.notboring.co/p/the-dao-of-daos" />
+                            <div className={styles.showPopPageTags}>
+                                <Tag name="DAO" />
+                                <Tag name="Crypto" />
+                                <Tag name="Organisation" />
+                                <Tag name="Efficient" />
+                            </div>
+                            <div className={styles.showPopPageNotes}>
+
+                            </div>
+                        </div>
+                    </div>
                 </section>
 
             </div>

@@ -158,7 +158,8 @@
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
-  max-width: 400px;
+  min-width: 80%;
+  max-width: 80%;
 }
 
 .copyLink p {
@@ -168,6 +169,8 @@
   border-radius: 2px;
   max-width: 70%;
   min-width: 70%;
+  max-height: 25px;
+  overflow: hidden;
 }
 
 .copyLink button {
