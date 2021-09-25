@@ -40,7 +40,12 @@ const HomePage: FunctionComponent = (): JSX.Element => {
         setSPTags(tags);
 
         // set pop page visible
-        setPopPage(!showPopPage);
+        if (showPopPage) {
+            setPopPage(!showPopPage);
+            setPopPage(!!showPopPage);
+        } else {
+            setPopPage(!showPopPage);
+        }
     }
     /* link card edit action - end */
 
