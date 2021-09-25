@@ -15,6 +15,9 @@ import { Loading, Button, Tooltip, Spacer } from '@nextui-org/react';
 
 import { Modal, Input } from "@geist-ui/react";
 
+// import graphql actions
+import { FETCH_ALL, CREATE_LINK } from "../graphql/actions";
+
 const HomePage: FunctionComponent = (): JSX.Element => {
 
     /* Create Link/Collection Modal states */
@@ -75,22 +78,7 @@ const HomePage: FunctionComponent = (): JSX.Element => {
 
     /* End Tooltip body */
 
-    const Hello = gql`
-    query {
-        user {
-            name, 
-            email,
-            links {
-                annotation,
-                tags,
-                note,
-                id,
-                url
-            }
-        }
-    }
-    `;
-    const { loading, error, data } = useQuery(Hello);
+    const { loading, error, data } = useQuery(FETCH_ALL);
 
     if (loading) {
         toast.promise(new Promise((resolve, reject) => setTimeout(() => resolve("Hello"), Math.floor(Math.random() * 4000))), { loading: "Fetching Latest Data...", success: "Done", error: "Something Wrong Occurred" });
@@ -117,7 +105,11 @@ const HomePage: FunctionComponent = (): JSX.Element => {
         toast.error("Could not load data.");
         return (
             <div className={styles.dashboardPage}>
-                <h2>Something Wrong Ocurred.</h2>
+                <Header />
+                <div className={styles.dashboardSections}>
+                    <h1>Something Wrong Occurred</h1>
+                </div>
+                <Toaster />
             </div>
         )
     }
@@ -126,7 +118,7 @@ const HomePage: FunctionComponent = (): JSX.Element => {
         <div className={styles.dashboardPage}>
             <Header />
             <div className={styles.dashboardSections}>
-                <section className={styles.foldersSection}>
+                <section style={showPopPage ? { display: "none" } : { display: "block" }} className={styles.foldersSection}>
                     <Search searchAction={(() => undefined)} />
                     <div className={styles.center}>
                         <Tooltip position="right" trigger="click" text={<CreateToolTipBody />}>
@@ -135,9 +127,6 @@ const HomePage: FunctionComponent = (): JSX.Element => {
                             </Button>
                         </Tooltip>
                     </div>
-                    <button onClick={() => togglePopPage()}>
-                        Show Pop
-                    </button>
                 </section>
 
 
@@ -190,23 +179,6 @@ const HomePage: FunctionComponent = (): JSX.Element => {
             {/* End Toasts */}
 
             {/* Modals */}
-
-            {/* Create Link Modal */}
-            <Modal visible={createLink}>
-                <Modal.Title>
-                    Create Link
-                </Modal.Title>
-                <Modal.Content>
-                    <form className={styles.createLinkForm}>
-                        <Input placeholder="URL e.g https://twitter.com" />
-                        <Input placeholder="Annotation e.g Thread on mental health" />
-                        <Input placeholder="Tags, separate the tags by commas e.g brain, health" />
-                        <Button>
-                            Save Link
-                        </Button>
-                    </form>
-                </Modal.Content>
-            </Modal>
 
             {/* Create collection Modal */}
             <Modal visible={createCollection}>
