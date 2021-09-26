@@ -18,7 +18,7 @@ const FETCH_ALL = gql`
     `;
 
 const CREATE_LINK = gql`
-    mutation createLink($annotation: String!, $url: String!, $tags: String!) {
+    mutation createLink($annotation: String!, $url: String!, $tags: [String]!) {
         createLink(annotation: $annotation, url: $url, tags: $tags) {
             status
         }
