@@ -15,6 +15,9 @@
   align-items: center;
   width: 40%;
   height: 80%;
+  border: solid 2px rgba(103, 103, 255, 0.692);
+  border-radius: 5px;
+  box-shadow: 1px 1px 2px 2px whitesmoke;
 }
 
 .authPage form {
