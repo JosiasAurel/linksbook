@@ -24,7 +24,6 @@ app.get("/", (req: Request, res: Response) => {
     res.send("LinksBook server working");
 });
 
-
 // Create apollo server
 const apolloServer = new ApolloServer({
     typeDefs: typeDefinitions,
