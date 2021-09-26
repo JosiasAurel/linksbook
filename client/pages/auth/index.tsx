@@ -33,7 +33,7 @@ const MainAuthPage: React.FC = (): JSX.Element => {
                 </form>
                 <div className={styles.option}>
                     Already have an account ?
-                    <Link href="/login">
+                    <Link href="/auth/login">
                         <p className={styles.loginOption}>Log In</p>
                     </Link>
                 </div>
