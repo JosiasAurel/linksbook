@@ -6,6 +6,7 @@ import { AppProps } from "next/app";
 
 // Use Geist UI components
 import { GeistProvider, CssBaseline } from "@geist-ui/react";
+import AuthProvider from "../contexts/auth";
 
 /* Init Apollo Client */
 import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink } from "@apollo/client";
@@ -36,12 +37,14 @@ const client = new ApolloClient({
 const LinksBookApp: FunctionComponent<AppProps> = ({ Component, pageProps }): JSX.Element => {
 
     return (
-        <GeistProvider>
-            <CssBaseline />
-            <ApolloProvider client={client}>
-                <Component {...pageProps} />
-            </ApolloProvider>
-        </GeistProvider>
+        <AuthProvider>
+            <GeistProvider>
+                <CssBaseline />
+                <ApolloProvider client={client}>
+                    <Component {...pageProps} />
+                </ApolloProvider>
+            </GeistProvider>
+        </AuthProvider>
     )
 }
 
