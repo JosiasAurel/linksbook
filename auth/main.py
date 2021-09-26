@@ -86,7 +86,7 @@ async def _complete_user_login(request: Request):
     return {"status": "Failed", "type": "PinDoesNotExist"}
 
 
-@app.post("/is-authenticated")
+""" @app.post("/is-authenticated")
 async def _check_is_auth(request: Request):
     req_body = await request.json()
     user_email = req_body["email"]
@@ -97,6 +97,7 @@ async def _check_is_auth(request: Request):
     result = verify_token(auth_token, user.get("key"))
 
     return {"status": "Done", "info": result, "credentials": {"name": user.get("name"), "email": user.get("email")}}
+ """
 
 
 @app.post("/sign-out")
