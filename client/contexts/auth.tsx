@@ -5,6 +5,8 @@ interface AuthCtxProps {
     children: React.ReactElement
 }
 
+const AuthCtx = createContext({ authenticated: false, name: "" });
+
 const AuthProvider: React.FC<AuthCtxProps> = ({ children }): JSX.Element => {
 
     const [isAuth, setIsAuth] = React.useState<boolean>(false);
@@ -21,7 +23,6 @@ const AuthProvider: React.FC<AuthCtxProps> = ({ children }): JSX.Element => {
             setName(userName);
         }
     }, []);
-    const AuthCtx = createContext({ authenticated: isAuth, name });
 
     return (
         <div>
@@ -31,5 +32,7 @@ const AuthProvider: React.FC<AuthCtxProps> = ({ children }): JSX.Element => {
         </div>
     )
 }
+
+export { AuthCtx };
 
 export default AuthProvider;
