@@ -57,7 +57,12 @@ const LogInPage: React.FC = (): JSX.Element => {
 
         const result = await response.json();
 
-        console.log(result);
+        if (result.status === "success") {
+            toast.success(result.status);
+            setTimeout(() => router.replace("/"), 2000);
+        } else {
+            toast.error(result.status);
+        }
     }
 
     async function authenticateWithPin(event: any): Promise<void> {
