@@ -158,10 +158,10 @@
   resolved "https://registry.yarnpkg.com/@next/react-refresh-utils/-/react-refresh-utils-11.1.0.tgz#60c3c7b127a5dab8b0a2889a7dcf8a90d2c4e592"
   integrity sha512-g5DtFTpLTGa36iy9DuZawtJeitI11gysFGKPQQqy+mNbSFazguArcJ10gAYFlbqpIi4boUamWNI5mAoSPx3kog==
 
-"@nextui-org/react@^1.0.1-alpha.32":
-  version "1.0.1-alpha.32"
-  resolved "https://registry.yarnpkg.com/@nextui-org/react/-/react-1.0.1-alpha.32.tgz#d71412d346d67897bd422d7c91b0aff77294cb48"
-  integrity sha512-NwmdGOIBc5unfWJGPR7o/q5gq/uCCsOpTfdLysVhaM1VEKrfYBJgDAOLLl3vKhiX+hIIM3iZaVTxKTI2REgMyw==
+"@nextui-org/react@^1.0.1-alpha.34":
+  version "1.0.1-alpha.34"
+  resolved "https://registry.yarnpkg.com/@nextui-org/react/-/react-1.0.1-alpha.34.tgz#17b0a5eaf450a680ff43730b0751377274795321"
+  integrity sha512-xqhVt70msW11o4csa2bIi7VyGJhGAVjbnWhmCtOwJFzEQ4PfT0lCxZnZWgzp6R3w1M0N8QzBeJO+TiJ8IluHyg==
   dependencies:
     styled-jsx "^3.4.4"
 
