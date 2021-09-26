@@ -8,12 +8,14 @@ import LinkCard from "../components/LinkCard";
 import CopyLink from "../components/CopyLink";
 import Tag from "../components/Tag";
 
+import CreateLinkForm from "../components/createLink";
+
 import styles from "../styles/index.module.css";
 
 import toast, { Toaster } from "react-hot-toast";
 import { Loading, Button, Tooltip, Spacer } from '@nextui-org/react';
 
-import { Modal, Input } from "@geist-ui/react";
+import { Modal } from "@geist-ui/react";
 
 // import graphql actions
 import { FETCH_ALL, CREATE_LINK } from "../graphql/actions";
@@ -65,9 +67,11 @@ const HomePage: FunctionComponent = (): JSX.Element => {
     function CreateToolTipBody(): JSX.Element {
         return (
             <div style={{ display: "flex", flexDirection: "column" }}>
-                <Button onClick={e => toggleModal(createLink, setCreateLink)}>
-                    Create Link
-                </Button>
+                <Tooltip position="right" trigger="click" text={<CreateLinkForm />}>
+                    <Button>
+                        Create Link
+                    </Button>
+                </Tooltip>
                 <Spacer />
                 <Button onClick={e => toggleModal(createCollection, setCreateCollection)}>
                     Create Collection
@@ -104,12 +108,8 @@ const HomePage: FunctionComponent = (): JSX.Element => {
         toast.error("Something Wrong Ocurred.");
         toast.error("Could not load data.");
         return (
-            <div className={styles.dashboardPage}>
-                <Header />
-                <div className={styles.dashboardSections}>
-                    <h1>Something Wrong Occurred</h1>
-                </div>
-                <Toaster />
+            <div className={styles.errorPage}>
+                <h1>Something Wrong Occurred</h1>
             </div>
         )
     }
