@@ -6,16 +6,22 @@ from lib.tokenmanager import save_token, verify_token, revoke_token
 from models.user import get_user_by_email, create_user
 from fastapi import FastAPI, Request
 from deta import Deta
+from fastapi.middleware.cors import CORSMiddleware
 
 deta = Deta("a0ojq87u_xgq3dQQLkXj3YBsJ5iJKZ5MTAtYmCLoF")
 
 usersdb = deta.Base("users")
 
-# custom library
-
-
 app = FastAPI()
 
+# add CORS middleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.get("/")
 def _root(request: Request) -> str:
