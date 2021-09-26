@@ -3,6 +3,7 @@ import React from "react";
 import { Button } from "@nextui-org/react";
 import { Input } from "@geist-ui/react";
 import Image from "next/image";
+import Link from "next/link";
 
 import styles from "../../styles/auth.module.css";
 
@@ -30,6 +31,12 @@ const MainAuthPage: React.FC = (): JSX.Element => {
                         Sign Up
                     </Button>
                 </form>
+                <div className={styles.option}>
+                    Already have an account ?
+                    <Link href="/login">
+                        <p className={styles.loginOption}>Log In</p>
+                    </Link>
+                </div>
             </div>
         </div>
     )
