@@ -3,8 +3,10 @@ import React from "react";
 import styles from "../styles/components.module.css";
 import Tag from "./Tag";
 
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import { Copy, Edit2, ArrowUpRight, Archive } from "@geist-ui/react-icons";
+
+import { truncateStr } from "../utils/string";
 
 interface LinkCardProps {
     name: string
@@ -24,7 +26,7 @@ const LinkCard: React.FC<LinkCardProps> = ({ name, url, tags, editAction }): JSX
 
     return (
         <div className={styles.linkCard}>
-            <p> {name} </p>
+            <p> {truncateStr(name, 30)} </p>
             <div className={styles.linkTags}>
                 {tags.map(tag => {
                     return (
