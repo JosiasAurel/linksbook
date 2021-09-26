@@ -2,7 +2,7 @@
 import React, { createContext } from "react";
 
 interface AuthCtxProps {
-    children: React.ReactChildren
+    children: React.ReactElement
 }
 
 const AuthProvider: React.FC<AuthCtxProps> = ({ children }): JSX.Element => {
