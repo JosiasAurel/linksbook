@@ -6,6 +6,10 @@ import Image from "next/image";
 import Link from "next/link";
 
 import styles from "../../styles/auth.module.css";
+import toast from "react-hot-toast";
+import router from "next/router";
+
+const AUTH_SERVICE_URI: string = process.env.NEXT_PUBLIC_AUTH_SERVICE;
 
 const MainAuthPage: React.FC = (): JSX.Element => {
 
@@ -14,6 +18,20 @@ const MainAuthPage: React.FC = (): JSX.Element => {
 
     function handleChange(event, handler): void {
         handler(event.target.value);
+    }
+
+    function handleRegistration(): void {
+        fetch(AUTH_SERVICE_URI)
+            .then(res => res.json())
+            .then(result => {
+                if (result.status === "Success") {
+                    toast.success("Success");
+                    // redirect to login page
+                    router.replace("/auth/login");
+                } else {
+                    toast.error("Something Wrong Occurred");
+                }
+            });
     }
 
     return (
