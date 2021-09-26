@@ -7,6 +7,16 @@
   max-height: 8vh;
 }
 
+.header .headerLogo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.header .headerLogo img {
+  max-width: 40px;
+}
+
 .header > * {
   margin: 0 0.5em;
 }
