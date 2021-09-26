@@ -1,13 +1,12 @@
 import React, { FunctionComponent, useState, useContext, useEffect } from "react";
 
-import { useQuery, gql } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 
 import Header from "../components/Header";
 import Search from "../components/Search";
 import LinkCard from "../components/LinkCard";
 import CopyLink from "../components/CopyLink";
 import Tag from "../components/Tag";
-
 import CreateLinkForm from "../components/createLink";
 
 import styles from "../styles/index.module.css";
@@ -19,6 +18,8 @@ import { Modal } from "@geist-ui/react";
 
 // import graphql actions
 import { FETCH_ALL, CREATE_LINK } from "../graphql/actions";
+
+import { truncateStr } from "../utils/string";
 
 const HomePage: FunctionComponent = (): JSX.Element => {
 
@@ -153,7 +154,7 @@ const HomePage: FunctionComponent = (): JSX.Element => {
                                 <p onClick={() => togglePopPage()}> X </p>
                             </div>
                             <div className={styles.showPopPageContentTitle}>
-                                <h1> {spTitle} </h1>
+                                <h1> {truncateStr(spTitle)} </h1>
                                 <CopyLink link={spLink} />
                                 <div className={styles.showPopPageTags}>
                                     {spTags.map(tag => {
