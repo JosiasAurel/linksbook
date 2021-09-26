@@ -1,7 +1,7 @@
 import React from "react";
 
 import { Button } from "@nextui-org/react";
-import { Input } from "@geist-ui/react";
+import { Input, Modal } from "@geist-ui/react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -15,7 +15,10 @@ const AUTH_SERVICE_URI: string = process.env.NEXT_PUBLIC_AUTH_SERVICE;
 const LogInPage: React.FC = (): JSX.Element => {
 
     const [email, setEmail] = React.useState<string>("");
+    const [pin, setPin] = React.useState<string>("");
+    const [modal, setModal] = React.useState<boolean>(false);
 
+    /* Handle Creating Log In Pin */
     async function handleLogIn(): Promise<void> {
         const response = await fetch(`${AUTH_SERVICE_URI}/create-login`, {
             method: "POST",
@@ -23,10 +26,10 @@ const LogInPage: React.FC = (): JSX.Element => {
             body: JSON.stringify({ email })
         });
         const result = await response.json();
-
+        console.log(result);
         if (result.status === "Success") {
             toast.success("Success");
-            router.replace("/auth/finish");
+            setModal(true);
         } else {
             toast.error("Something Wrong Occurred");
             toast("Please Try Again...");
@@ -42,6 +45,32 @@ const LogInPage: React.FC = (): JSX.Element => {
             toast.error("Please fill in your email");
         }
     }
+    /* Handle Creating Log In Pin - End */
+
+    /* Handle Getting Auth token */
+    async function getCredentials(): Promise<void> {
+        const response = await fetch(`${AUTH_SERVICE_URI}/complete-login`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email, pin })
+        });
+
+        const result = await response.json();
+
+        console.log(result);
+    }
+
+    async function authenticateWithPin(event: any): Promise<void> {
+        event.preventDefault(); // prevent browser reload
+
+        if (pin.trim() !== "" && email.trim() !== "") {
+            await getCredentials();
+        } else {
+            toast.error("Please enter your pin or fill email");
+        }
+    }
+    /* Handle Getting Auth token - End*/
+
 
     return (
         <div className={styles.authPage}>
@@ -62,6 +91,19 @@ const LogInPage: React.FC = (): JSX.Element => {
                     </Link>
                 </div>
             </div>
+            <Modal visible={modal}>
+                <div className={styles.content}>
+                    <Image src="/LinksBook.svg" width={150} height={150} />
+                    <form onSubmit={e => authenticateWithPin(e)}>
+                        <Input value={pin} onChange={e => handleChange(e, setPin)} clearable>
+                            Log In Pin
+                        </Input>
+                        <Button htmlType="submit">
+                            Log In
+                        </Button>
+                    </form>
+                </div>
+            </Modal>
         </div>
     )
 }
