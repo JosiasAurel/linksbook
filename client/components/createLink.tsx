@@ -15,11 +15,8 @@ const CreateLinkForm: React.FC = (): JSX.Element => {
     async function handleCreateLink(event: any): Promise<void> {
         event.preventDefault(); // prevent page reload
 
-        saveLink({ variables: { url, annotation: url, tags: [] } });
-    }
+        toast.promise(saveLink({ variables: { url, annotation: url, tags: [] } }), { loading: "Saving", success: "Bookmark saved", error: "Could not save bookmark" });
 
-    if (loading) {
-        toast.promise(new Promise((res, rej) => { if (data) { res(data) } else { rej(error) } }), { loading: "Saving", success: "Bookmark saved", error: "Could not save bookmark" })
     }
 
     return (
