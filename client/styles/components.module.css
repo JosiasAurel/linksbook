@@ -238,6 +238,10 @@
   margin: 0.5em 0;
 }
 
+.linkCard p {
+  overflow: hidden;
+}
+
 .linkCard:hover {
   box-shadow: 0 2px 2px 2px whitesmoke;
 }
