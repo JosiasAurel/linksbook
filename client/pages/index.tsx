@@ -16,12 +16,12 @@ import styles from "../styles/index.module.css";
 import toast, { Toaster } from "react-hot-toast";
 import { Loading, Button, Tooltip, Spacer } from '@nextui-org/react';
 
-import { Modal, Button as GButton, Input, Textarea } from "@geist-ui/react";
+import { Modal, Button as GButton } from "@geist-ui/react";
 
 // import graphql actions
-import { FETCH_ALL, UPDATE_LINK } from "../graphql/actions";
+import { FETCH_ALL } from "../graphql/actions";
 
-import { handleChange, truncateStr } from "../utils/string";
+import { truncateStr } from "../utils/string";
 
 const HomePage: FunctionComponent = (): JSX.Element => {
 
@@ -35,7 +35,7 @@ const HomePage: FunctionComponent = (): JSX.Element => {
     /* link card edit button action handle */
     const [editLinkModal, setEditLinkModal] = useState<boolean>(false);
     /* edit link modal form fields props */
-    const [currentLink, setCurrentLink] = useState<string>();
+    const [currentLink, setCurrentLink] = useState<string>("");
     /* edit link modal form fields props - end */
 
     /* Show Pop page props; abbreviated 'sp' */
