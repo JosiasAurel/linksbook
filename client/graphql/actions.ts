@@ -25,4 +25,12 @@ const CREATE_LINK = gql`
     }
 `;
 
-export { FETCH_ALL, CREATE_LINK };
+const UPDATE_LINK = gql`
+    mutation updateLink($linkId: String!, $annotation: String, $url: String, $tags: [String], $note: String) {
+        updateLink(linkId: $linkId, annotation: $annotation, url: $url, tags: $tags, note: $note) {
+            status
+        }
+    }
+`;
+
+export { FETCH_ALL, CREATE_LINK, UPDATE_LINK};
