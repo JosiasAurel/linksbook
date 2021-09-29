@@ -25,7 +25,6 @@ import { truncateStr } from "../utils/string";
 const HomePage: FunctionComponent = (): JSX.Element => {
 
     /* Create Link/Collection Modal states */
-    const [createLink, setCreateLink] = useState<boolean>(false);
     const [createCollection, setCreateCollection] = useState<boolean>(false);
     function toggleModal(state, handler): void {
         handler(!state);
@@ -38,13 +37,15 @@ const HomePage: FunctionComponent = (): JSX.Element => {
     const [spTitle, setSPTitle] = useState<string>("");
     const [spLink, setSPLink] = useState<string>("");
     const [spTags, setSPTags] = useState<Array<string>>([""]);
+    const [spNote, setSPNote] = useState<string>("");
 
-    function editActionHandler(annotation: string, link: string, tags: Array<string>): void {
+    function editActionHandler(annotation: string, link: string, tags: Array<string>, note: string): void {
         // All this function does is replace the 
         // state of show pop page
         setSPTitle(annotation);
         setSPLink(link);
         setSPTags(tags);
+        setSPNote((note !== null) ? note : "Add note by editing link...");
 
         // set pop page visible
         if (showPopPage) {
@@ -85,6 +86,7 @@ const HomePage: FunctionComponent = (): JSX.Element => {
     /* End Tooltip body */
 
     const { loading, error, data } = useQuery(FETCH_ALL);
+    /*     if (data) console.log(data); */
 
     if (loading) {
         toast.promise(new Promise((resolve, reject) => setTimeout(() => resolve("Hello"), Math.floor(Math.random() * 4000))), { loading: "Fetching Latest Data...", success: "Done", error: "Something Wrong Occurred" });
@@ -142,7 +144,7 @@ const HomePage: FunctionComponent = (): JSX.Element => {
                                     name={link.annotation}
                                     url={link.url}
                                     tags={link.tags}
-                                    editAction={() => editActionHandler(link.annotation, link.url, link.tags)}
+                                    editAction={() => editActionHandler(link.annotation, link.url, link.tags, link.note)}
                                 />
                             )
                         })}
@@ -166,7 +168,7 @@ const HomePage: FunctionComponent = (): JSX.Element => {
                             </div>
                         </div>
                         <div className={styles.notesSection}>
-                            <Note note="Hello World" />
+                            <Note note={spNote} />
                         </div>
                     </div>
                 </section>
