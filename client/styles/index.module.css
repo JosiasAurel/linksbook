@@ -164,20 +164,11 @@
   align-items: center;
 }
 
-.addNote {
-  width: 1em;
-  height: 1em;
-  padding: 0.2em 0.2em;
-  border-radius: 5px;
-  background-color: whitesmoke;
-  font-size: 1.5em;
-  position: relative;
-  top: -22px;
-  right: -45%;
+.editLinkModalForm {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  justify-content: space-evenly;
   align-items: center;
-  cursor: pointer;
 }
 
 .showPopPageNotes {
