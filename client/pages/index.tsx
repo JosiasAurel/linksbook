@@ -8,6 +8,7 @@ import LinkCard from "../components/LinkCard";
 import CopyLink from "../components/CopyLink";
 import Tag from "../components/Tag";
 import CreateLinkForm from "../components/createLink";
+import Note from "../components/Note";
 
 import styles from "../styles/index.module.css";
 
@@ -161,10 +162,10 @@ const HomePage: FunctionComponent = (): JSX.Element => {
                                         return <Tag key={tag} name={tag} />
                                     })}
                                 </div>
-                                <div className={styles.showPopPageNotes}>
-
-                                </div>
                             </div>
+                        </div>
+                        <div className={styles.showPopPageNotes}>
+                            <Note note="Hello World" />
                         </div>
                     </div>
                 </section>
