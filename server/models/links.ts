@@ -96,12 +96,13 @@ async function createLink(annotation: string, url: string, tags: Array<string>, 
 
 }
 
-async function updateLink(linkId: string, annotation: string, url: string, tags: Array<string>): Promise<string> {
+async function updateLink(linkId: string, annotation: string, url: string, tags: Array<string>, note: string): Promise<string> {
     try {
         await db.update({
             annotation,
             url,
-            tags
+            note,
+            tags,
         }, linkId);
         return "Success";
     } catch(error: any) {

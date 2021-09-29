@@ -58,7 +58,7 @@ const resolvers = {
             const oldLink = await getLink(args.linkId);
 
             if (oldLink !== "Failed") {
-                const result = await updateLink(args.linkId, args.annotation ? args.annotation : oldLink.annotation, args.url ? args.url : oldLink.url, args.tags ? args.tags : oldLink.tags);
+                const result = await updateLink(args.linkId, args.annotation ? args.annotation : oldLink.annotation, args.url ? args.url : oldLink.url, args.tags ? args.tags : oldLink.tags, args.note ? args.note : oldLink.note);
 
                 return {status: result};
             }
