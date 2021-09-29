@@ -15,12 +15,12 @@ import styles from "../styles/index.module.css";
 import toast, { Toaster } from "react-hot-toast";
 import { Loading, Button, Tooltip, Spacer } from '@nextui-org/react';
 
-import { Modal, Button as GButton } from "@geist-ui/react";
+import { Modal, Button as GButton, Input, Textarea } from "@geist-ui/react";
 
 // import graphql actions
 import { FETCH_ALL, CREATE_LINK } from "../graphql/actions";
 
-import { truncateStr } from "../utils/string";
+import { handleChange, truncateStr } from "../utils/string";
 
 const HomePage: FunctionComponent = (): JSX.Element => {
 
@@ -32,6 +32,14 @@ const HomePage: FunctionComponent = (): JSX.Element => {
     /*  */
 
     /* link card edit button action handle */
+    const [editLinkModal, setEditLinkModal] = useState<boolean>(false);
+    /* edit link modal form fields props */
+    const [eTitle, setETitle] = useState<string>();
+    const [eLink, setELink] = useState<string>();
+    const [eTags, setETags] = useState<string>();
+    const [eNote, setENote] = useState<string>();
+    /* edit link modal form fields props - end */
+
     /* Show Pop page props; abbreviated 'sp' */
 
     const [spTitle, setSPTitle] = useState<string>("");
@@ -46,6 +54,12 @@ const HomePage: FunctionComponent = (): JSX.Element => {
         setSPLink(link);
         setSPTags(tags);
         setSPNote((note !== null) ? note : "Add note by editing link...");
+
+        // also set link edit modal props
+        setETitle(annotation);
+        setELink(link);
+        setETags(tags.join(","));
+        setENote((note !== null) ? note : "Take some notes in here...");
 
         // set pop page visible
         if (showPopPage) {
@@ -155,7 +169,7 @@ const HomePage: FunctionComponent = (): JSX.Element => {
                         <div className={styles.showPopPageContentTitle}>
                             <div className={styles.closeShowPopPage}>
                                 <p onClick={() => togglePopPage()}> X </p>
-                                <GButton auto scale={0.35} type="secondary">Edit</GButton>
+                                <GButton onClick={_ => setEditLinkModal(!editLinkModal)} auto scale={0.35} type="secondary">Edit</GButton>
                             </div>
                             <div className={styles.showPopPageContentTitle}>
                                 <h1 className={styles.showPopLinkTitle}> {truncateStr(spTitle, 40)} </h1>
@@ -184,6 +198,30 @@ const HomePage: FunctionComponent = (): JSX.Element => {
             {/* End Toasts */}
 
             {/* Modals */}
+            {/* Edit Link Modal */}
+            <Modal visible={editLinkModal} onClose={() => setEditLinkModal(false)}>
+                <Modal.Title>
+                    Edit Link
+                </Modal.Title>
+                <Modal.Content>
+                    <form className={styles.editLinkModalForm}>
+                        <Input value={eTitle} onChange={e => handleChange(e, setETitle)} placeholder="Note title/annotation" />
+                        <Spacer />
+                        <Input value={eLink} onChange={e => handleChange(e, setELink)} placeholder="some-url.example.com" />
+                        <Spacer />
+                        <Input value={eTags} onChange={e => handleChange(e, setETags)} placeholder="Tags separated by commas" />
+                        <Spacer />
+                        <Textarea value={eNote} onChange={e => handleChange(e, setENote)} />
+                        <Spacer />
+                    </form>
+                </Modal.Content>
+                <Modal.Action passive onClick={() => setEditLinkModal(false)}>
+                    Cancel
+                </Modal.Action>
+                <Modal.Action>
+                    Save
+                </Modal.Action>
+            </Modal>
             {/* Create collection Modal */}
             <Modal visible={createCollection}>
 
