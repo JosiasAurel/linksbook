@@ -280,3 +280,15 @@
 }
 
 /* End Link Card */
+
+/* Note Card */
+.noteCard {
+  width: 90%;
+  max-height: 100px;
+  background-color: white;
+  font-family: sans-serif;
+  border-radius: 4px;
+  box-shadow: 1px 1px 2px 1px rgba(168, 168, 168, 0.555);
+  padding: 1em;
+}
+/* Note Card - End */
