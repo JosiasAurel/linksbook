@@ -9,6 +9,7 @@ import CopyLink from "../components/CopyLink";
 import Tag from "../components/Tag";
 import CreateLinkForm from "../components/createLink";
 import Note from "../components/Note";
+import UpdateLink from "../components/updateLink";
 
 import styles from "../styles/index.module.css";
 
@@ -34,10 +35,6 @@ const HomePage: FunctionComponent = (): JSX.Element => {
     /* link card edit button action handle */
     const [editLinkModal, setEditLinkModal] = useState<boolean>(false);
     /* edit link modal form fields props */
-    const [eTitle, setETitle] = useState<string>();
-    const [eLink, setELink] = useState<string>();
-    const [eTags, setETags] = useState<string>();
-    const [eNote, setENote] = useState<string>();
     const [currentLink, setCurrentLink] = useState<string>();
     /* edit link modal form fields props - end */
 
@@ -59,12 +56,6 @@ const HomePage: FunctionComponent = (): JSX.Element => {
         setSPTags(tags);
         setSPNote((note !== null) ? note : "Add note by editing link...");
 
-        // also set link edit modal props
-        setETitle(annotation);
-        setELink(link);
-        setETags(tags.join(","));
-        setENote((note !== null) ? note : "Take some notes in here...");
-
         // set pop page visible
         if (showPopPage) {
             setPopPage(!showPopPage);
@@ -74,22 +65,6 @@ const HomePage: FunctionComponent = (): JSX.Element => {
         }
     }
     /* link card edit action - end */
-
-    /* update link handler */
-
-    function handleUpdateLink(): void {
-
-        // the magic takes place here
-        // below is update link mutation handler
-        const [updateLink, { data, loading, error }] = useMutation(UPDATE_LINK);
-
-        toast.promise(updateLink({ variables: { linkId: currentLink, annotation: eTitle, url: eLink, tags: eTags.split(" "), note: eNote } }), {
-            loading: "Updating...",
-            success: "Bookmark Updated",
-            error: "Could not update bookmark"
-        });
-    }
-    /* update link handler - end*/
 
     /* Side Pop Page */
     const [showPopPage, setPopPage] = useState<boolean>(false);
@@ -224,22 +199,16 @@ const HomePage: FunctionComponent = (): JSX.Element => {
                     Edit Link
                 </Modal.Title>
                 <Modal.Content>
-                    <form className={styles.editLinkModalForm}>
-                        <Input width="100%" value={eTitle} onChange={e => handleChange(e, setETitle)} placeholder="Note title/annotation" />
-                        <Spacer />
-                        <Input width="100%" value={eLink} onChange={e => handleChange(e, setELink)} placeholder="some-url.example.com" />
-                        <Spacer />
-                        <Input width="100%" value={eTags} onChange={e => handleChange(e, setETags)} placeholder="Tags separated by commas" />
-                        <Spacer />
-                        <Textarea width="100%" h="100px" value={eNote} onChange={e => handleChange(e, setENote)} />
-                        <Spacer />
-                    </form>
+                    <UpdateLink
+                        title={spTitle}
+                        url={spLink}
+                        tags={spTags.join(",")}
+                        note={spNote}
+                        currentLink={currentLink}
+                    />
                 </Modal.Content>
                 <Modal.Action passive onClick={() => setEditLinkModal(false)}>
                     Cancel
-                </Modal.Action>
-                <Modal.Action onClick={() => handleUpdateLink()}>
-                    Save
                 </Modal.Action>
             </Modal>
             {/* Create collection Modal */}
