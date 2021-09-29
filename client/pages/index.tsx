@@ -164,8 +164,13 @@ const HomePage: FunctionComponent = (): JSX.Element => {
                                 </div>
                             </div>
                         </div>
-                        <div className={styles.showPopPageNotes}>
-                            <Note note="Hello World" />
+                        <div className={styles.notesSection}>
+                            <div className={styles.addNote}>
+                                +
+                            </div>
+                            <div className={styles.showPopPageNotes}>
+                                <Note note="Hello World" />
+                            </div>
                         </div>
                     </div>
                 </section>
