@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useState, useContext, useEffect } from "react";
 
-import { useQuery } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 
 import Header from "../components/Header";
 import Search from "../components/Search";
@@ -18,7 +18,7 @@ import { Loading, Button, Tooltip, Spacer } from '@nextui-org/react';
 import { Modal, Button as GButton, Input, Textarea } from "@geist-ui/react";
 
 // import graphql actions
-import { FETCH_ALL, CREATE_LINK } from "../graphql/actions";
+import { FETCH_ALL, UPDATE_LINK } from "../graphql/actions";
 
 import { handleChange, truncateStr } from "../utils/string";
 
@@ -38,6 +38,7 @@ const HomePage: FunctionComponent = (): JSX.Element => {
     const [eLink, setELink] = useState<string>();
     const [eTags, setETags] = useState<string>();
     const [eNote, setENote] = useState<string>();
+    const [currentLink, setCurrentLink] = useState<string>();
     /* edit link modal form fields props - end */
 
     /* Show Pop page props; abbreviated 'sp' */
@@ -47,7 +48,10 @@ const HomePage: FunctionComponent = (): JSX.Element => {
     const [spTags, setSPTags] = useState<Array<string>>([""]);
     const [spNote, setSPNote] = useState<string>("");
 
-    function editActionHandler(annotation: string, link: string, tags: Array<string>, note: string): void {
+    function editActionHandler(id: string, annotation: string, link: string, tags: Array<string>, note: string): void {
+        // set current link by ID
+        setCurrentLink(id);
+
         // All this function does is replace the 
         // state of show pop page
         setSPTitle(annotation);
@@ -70,6 +74,22 @@ const HomePage: FunctionComponent = (): JSX.Element => {
         }
     }
     /* link card edit action - end */
+
+    /* update link handler */
+
+    function handleUpdateLink(): void {
+
+        // the magic takes place here
+        // below is update link mutation handler
+        const [updateLink, { data, loading, error }] = useMutation(UPDATE_LINK);
+
+        toast.promise(updateLink({ variables: { linkId: currentLink, annotation: eTitle, url: eLink, tags: eTags.split(" "), note: eNote } }), {
+            loading: "Updating...",
+            success: "Bookmark Updated",
+            error: "Could not update bookmark"
+        });
+    }
+    /* update link handler - end*/
 
     /* Side Pop Page */
     const [showPopPage, setPopPage] = useState<boolean>(false);
@@ -158,7 +178,7 @@ const HomePage: FunctionComponent = (): JSX.Element => {
                                     name={link.annotation}
                                     url={link.url}
                                     tags={link.tags}
-                                    editAction={() => editActionHandler(link.annotation, link.url, link.tags, link.note)}
+                                    editAction={() => editActionHandler(link.id, link.annotation, link.url, link.tags, link.note)}
                                 />
                             )
                         })}
@@ -205,20 +225,20 @@ const HomePage: FunctionComponent = (): JSX.Element => {
                 </Modal.Title>
                 <Modal.Content>
                     <form className={styles.editLinkModalForm}>
-                        <Input value={eTitle} onChange={e => handleChange(e, setETitle)} placeholder="Note title/annotation" />
+                        <Input width="100%" value={eTitle} onChange={e => handleChange(e, setETitle)} placeholder="Note title/annotation" />
                         <Spacer />
-                        <Input value={eLink} onChange={e => handleChange(e, setELink)} placeholder="some-url.example.com" />
+                        <Input width="100%" value={eLink} onChange={e => handleChange(e, setELink)} placeholder="some-url.example.com" />
                         <Spacer />
-                        <Input value={eTags} onChange={e => handleChange(e, setETags)} placeholder="Tags separated by commas" />
+                        <Input width="100%" value={eTags} onChange={e => handleChange(e, setETags)} placeholder="Tags separated by commas" />
                         <Spacer />
-                        <Textarea value={eNote} onChange={e => handleChange(e, setENote)} />
+                        <Textarea width="100%" h="100px" value={eNote} onChange={e => handleChange(e, setENote)} />
                         <Spacer />
                     </form>
                 </Modal.Content>
                 <Modal.Action passive onClick={() => setEditLinkModal(false)}>
                     Cancel
                 </Modal.Action>
-                <Modal.Action>
+                <Modal.Action onClick={() => handleUpdateLink()}>
                     Save
                 </Modal.Action>
             </Modal>
