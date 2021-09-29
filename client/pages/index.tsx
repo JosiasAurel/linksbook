@@ -15,7 +15,7 @@ import styles from "../styles/index.module.css";
 import toast, { Toaster } from "react-hot-toast";
 import { Loading, Button, Tooltip, Spacer } from '@nextui-org/react';
 
-import { Modal } from "@geist-ui/react";
+import { Modal, Button as GButton } from "@geist-ui/react";
 
 // import graphql actions
 import { FETCH_ALL, CREATE_LINK } from "../graphql/actions";
@@ -153,6 +153,7 @@ const HomePage: FunctionComponent = (): JSX.Element => {
                         <div className={styles.showPopPageContentTitle}>
                             <div className={styles.closeShowPopPage}>
                                 <p onClick={() => togglePopPage()}> X </p>
+                                <GButton auto scale={0.35} type="secondary">Edit</GButton>
                             </div>
                             <div className={styles.showPopPageContentTitle}>
                                 <h1> {truncateStr(spTitle)} </h1>
@@ -165,12 +166,7 @@ const HomePage: FunctionComponent = (): JSX.Element => {
                             </div>
                         </div>
                         <div className={styles.notesSection}>
-                            <div className={styles.addNote}>
-                                +
-                            </div>
-                            <div className={styles.showPopPageNotes}>
-                                <Note note="Hello World" />
-                            </div>
+                            <Note note="Hello World" />
                         </div>
                     </div>
                 </section>
@@ -186,7 +182,6 @@ const HomePage: FunctionComponent = (): JSX.Element => {
             {/* End Toasts */}
 
             {/* Modals */}
-
             {/* Create collection Modal */}
             <Modal visible={createCollection}>
 
