@@ -158,7 +158,7 @@ const HomePage: FunctionComponent = (): JSX.Element => {
                                 <GButton auto scale={0.35} type="secondary">Edit</GButton>
                             </div>
                             <div className={styles.showPopPageContentTitle}>
-                                <h1> {truncateStr(spTitle)} </h1>
+                                <h1 className={styles.showPopLinkTitle}> {truncateStr(spTitle, 40)} </h1>
                                 <CopyLink link={spLink} />
                                 <div className={styles.showPopPageTags}>
                                     {spTags.map(tag => {
