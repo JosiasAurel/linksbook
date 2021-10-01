@@ -209,3 +209,10 @@
   justify-content: center;
   align-items: center;
 }
+
+.folders {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+}

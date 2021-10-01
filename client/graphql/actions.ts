@@ -16,6 +16,7 @@ const FETCH_ALL = gql`
             collections {
                 id,
                 name,
+                type,
                 links {
                     annotation
                 }

@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useState, useContext, useEffect } from "react";
 
-import { useMutation, useQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 
 import Header from "../components/Header";
 import Search from "../components/Search";
@@ -11,6 +11,7 @@ import CreateLinkForm from "../components/createLink";
 import CreateCollectionForm from "../components/createCollection";
 import Note from "../components/Note";
 import UpdateLink from "../components/updateLink";
+import Folder from "../components/Folder";
 
 import styles from "../styles/index.module.css";
 
@@ -98,7 +99,7 @@ const HomePage: FunctionComponent = (): JSX.Element => {
     /* End Tooltip body */
 
     const { loading, error, data } = useQuery(FETCH_ALL);
-    /*     if (data) console.log(data); */
+    if (data) console.log(data);
 
     if (loading) {
         toast.promise(new Promise((resolve, reject) => setTimeout(() => resolve("Hello"), Math.floor(Math.random() * 4000))), { loading: "Fetching Latest Data...", success: "Done", error: "Something Wrong Occurred" });
@@ -142,6 +143,13 @@ const HomePage: FunctionComponent = (): JSX.Element => {
                                 Create
                             </Button>
                         </Tooltip>
+                    </div>
+                    <div className={styles.folders}>
+                        {data.user.collections.map(folder => {
+                            return (
+                                <Folder label={folder.name} type={folder.type} />
+                            )
+                        })}
                     </div>
                 </section>
 
