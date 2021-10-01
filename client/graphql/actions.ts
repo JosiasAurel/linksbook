@@ -12,6 +12,13 @@ const FETCH_ALL = gql`
                 note,
                 id,
                 url
+            },
+            collections {
+                id,
+                name,
+                links {
+                    annotation
+                }
             }
         }
     }
