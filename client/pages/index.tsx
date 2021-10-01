@@ -8,6 +8,7 @@ import LinkCard from "../components/LinkCard";
 import CopyLink from "../components/CopyLink";
 import Tag from "../components/Tag";
 import CreateLinkForm from "../components/createLink";
+import CreateCollectionForm from "../components/createCollection";
 import Note from "../components/Note";
 import UpdateLink from "../components/updateLink";
 
@@ -85,9 +86,11 @@ const HomePage: FunctionComponent = (): JSX.Element => {
                     </Button>
                 </Tooltip>
                 <Spacer />
-                <Button onClick={e => toggleModal(createCollection, setCreateCollection)}>
-                    Create Collection
-                </Button>
+                <Tooltip position="right" trigger="click" text={<CreateCollectionForm />}>
+                    <Button>
+                        Create Collection
+                    </Button>
+                </Tooltip>
             </div>
         )
     }
