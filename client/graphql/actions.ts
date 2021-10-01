@@ -33,4 +33,12 @@ const UPDATE_LINK = gql`
     }
 `;
 
-export { FETCH_ALL, CREATE_LINK, UPDATE_LINK};
+const CREATE_COLLECTION = gql`
+    mutation createCollection($name: String!, $type: String!, $parent: String) {
+        createCollection(name: $name, type: $type, parent: $parent) {
+            status
+        }
+    }
+`;
+
+export { FETCH_ALL, CREATE_LINK, UPDATE_LINK, CREATE_COLLECTION };
