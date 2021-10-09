@@ -115,4 +115,13 @@ async function deleteLink(linkId: string): Promise<string> {
     return "Done";
 }
 
-export { createLink, deleteLink, updateLink, getLink, getAllLinks, searchLinks };
+async function linkWithUrl(url: string): Promise<any> {
+    const link = await (await db.fetch({ url })).items;
+    if (link.length === 0) {
+        return false;
+    } 
+
+    return true;
+}
+
+export { createLink, deleteLink, updateLink, getLink, getAllLinks, searchLinks, linkWithUrl };
