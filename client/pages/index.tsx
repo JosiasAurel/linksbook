@@ -156,6 +156,7 @@ const HomePage: FunctionComponent = (): JSX.Element => {
 
                 <section className={styles.linksSection}>
                     <div className={styles.links}>
+                        <Spacer y={5} />
                         {data.user.links.map(link => {
                             console.log({ link: link })
                             return (
@@ -168,6 +169,7 @@ const HomePage: FunctionComponent = (): JSX.Element => {
                                 />
                             )
                         })}
+                        <Spacer y={2} />
                     </div>
                 </section>
                 <section style={showPopPage ? { display: "flex" } : { display: "none" }} className={styles.sidePopPage}>
