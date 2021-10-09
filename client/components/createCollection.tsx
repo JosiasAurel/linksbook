@@ -15,7 +15,7 @@ const CreateCollectionForm: React.FC = (): JSX.Element => {
     async function handleCreateLink(event: any): Promise<void> {
         event.preventDefault(); // prevent page reload
 
-        toast.promise(saveCollection({ variables: { name, type: "Parent" } }), { loading: "Saving", success: "Bookmark saved", error: "Could not save bookmark" });
+        toast.promise(saveCollection({ variables: { name, type: "Parent" } }), { loading: "Saving", success: "Folder Created", error: "Could not save Folder" });
 
     }
 
