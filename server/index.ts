@@ -10,6 +10,7 @@ import { authenticateUser } from "./utils/auth";
 
 // models...
 import { linkWithUrl, createLink } from "./models/links";
+import { syncBookmarks } from "./models";
 
 const port: number = 5000;
 
@@ -42,7 +43,7 @@ app.post("/save-link", async (req: Request, res: Response) => {
     create the link and responed with success message 
     */
 
-    const exists: boolean = await linkWithUrl(url);
+    const exists: boolean = await linkWithUrl(url, key);
     if (exists) {
         res.json({ status: "Done", msg: "Bookmark Exists" });
         return;
@@ -50,14 +51,24 @@ app.post("/save-link", async (req: Request, res: Response) => {
 
     // otherwise
     const createdLink = await createLink(annotation, url, [], key);
-    res.json({status: "Done", msg: "Bookmark Saved"});
+    if (createdLink === "Success") {
+        res.json({status: "Done", msg: "Bookmark Saved"});
+    }
 
+    res.json({status: "Done", msg: "Failed"});
 });
 
 // route for pushing browser bookmarks
-app.post("/sync-bookmarks", (req: Request, res: Response) => {
+app.post("/sync-bookmarks", async (req: Request, res: Response) => {
 
-    // i
+    const { key } = getUserInfo(req);
+
+    const data = req.body;
+
+    const result = await syncBookmarks(data, "NONE", key);
+
+    res.json({msg: result});
+    
 });
 
 /* Routes for browser extension - End */
