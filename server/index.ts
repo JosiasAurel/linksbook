@@ -9,7 +9,7 @@ import cors from "cors";
 import { authenticateUser } from "./utils/auth";
 
 // models...
-
+import { linkWithUrl, createLink } from "./models/links";
 
 const port: number = 5000;
 
@@ -25,11 +25,13 @@ app.get("/", (req: Request, res: Response) => {
 });
 
 /* Routes to handle operations by the browser extension */
-app.post("/save-link", (req: Request, res: Response) => {
+app.post("/save-link", async (req: Request, res: Response) => {
 
     /* Requirements include which user ? */
 
-    const { name, email, id: key } = getUserInfo(req);
+    const { key } = getUserInfo(req);
+
+    const { annotation, url } = req.body;
 
     /*
     --- Steps ---
@@ -38,7 +40,18 @@ app.post("/save-link", (req: Request, res: Response) => {
     create the link and responed with success message 
     */
 
+    const exists: boolean = await linkWithUrl(url);
+    if (exists) {
+        res.json({ status: "Done", msg: "Bookmark Exists" });
+        return;
+    }
+
+    // otherwise
+    const createdLink = await createLink(annotation, url, [], key);
+    res.json({status: "Done", msg: "Bookmark Saved"});
+
 });
+
 /* Routes for browser extension */
 
 function getUserInfo(req: Request): any {

@@ -115,7 +115,7 @@ async function deleteLink(linkId: string): Promise<string> {
     return "Done";
 }
 
-async function linkWithUrl(url: string): Promise<any> {
+async function linkWithUrl(url: string): Promise<boolean> {
     const link = await (await db.fetch({ url })).items;
     if (link.length === 0) {
         return false;
