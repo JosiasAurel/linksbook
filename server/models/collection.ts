@@ -1,3 +1,4 @@
+
 import { deta, generateModelKey } from "./index";
 
 // collections database table
@@ -111,6 +112,16 @@ async function removeLink(collectionId: string, linkId: string): Promise<string>
     }
 }
 
+async function folderWithName(name: string): Promise<boolean> {
+    const bookmark = await (await collections.fetch({ name })).items;
+
+    if (bookmark.length === 0) {
+        return false;
+    }
+
+    return true;
+}
+
 export { 
     createCollection, 
     getCollection, 
@@ -118,5 +129,6 @@ export {
     updateCollection, 
     deleteCollection, 
     dropLinkToCollection, 
-    removeLink 
+    removeLink,
+    folderWithName
 };

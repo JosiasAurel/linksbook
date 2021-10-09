@@ -124,4 +124,12 @@ async function linkWithUrl(url: string): Promise<boolean> {
     return true;
 }
 
-export { createLink, deleteLink, updateLink, getLink, getAllLinks, searchLinks, linkWithUrl };
+export { 
+    createLink, 
+    deleteLink, 
+    updateLink, 
+    getLink, 
+    getAllLinks, 
+    searchLinks, 
+    linkWithUrl 
+};

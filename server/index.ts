@@ -25,6 +25,8 @@ app.get("/", (req: Request, res: Response) => {
 });
 
 /* Routes to handle operations by the browser extension */
+
+// Route for saving a link
 app.post("/save-link", async (req: Request, res: Response) => {
 
     /* Requirements include which user ? */
@@ -52,7 +54,12 @@ app.post("/save-link", async (req: Request, res: Response) => {
 
 });
 
-/* Routes for browser extension */
+// route for pushing browser bookmarks
+app.post("/sync-bookmarks", (req: Request, res: Response) => {
+    
+});
+
+/* Routes for browser extension - End */
 
 function getUserInfo(req: Request): any {
     const requestHeaders: any = req.headers;
