@@ -51,7 +51,7 @@ const UpdateLink: React.FC<UpdateLinkProps> = ({ title, url, tags, note, handleF
             <Spacer />
             <Input width="100%" value={eLink} onChange={e => handleChange(e, setELink)} placeholder="some-url.example.com" />
             <Spacer />
-            <Input width="100%" value={eTags} onChange={e => handleChange(e, setETags)} placeholder="Tags separated by commas" />
+            <Input width="100%" value={eTags} onChange={e => handleChange(e, setETags)} placeholder="Tags separated by spaces" />
             <Spacer />
             <Textarea width="100%" h="100px" value={eNote} onChange={e => handleChange(e, setENote)} />
             <Spacer />

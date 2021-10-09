@@ -216,7 +216,7 @@ const HomePage: FunctionComponent = (): JSX.Element => {
                     <UpdateLink
                         title={spTitle}
                         url={spLink}
-                        tags={spTags.join(",")}
+                        tags={spTags.join(" ")}
                         note={spNote}
                         currentLink={currentLink}
                     />
@@ -224,10 +224,6 @@ const HomePage: FunctionComponent = (): JSX.Element => {
                 <Modal.Action passive onClick={() => setEditLinkModal(false)}>
                     Cancel
                 </Modal.Action>
-            </Modal>
-            {/* Create collection Modal */}
-            <Modal visible={createCollection}>
-
             </Modal>
 
             {/* End Modals */}
