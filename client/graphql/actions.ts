@@ -41,6 +41,15 @@ const UPDATE_LINK = gql`
     }
 `;
 
+const DELETE_LINK = gql`
+    mutation deleteLink($linkId: String!) {
+        deleteLink(linkId: $linkId) {
+            status
+        }
+    }
+`;
+
+
 const CREATE_COLLECTION = gql`
     mutation createCollection($name: String!, $type: String!, $parent: String) {
         createCollection(name: $name, type: $type, parent: $parent) {
@@ -49,4 +58,4 @@ const CREATE_COLLECTION = gql`
     }
 `;
 
-export { FETCH_ALL, CREATE_LINK, UPDATE_LINK, CREATE_COLLECTION };
+export { FETCH_ALL, CREATE_LINK, UPDATE_LINK, CREATE_COLLECTION, DELETE_LINK };
