@@ -147,7 +147,7 @@ const HomePage: FunctionComponent = (): JSX.Element => {
                     <div className={styles.folders}>
                         {data.user.collections.map(folder => {
                             return (
-                                <Folder label={folder.name} type={folder.type} />
+                                <Folder label={folder.name} type={folder.type} thirdPartyAction={() => undefined} />
                             )
                         })}
                     </div>
@@ -162,6 +162,7 @@ const HomePage: FunctionComponent = (): JSX.Element => {
                             return (
                                 <LinkCard
                                     key={link.id}
+                                    id={link.id}
                                     name={link.annotation}
                                     url={link.url}
                                     tags={link.tags}

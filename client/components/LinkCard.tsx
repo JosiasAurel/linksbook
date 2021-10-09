@@ -8,16 +8,26 @@ import { Copy, Edit2, ArrowUpRight, Archive } from "@geist-ui/react-icons";
 
 import { truncateStr } from "../utils/string";
 
+import { useMutation } from "@apollo/client";
+import { DELETE_LINK } from "../graphql/actions";
+
 interface LinkCardProps {
-    name: string
-    url: string
-    tags: Array<string>
+    readonly name: string
+    readonly url: string
+    readonly tags: Array<string>
+    readonly id: string
     editAction?: Function
 }
 
 
-const LinkCard: React.FC<LinkCardProps> = ({ name, url, tags, editAction }): JSX.Element => {
+const LinkCard: React.FC<LinkCardProps> = ({ name, url, tags, editAction, id }): JSX.Element => {
 
+    const [deleteLink, { data, loading, error }] = useMutation(DELETE_LINK);
+
+    function handledeleteAction(): void {
+        toast.promise(deleteLink({ variables: { linkId: id } }), { loading: "Deleting...", success: "LinkDeleted", error: "Could not delete link" });
+        return;
+    }
     function copyToClipboard(): void {
         // copy the link to the clipboard
         navigator.clipboard.writeText(url);
@@ -72,7 +82,7 @@ const LinkCard: React.FC<LinkCardProps> = ({ name, url, tags, editAction }): JSX
                 {/* End Edit Icon */}
 
                 {/* Delete Icon */}
-                <div className={styles.deleteIcon}>
+                <div onClick={() => handledeleteAction()} className={styles.deleteIcon}>
                     {/* <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                         <g data-name="Layer 2">
                             <g data-name="trash-2">
