@@ -1,4 +1,6 @@
 
+import { PutResponse } from "deta/dist/types/types/base/response";
+import { ObjectType } from "deta/dist/types/types/basic";
 import { deta, generateModelKey } from "./index";
 
 const db = deta.Base("links");
@@ -79,7 +81,7 @@ async function searchLinks(searchParam: string, type: string, owner: string): Pr
     }   
 }
 
-async function createLink(annotation: string, url: string, tags: Array<string>, owner: string): Promise<string> {
+async function createLink(annotation: string, url: string, tags: Array<string>, owner: string, returnData?: boolean): Promise<string|PutResponse> {
     
     try {
         const newLink = await db.put({
@@ -88,6 +90,10 @@ async function createLink(annotation: string, url: string, tags: Array<string>, 
             tags, 
             owner
         }, generateModelKey());
+
+        if (returnData) {
+            return newLink;
+        }
 
         return "Success";
     } catch (err: any) {
@@ -115,8 +121,8 @@ async function deleteLink(linkId: string): Promise<string> {
     return "Done";
 }
 
-async function linkWithUrl(url: string): Promise<boolean> {
-    const link = await (await db.fetch({ url })).items;
+async function linkWithUrl(url: string, owner: string): Promise<boolean> {
+    const link = await (await db.fetch({ url, owner })).items;
     if (link.length === 0) {
         return false;
     } 
