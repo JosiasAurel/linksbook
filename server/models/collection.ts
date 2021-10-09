@@ -1,4 +1,5 @@
 
+import { ObjectType } from "deta/dist/types/types/basic";
 import { deta, generateModelKey } from "./index";
 
 // collections database table
@@ -12,7 +13,7 @@ interface CollectionData {
     id: string
 }
 
-async function createCollection(name: string, type: string, owner: string, parent?: string): Promise<any> {
+async function createCollection(name: string, type: string, owner: string, returnData?: boolean, parent?: string): Promise<any> {
     try {
         const newCollection = collections.put({
             name,
@@ -23,6 +24,9 @@ async function createCollection(name: string, type: string, owner: string, paren
             parent: parent ? parent : false
         }, generateModelKey());
 
+        if (returnData) {
+            return newCollection;
+        }
             return {status: "Success"};
     } catch (error: any) {
         return {status: "Failed"};
@@ -92,6 +96,27 @@ async function dropLinkToCollection(collectionId: string, linkId: string): Promi
     }
 }
 
+async function dropCollectionToCollection(collectionId: string, childCollectionId: string): Promise<string> {
+    const currentCollection = await getCollection(collectionId);
+
+    if (childCollectionId in currentCollection.links) {
+        return "Success";
+    }
+
+    try {
+        // Update only the list of links
+        const thisCollection = await collections.get(collectionId);
+        const newChildren: Array<any> = [...new Set([...thisCollection?.children as Array<string>, childCollectionId])];
+        collections.update({
+            children: newChildren
+        }, collectionId);
+
+        return "Success";
+    } catch {
+        return "Failed";
+    }
+}
+
 async function removeLink(collectionId: string, linkId: string): Promise<string> {
     const currentCollection = await getCollection(collectionId);
 
@@ -112,11 +137,15 @@ async function removeLink(collectionId: string, linkId: string): Promise<string>
     }
 }
 
-async function folderWithName(name: string): Promise<boolean> {
-    const bookmark = await (await collections.fetch({ name })).items;
+async function collectionWithName(name: string, owner: string, data?: boolean): Promise<boolean|ObjectType> {
+    const collection = await (await collections.fetch({ name, owner })).items;
 
-    if (bookmark.length === 0) {
+    if (collection.length === 0) {
         return false;
+    }
+
+    if (data) {
+        return collection[0];
     }
 
     return true;
@@ -130,5 +159,6 @@ export {
     deleteCollection, 
     dropLinkToCollection, 
     removeLink,
-    folderWithName
+    collectionWithName,
+    dropCollectionToCollection
 };
