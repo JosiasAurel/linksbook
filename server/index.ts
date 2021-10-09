@@ -56,7 +56,8 @@ app.post("/save-link", async (req: Request, res: Response) => {
 
 // route for pushing browser bookmarks
 app.post("/sync-bookmarks", (req: Request, res: Response) => {
-    
+
+    // i
 });
 
 /* Routes for browser extension - End */

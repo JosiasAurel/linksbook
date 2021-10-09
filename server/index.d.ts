@@ -25,3 +25,10 @@ declare interface Note {
     content: string
     title: string
 }
+
+declare interface bookmarksStructure {
+    children: Array<bookmarksStructure>
+    url: string
+    name: string
+    date: string
+}
