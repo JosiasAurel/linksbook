@@ -69,6 +69,12 @@
   margin: 1em 1em 1em 0.5em;
   max-height: 95vh;
   overflow-y: scroll;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.links::-webkit-scrollbar {
+  display: none;
 }
 
 .page {
