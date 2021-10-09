@@ -23,7 +23,7 @@ function generateModelKey(): string {
     return modelKey;
 }
 
-async function syncBookmarks(data: any, parent: string = "NONE", owner: string): Promise<void> {
+async function syncBookmarks(data: any, parent: string = "NONE", owner: string): Promise<string> {
 
     for (let item in data) {
         if (data[item].hasOwnProperty("children")) {
@@ -38,6 +38,7 @@ async function syncBookmarks(data: any, parent: string = "NONE", owner: string):
             const newFolder: any = await createCollection(data[item].title, "", owner, true);
 
             await dropCollectionToCollection(parent, newFolder.key);
+            syncBookmarks(data[item], newFolder.key, owner);
         } else {
             let bookmarkExists: boolean = await linkWithUrl(data[item].url, owner);
 
@@ -46,9 +47,15 @@ async function syncBookmarks(data: any, parent: string = "NONE", owner: string):
 
                 dropLinkToCollection(parent, newLink?.key);
             }
+
+            // otherwise
+            // it already exists in a place the user has kept it
+            // no need to add it to a collection once more
         }
     }
 
+    return "Done";
+
 }
 
-export { deta, generateModelKey };
+export { deta, generateModelKey, syncBookmarks };
