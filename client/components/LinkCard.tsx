@@ -4,7 +4,9 @@ import styles from "../styles/components.module.css";
 import Tag from "./Tag";
 
 import toast from "react-hot-toast";
+import { Modal } from "@geist-ui/react";
 import { Copy, Edit2, ArrowUpRight, Archive } from "@geist-ui/react-icons";
+import { Button, Spacer } from "@nextui-org/react";
 
 import { truncateStr } from "../utils/string";
 
@@ -21,6 +23,9 @@ interface LinkCardProps {
 
 
 const LinkCard: React.FC<LinkCardProps> = ({ name, url, tags, editAction, id }): JSX.Element => {
+
+    // modal state
+    const [confimDeleteModal, setConfirmDeleteModal] = React.useState<boolean>(false);
 
     const [deleteLink, { data, loading, error }] = useMutation(DELETE_LINK);
 
@@ -82,7 +87,7 @@ const LinkCard: React.FC<LinkCardProps> = ({ name, url, tags, editAction, id }):
                 {/* End Edit Icon */}
 
                 {/* Delete Icon */}
-                <div onClick={() => handledeleteAction()} className={styles.deleteIcon}>
+                <div onClick={() => setConfirmDeleteModal(true)} className={styles.deleteIcon}>
                     {/* <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                         <g data-name="Layer 2">
                             <g data-name="trash-2">
@@ -97,7 +102,23 @@ const LinkCard: React.FC<LinkCardProps> = ({ name, url, tags, editAction, id }):
                 </div>
                 {/* End Delete Icon */}
             </div>
-        </div>
+            <Modal visible={confimDeleteModal} onClose={() => setConfirmDeleteModal(false)}>
+                <Modal.Content>
+                    <Modal.Title>
+                        Do You Really Want To Delete This Bookmark ?
+                    </Modal.Title>
+                    <div className={styles.confirmDeleteModalStyles}>
+                        <Button onClick={() => handledeleteAction()} color="error">
+                            Yes, Delete
+                        </Button>
+                        <Spacer />
+                        <Button onClick={() => setConfirmDeleteModal(false)} color="success">
+                            No, Cancel
+                        </Button>
+                    </div>
+                </Modal.Content>
+            </Modal>
+        </div >
     )
 }
 
