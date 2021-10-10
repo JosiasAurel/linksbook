@@ -1,12 +1,12 @@
 import React from "react";
 
 import { Button } from "@nextui-org/react";
-import { Input, Modal } from "@geist-ui/react";
+import { Input, Modal, Spacer } from "@geist-ui/react";
 import Image from "next/image";
 import Link from "next/link";
 
 import styles from "../../styles/auth.module.css";
-import toast from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 import router from "next/router";
 import { handleChange } from "../../utils/string";
 
@@ -29,6 +29,7 @@ const LogInPage: React.FC = (): JSX.Element => {
         console.log(result);
         if (result.status === "Success") {
             toast.success("Success");
+            toast(`An email has been sent to ${email} containinig a temporal login in. Pins may only be used once`, { duration: 6000 });
             setModal(true);
         } else {
             toast.error("Something Wrong Occurred");
@@ -42,7 +43,7 @@ const LogInPage: React.FC = (): JSX.Element => {
         if (email.trim() !== "") {
             await handleLogIn();
         } else {
-            toast.error("Please fill in your email");
+            toast.error("Please fill in your email", { duration: 6000 });
         }
     }
     /* Handle Creating Log In Pin - End */
@@ -57,8 +58,11 @@ const LogInPage: React.FC = (): JSX.Element => {
 
         const result = await response.json();
 
-        if (result.status === "success") {
-            toast.success(result.status);
+        if (result.status === "Success") {
+            // set the authentication credential
+            localStorage.setItem("token", result.token);
+            toast.success("You are logged in", { duration: 2000 });
+            toast("You will be redirected in 2 seconds...", { duration: 1500 });
             setTimeout(() => router.replace("/"), 2000);
         } else {
             toast.error(result.status);
@@ -71,7 +75,7 @@ const LogInPage: React.FC = (): JSX.Element => {
         if (pin.trim() !== "" && email.trim() !== "") {
             await getCredentials();
         } else {
-            toast.error("Please enter your pin or fill email");
+            toast.error("Please enter your pin or fill email", { duration: 4000 });
         }
     }
     /* Handle Getting Auth token - End*/
@@ -103,12 +107,14 @@ const LogInPage: React.FC = (): JSX.Element => {
                         <Input value={pin} onChange={e => handleChange(e, setPin)} clearable>
                             Log In Pin
                         </Input>
+                        <Spacer />
                         <Button htmlType="submit">
                             Log In
                         </Button>
                     </form>
                 </div>
             </Modal>
+            <Toaster />
         </div>
     )
 }
