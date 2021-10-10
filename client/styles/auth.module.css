@@ -1,0 +1,46 @@
+/* This file contains all styles related to authentication */
+/* User, SignIn, SignOut, SignUp... */
+
+.authPage {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.authPage .content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 40%;
+  height: 80%;
+  border: solid 2px rgba(103, 103, 255, 0.692);
+  border-radius: 5px;
+  box-shadow: 1px 1px 2px 2px whitesmoke;
+}
+
+.authPage form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+.authPage form > * {
+  margin: 3em 0;
+}
+
+.option {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.option .loginOption {
+  color: rgb(60, 60, 255);
+  cursor: pointer;
+}

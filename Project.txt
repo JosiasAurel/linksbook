@@ -1,0 +1,37 @@
+This will be version 2 of LinksBook app but much better.
+
+[][][][][][][][][][][][][][]
+Project key : a0ojq87u_xgq3dQQLkXj3YBsJ5iJKZ5MTAtYmCLoF
+Project ID : a0ojq87u
+[][][][][][][][][][][][][][]
+
+## Old Version Features
+- Create a collection
+- Create a link under a collection
+- Edit a collection
+- Edit a link under a collection
+- Delete a link
+- Delete a collection
+- Share link to public
+
+## Changelog linkbook@v2
+- Link OG preview
+- Improved UI and simplicity
+- Sharing links with QR Code (from desktop)
+- PWA
+- Share link to public
+- Custom OG image for public collection -> custom image placeholder for collection
+- Add search (where result can contain both collections and links)
+- + Chrome Extensiom
+	- Create a link under a collection
+	- Create a collection
+	- Convert link or collection with QR code scanning to share with people
+- Handle broken links
+- Capture preview of the link that has been saved, used to preview it
+- User can set custom thumbnail for collection
+- Email us link with subject(as annotation) and link in body used to set the link of the bookmark
+You can optionally note something under the link which will be used as note on the bookmark.
+- Internal links in bookmark  notes so you can reference one to another and create a knowledge cycle
+
+How can I install a Chrome extension myself  from my own site automatically ?
+pro features might be access to Chrome extension `\o/`

@@ -1,34 +1,42 @@
 {
-  "name": "linksbook",
+  "dependencies": {
+    "@apollo/client": "^3.4.11",
+    "@geist-ui/react": "^2.2.0",
+    "@geist-ui/react-icons": "^1.0.1",
+    "@nextui-org/react": "1.0.1-alpha.32",
+    "deta": "^1.0.0",
+    "dompurify": "^2.3.3",
+    "graphql": "^15.5.3",
+    "next": "^11.1.0",
+    "react": "^17.0.2",
+    "react-dnd": "^14.0.4",
+    "react-dnd-html5-backend": "^14.0.2",
+    "react-dom": "^17.0.2",
+    "react-hot-toast": "^2.1.1",
+    "react-query": "^3.21.1"
+  },
+  "devDependencies": {
+    "@types/dompurify": "^2.2.3",
+    "@types/react": "^17.0.3",
+    "@types/react-dom": "^17.0.9",
+    "typescript": "^4.3.5"
+  },
+  "name": "client",
   "version": "1.0.0",
-  "description": "An app to store your links bookmark and share it across devices",
+  "description": "Linksbook frontend client",
   "main": "index.js",
   "scripts": {
     "test": "jest",
+    "dev": "next dev",
     "start": "next start",
-    "build": "next build",
-    "dev": "next dev"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/JosiasAurel/linksbook.git"
+    "build": "next build"
   },
   "keywords": [
-    "links",
-    "store",
-    "nook"
+    "client",
+    "UI/UX",
+    "application",
+    "web"
   ],
   "author": "Josias Aurel",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/JosiasAurel/linksbook/issues"
-  },
-  "homepage": "https://github.com/JosiasAurel/linksbook#readme",
-  "dependencies": {
-    "dotenv": "^8.2.0",
-    "jsonwebtoken": "^8.5.1",
-    "next": "^10.1.2",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2"
-  }
+  "license": "ISC"
 }
