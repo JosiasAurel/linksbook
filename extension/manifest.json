@@ -9,7 +9,8 @@
     "declarativeContent",
     "storage",
     "<all_urls>",
-    "bookmarks"
+    "bookmarks",
+    "identity"
   ],
   "content_scripts": [
     {
