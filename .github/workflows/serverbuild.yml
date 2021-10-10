@@ -9,10 +9,6 @@ on:
   pull_request:
     branches: [v2]
 
-defaults:
-  run:
-    working-directory: ./server
-
 jobs:
   build:
     runs-on: ubuntu-latest

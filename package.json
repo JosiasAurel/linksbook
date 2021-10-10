@@ -1,0 +1,30 @@
+{
+  "name": "linksbook",
+  "version": "1.0.0",
+  "description": "A bookmarks manager app",
+  "main": "index.js",
+  "scripts": {
+    "test": "testall",
+    "build:server": "tsc ./server",
+    "build:client": "next build ./client"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JosiasAurel/linksbook.git"
+  },
+  "keywords": [
+    "bookmarks",
+    "browser",
+    "manager",
+    "automation"
+  ],
+  "author": "Josias Aurel",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JosiasAurel/linksbook/issues"
+  },
+  "homepage": "https://github.com/JosiasAurel/linksbook#readme",
+  "dependencies": {
+    "useless-print": "^1.2.2"
+  }
+}
