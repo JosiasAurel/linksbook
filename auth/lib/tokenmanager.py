@@ -36,15 +36,26 @@ def save_token(name: str, email: str, owner: str) -> T.Dict[str, str]:
 
 def verify_token(token: str, owner: str) -> str:
     try:
-        jwt.decode(token, "SECRET")
-
+        data = jwt.decode(token, "SECRET")
+    
+        
         # check if token is in database
         token_in_db = tokensdb.get(owner)  # will return none if not found
         if token_in_db != None:
             return "Valid"
+
+        return "Invalid"
     except jwt.ExpiredSignatureError:
         return "Invalid"
 
+def name_from_token(token: str, owner: str) -> any:
+    verification = verify_token(token, owner)
+    if verification == "Valid":
+        data = jwt.decode(token, "SECRET")
+        # print(f" NAME FROM TOKEN {data}")
+        return {"status": "Success", "userName": data.get("name")}
+    
+    return {"status": "Failed"}
 
 def revoke_token(owner: str) -> bool:
     tokensdb.delete(owner)  # remove token with ID of owner
