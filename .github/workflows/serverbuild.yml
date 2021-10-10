@@ -12,8 +12,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    env:
-      working-directory: ./server
+    defaults:
+      run:
+        working-directory: ./server
 
     strategy:
       matrix:
@@ -27,7 +28,5 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: "yarn"
-        run: ls -R
-        working-directory: ${{ env.working-directory }}
       - run: yarn install
       - run: tsc
