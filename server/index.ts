@@ -10,7 +10,7 @@ import { authenticateUser } from "./utils/auth";
 
 // models...
 import { linkWithUrl, createLink } from "./models/links";
-import { syncBookmarks } from "./models";
+import { syncBookmarks } from "./models/ext";
 
 const port: number = 5000;
 
