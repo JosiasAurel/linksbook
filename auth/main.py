@@ -2,8 +2,9 @@ from config import SECRET
 from lib.mail import send_mail_to
 from lib.genid import generate_id
 from lib.pinmanager import create_pin, verify_and_revoke_pin
-from lib.tokenmanager import save_token, verify_token, revoke_token
+from lib.tokenmanager import save_token, verify_token, revoke_token, name_from_token
 from models.user import get_user_by_email, create_user
+import jwt
 from fastapi import FastAPI, Request
 from deta import Deta
 from fastapi.middleware.cors import CORSMiddleware
@@ -95,18 +96,15 @@ async def _complete_user_login(request: Request):
 @app.post("/is-authenticated")
 async def _check_is_auth(request: Request):
     req_body = await request.json()
-    user_email = req_body["email"]
     auth_token = req_body["token"]
 
-    user = get_user_by_email(user_email)
+    data = jwt.decode(auth_token, "SECRET")
 
-    result = verify_token(auth_token, user.get("key"))
-    
-    if result == "Invalid":
-        return {status: "Failed"}
+    user = get_user_by_email(data.get("email"))
 
-    return {"status": "Done", "info": result, "credentials": {"name": user.get("name"), "email": user.get("email")}}
+    result = name_from_token(auth_token, user.get("key"))
 
+    return result
 
 
 @app.post("/sign-out")
