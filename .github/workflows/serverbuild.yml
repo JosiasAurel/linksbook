@@ -23,11 +23,11 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Use Node.js ${{ matrix.node-version }}
-        run:
-          working-directory: ${{ env.working-directory }}
         uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node-version }}
           cache: "yarn"
+        run: ls -R
+        working-directory: ${{ env.working-directory }}
       - run: yarn install
       - run: tsc
