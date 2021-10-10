@@ -34,10 +34,11 @@ const UpdateLink: React.FC<UpdateLinkProps> = ({ title, url, tags, note, handleF
     function handleUpdateLink(event: any): void {
         event.preventDefault();
 
+
         // the magic takes place here
         // below is update link mutation handler
 
-        toast.promise(updateLink({ variables: { linkId: currentLink, annotation: eTitle, url: eLink, tags: eTags.split(" "), note: eNote } }), {
+        toast.promise(updateLink({ variables: { linkId: currentLink, annotation: eTitle.trim(), url: eLink.trim(), tags: eTags.trim().split(" "), note: eNote.trim() } }), {
             loading: "Updating...",
             success: "Bookmark Updated",
             error: "Could not update bookmark"
