@@ -1,6 +1,8 @@
 
 import React, { createContext } from "react";
 
+const AUTH_SERVICE_URI: string = process.env.NEXT_PUBLIC_AUTH_SERVICE;
+
 interface AuthCtxProps {
     children: React.ReactElement
 }
@@ -16,12 +18,21 @@ const AuthProvider: React.FC<AuthCtxProps> = ({ children }): JSX.Element => {
         /* Request... Check if user is authenticated */
         /* Is token in localstorage */
         const authToken = localStorage.getItem("token") ?? undefined;
-        const userName = localStorage.getItem("name") ?? undefined;
 
-        if (authToken !== undefined && userName !== undefined) {
-            setIsAuth(true);
-            setName(userName);
-        }
+        fetch(`${AUTH_SERVICE_URI}/is-authenticated`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ token: authToken })
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (authToken !== undefined && data.status !== "Failed") {
+                    setIsAuth(true);
+                    setName(data.userName);
+                }
+            });
     }, []);
 
     return (
