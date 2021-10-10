@@ -156,7 +156,7 @@ const HomePage: FunctionComponent = (): JSX.Element => {
 
                 <section className={styles.linksSection}>
                     <div className={styles.links}>
-                        <Spacer y={5} />
+                        <Spacer y={2} />
                         {data.user.links.map(link => {
                             console.log({ link: link })
                             return (
