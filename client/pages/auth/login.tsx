@@ -30,7 +30,7 @@ const LogInPage: React.FC = (): JSX.Element => {
         if (result.status === "Success") {
             toast.success("Success");
             toast(`An email has been sent to ${email} containinig a temporal login in. Pins may only be used once`, { duration: 6000 });
-            setModal(true);
+            setTimeout(() => setModal(true), 3000);
         } else {
             toast.error("Something Wrong Occurred");
             toast("Please Try Again...");
