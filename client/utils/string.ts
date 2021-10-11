@@ -8,6 +8,7 @@ function truncateStr(longStr: string, length?: number): string {
     return `${longStr.slice(0, Math.min(longStr.length, length ? length : 15))}...`;
 }
 
+// function to handle change for Input fields
 function handleChange(event, handler): void {
     handler(DOMPurify.sanitize(event.target.value));
 }

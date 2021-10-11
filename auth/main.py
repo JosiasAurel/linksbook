@@ -1,5 +1,5 @@
 from config import SECRET
-from lib.mail import send_mail_to
+from lib.mail import send_mail_to, send_mail
 from lib.genid import generate_id
 from lib.pinmanager import create_pin, verify_and_revoke_pin
 from lib.tokenmanager import save_token, verify_token, revoke_token, name_from_token
@@ -23,6 +23,7 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
 
 @app.get("/")
 def _root(request: Request) -> str:
@@ -50,7 +51,8 @@ async def _login_user(request: Request):
     body = await request.json()
     # get user's email
     email = body["email"]  # get the user email
-    user = usersdb.fetch({"email": email}).__next__()
+    user = usersdb.fetch({"email": email}).items
+    # print(user)
     if len(user) == 1:
         # ...generate unique pin and email [email]...
         # ...generate unique pin...
@@ -58,7 +60,7 @@ async def _login_user(request: Request):
         if new_pin["status"] == "Success":
             pin = new_pin["pin"]
             message = f"Hey, here is your linksbook temporal login pin : {pin} "
-            send_mail_to(email, "LinksBook Login", message)
+            send_mail(email, "LinksBook Login", message)
             return {"status": "Success"}
         else:
             return {"status": "Failed", "type": "CreatePinError"}
@@ -81,6 +83,7 @@ async def _complete_user_login(request: Request):
 
         # fetch current user info
         user = get_user_by_email(email)
+        # print(f"user : {user} ")
 
         # generate token using user info
         user_token = save_token(user["name"], user["email"], user["key"])
