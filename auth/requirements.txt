@@ -1,3 +1,6 @@
 fastapi
 pyjwt
 deta
+uvicorn
+gunicorn
+sendgrid

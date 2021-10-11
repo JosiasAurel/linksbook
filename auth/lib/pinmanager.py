@@ -23,7 +23,9 @@ def create_pin() -> T.Dict[str, str]:
 
 def verify_and_revoke_pin(pin: str) -> T.Dict[str, str]:
     # check id the pin exists
-    does_pin_exist = pinsdb.fetch({"pin": pin}).__next__()
+    does_pin_exist = pinsdb.fetch({"pin": pin}).items
+    
+    print(does_pin_exist)
 
     if len(does_pin_exist) == 1:
         # if pin exist, revoke
