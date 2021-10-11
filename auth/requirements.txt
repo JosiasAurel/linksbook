@@ -4,3 +4,4 @@ deta
 uvicorn
 gunicorn
 sendgrid
+python-dotenv
