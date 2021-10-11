@@ -8,8 +8,12 @@ import jwt
 from fastapi import FastAPI, Request
 from deta import Deta
 from fastapi.middleware.cors import CORSMiddleware
+from dotenv import load_dotenv
+import os
 
-deta = Deta("a0ojq87u_xgq3dQQLkXj3YBsJ5iJKZ5MTAtYmCLoF")
+load_dotenv()
+
+deta = Deta(os.getenv("DETA_BASE_KEY"))
 
 usersdb = deta.Base("users")
 

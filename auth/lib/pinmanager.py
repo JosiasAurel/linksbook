@@ -2,8 +2,9 @@ from deta import Deta
 import secrets
 import typing as T
 from .genid import generate_id
+import os
 
-deta = Deta("a0ojq87u_xgq3dQQLkXj3YBsJ5iJKZ5MTAtYmCLoF")
+deta = Deta(os.getenv("DETA_BASE_KEY"))
 
 pinsdb = deta.Base("pins")
 
@@ -24,7 +25,7 @@ def create_pin() -> T.Dict[str, str]:
 def verify_and_revoke_pin(pin: str) -> T.Dict[str, str]:
     # check id the pin exists
     does_pin_exist = pinsdb.fetch({"pin": pin}).items
-    
+
     print(does_pin_exist)
 
     if len(does_pin_exist) == 1:
