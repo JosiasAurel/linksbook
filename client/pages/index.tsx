@@ -217,6 +217,7 @@ const HomePage: FunctionComponent = (): JSX.Element => {
                         tags={spTags.join(" ")}
                         note={spNote}
                         currentLink={currentLink}
+                        handleFormSubmit={v => setEditLinkModal(v)}
                     />
                 </Modal.Content>
                 <Modal.Action passive onClick={() => setEditLinkModal(false)}>
