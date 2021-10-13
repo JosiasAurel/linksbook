@@ -78,6 +78,7 @@ const HomePage: FunctionComponent = (): JSX.Element => {
     /* End side pop page */
 
     /* Tooltip Body */
+    // const [createLinkTooltip, setCreateLinkTooltip] = useState<boolean>(false);
     function CreateToolTipBody(): JSX.Element {
         return (
             <div style={{ display: "flex", flexDirection: "column" }}>
@@ -97,9 +98,14 @@ const HomePage: FunctionComponent = (): JSX.Element => {
     }
 
     /* End Tooltip body */
-
-    const { loading, error, data } = useQuery(FETCH_ALL);
+    let { loading, error, data } = useQuery(FETCH_ALL);
     if (data) console.log(data);
+
+    // update all links after edit
+    function getRefreshedData__Edit(datav: any): void {
+        data = datav;
+    }
+
 
     if (loading) {
         toast.promise(new Promise((resolve, reject) => setTimeout(() => resolve("Hello"), Math.floor(Math.random() * 4000))), { loading: "Fetching Latest Data...", success: "Done", error: "Something Wrong Occurred" });
@@ -218,6 +224,7 @@ const HomePage: FunctionComponent = (): JSX.Element => {
                         note={spNote}
                         currentLink={currentLink}
                         handleFormSubmit={v => setEditLinkModal(v)}
+                        getUpdatedData={v => getRefreshedData__Edit(v)}
                     />
                 </Modal.Content>
                 <Modal.Action passive onClick={() => setEditLinkModal(false)}>
