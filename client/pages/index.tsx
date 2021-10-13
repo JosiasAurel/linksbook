@@ -173,6 +173,7 @@ const HomePage: FunctionComponent = (): JSX.Element => {
                                     url={link.url}
                                     tags={link.tags}
                                     editAction={() => editActionHandler(link.id, link.annotation, link.url, link.tags, link.note)}
+                                    getUpdatedData={d => getRefreshedData(d)}
                                 />
                             )
                         })}

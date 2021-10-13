@@ -11,7 +11,7 @@ import { Button, Spacer } from "@nextui-org/react";
 import { truncateStr } from "../utils/string";
 
 import { useMutation } from "@apollo/client";
-import { DELETE_LINK } from "../graphql/actions";
+import { DELETE_LINK, FETCH_ALL } from "../graphql/actions";
 
 interface LinkCardProps {
     readonly name: string
@@ -19,10 +19,11 @@ interface LinkCardProps {
     readonly tags: Array<string>
     readonly id: string
     editAction?: Function
+    getUpdatedData?: Function
 }
 
 
-const LinkCard: React.FC<LinkCardProps> = ({ name, url, tags, editAction, id }): JSX.Element => {
+const LinkCard: React.FC<LinkCardProps> = ({ name, url, tags, editAction, id, getUpdatedData }): JSX.Element => {
 
     // modal state
     const [confimDeleteModal, setConfirmDeleteModal] = React.useState<boolean>(false);
@@ -30,7 +31,7 @@ const LinkCard: React.FC<LinkCardProps> = ({ name, url, tags, editAction, id }):
     const [deleteLink, { data, loading, error }] = useMutation(DELETE_LINK);
 
     function handledeleteAction(): void {
-        toast.promise(deleteLink({ variables: { linkId: id } }), { loading: "Deleting...", success: "LinkDeleted", error: "Could not delete link" });
+        toast.promise(deleteLink({ variables: { linkId: id }, refetchQueries: [{ query: FETCH_ALL }] }).then(_ => getUpdatedData(data)), { loading: "Deleting...", success: "LinkDeleted", error: "Could not delete link" });
         return;
     }
     function copyToClipboard(): void {
