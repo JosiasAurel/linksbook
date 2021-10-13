@@ -1,5 +1,7 @@
 import smtplib
 import ssl
+from sendgrid import SendGridAPIClient
+from sendgrid.helpers.mail import Mail, Content, Email, To
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
@@ -30,4 +32,16 @@ def send_mail_to(receiver: str, subject: str, body: str):
         mail_server.login("linksbook00@gmail.com", password)
         mail_server.sendmail(sender_mail, receiver_mail, message.as_string())
 
-    return
+
+def send_mail(receiver: str, subject: str, body: str) -> any:
+  message = Mail(Email("linksbook00@gmail.com"), To(receiver),
+                 subject, Content("text/plain", body))
+  try:
+      sg = SendGridAPIClient(
+          api_key='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')
+      response = sg.send(message)
+      print(response.status_code)
+      print(response.body)
+      print(response.headers)
+  except Exception as e:
+      raise e
