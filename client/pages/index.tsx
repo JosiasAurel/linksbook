@@ -82,13 +82,13 @@ const HomePage: FunctionComponent = (): JSX.Element => {
     function CreateToolTipBody(): JSX.Element {
         return (
             <div style={{ display: "flex", flexDirection: "column" }}>
-                <Tooltip position="right" trigger="click" text={<CreateLinkForm />}>
+                <Tooltip position="right" trigger="click" text={<CreateLinkForm getUpdatedData={d => getRefreshedData(d)} />}>
                     <Button>
                         Create Link
                     </Button>
                 </Tooltip>
                 <Spacer />
-                <Tooltip position="right" trigger="click" text={<CreateCollectionForm />}>
+                <Tooltip position="right" trigger="click" text={<CreateCollectionForm getUpdatedData={d => getRefreshedData(d)} />}>
                     <Button>
                         Create Collection
                     </Button>
@@ -102,7 +102,7 @@ const HomePage: FunctionComponent = (): JSX.Element => {
     if (data) console.log(data);
 
     // update all links after edit
-    function getRefreshedData__Edit(datav: any): void {
+    function getRefreshedData(datav: any): void {
         data = datav;
     }
 
@@ -224,7 +224,7 @@ const HomePage: FunctionComponent = (): JSX.Element => {
                         note={spNote}
                         currentLink={currentLink}
                         handleFormSubmit={v => setEditLinkModal(v)}
-                        getUpdatedData={v => getRefreshedData__Edit(v)}
+                        getUpdatedData={v => getRefreshedData(v)}
                     />
                 </Modal.Content>
                 <Modal.Action passive onClick={() => setEditLinkModal(false)}>
