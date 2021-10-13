@@ -201,9 +201,7 @@ const HomePage: FunctionComponent = (): JSX.Element => {
 
 
             {/* Toasts */}
-            <Toaster
-                position="bottom-right"
-            />
+            <Toaster />
             {/* End Toasts */}
 
             {/* Modals */}
