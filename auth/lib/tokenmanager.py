@@ -36,7 +36,7 @@ def save_token(name: str, email: str, owner: str) -> T.Dict[str, str]:
 
 def verify_token(token: str, owner: str) -> str:
     try:
-        data = jwt.decode(token, "SECRET")
+        data = jwt.decode(token, "SECRET", algorithms=["HS256"])
     
         
         # check if token is in database
@@ -51,7 +51,7 @@ def verify_token(token: str, owner: str) -> str:
 def name_from_token(token: str, owner: str) -> any:
     verification = verify_token(token, owner)
     if verification == "Valid":
-        data = jwt.decode(token, "SECRET")
+        data = jwt.decode(token, "SECRET", algorithms=["HS256"])
         # print(f" NAME FROM TOKEN {data}")
         return {"status": "Success", "userName": data.get("name")}
     

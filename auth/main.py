@@ -24,7 +24,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-
 @app.get("/")
 def _root(request: Request) -> str:
     return "Hello World from Service Root"
@@ -52,7 +51,7 @@ async def _login_user(request: Request):
     # get user's email
     email = body["email"]  # get the user email
     user = usersdb.fetch({"email": email}).items
-    # print(user)
+    print(user)
     if len(user) == 1:
         # ...generate unique pin and email [email]...
         # ...generate unique pin...
@@ -83,7 +82,7 @@ async def _complete_user_login(request: Request):
 
         # fetch current user info
         user = get_user_by_email(email)
-        # print(f"user : {user} ")
+        print(f"user : {user} ")
 
         # generate token using user info
         user_token = save_token(user["name"], user["email"], user["key"])
@@ -101,7 +100,7 @@ async def _check_is_auth(request: Request):
     req_body = await request.json()
     auth_token = req_body["token"]
 
-    data = jwt.decode(auth_token, "SECRET")
+    data = jwt.decode(auth_token, "SECRET", algorithms=["HS256"])
 
     user = get_user_by_email(data.get("email"))
 
