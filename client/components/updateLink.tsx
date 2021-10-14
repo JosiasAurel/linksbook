@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import styles from "../styles/index.module.css";
 
 import { handleChange } from "../utils/string";
-import { UPDATE_LINK } from "../graphql/actions";
+import { UPDATE_LINK, FETCH_ALL } from "../graphql/actions";
 import { useMutation } from "@apollo/client";
 import toast from "react-hot-toast";
 import { Input, Textarea } from "@geist-ui/react";
@@ -16,9 +16,10 @@ interface UpdateLinkProps {
     note: string
     currentLink: string
     handleFormSubmit?: Function
+    getUpdatedData?: Function
 }
 
-const UpdateLink: React.FC<UpdateLinkProps> = ({ title, url, tags, note, handleFormSubmit, currentLink }): JSX.Element => {
+const UpdateLink: React.FC<UpdateLinkProps> = ({ title, url, tags, note, handleFormSubmit, currentLink, getUpdatedData }): JSX.Element => {
 
     const [updateLink, { data, loading, error }] = useMutation(UPDATE_LINK);
 
@@ -38,7 +39,9 @@ const UpdateLink: React.FC<UpdateLinkProps> = ({ title, url, tags, note, handleF
         // the magic takes place here
         // below is update link mutation handler
 
-        toast.promise(updateLink({ variables: { linkId: currentLink, annotation: eTitle.trim(), url: eLink.trim(), tags: eTags.trim().split(" "), note: eNote.trim() } }), {
+        toast.promise(updateLink({ variables: { linkId: currentLink, annotation: eTitle.trim(), url: eLink.trim(), tags: eTags.trim().split(" "), note: eNote.trim() }, refetchQueries: [{ query: FETCH_ALL }] })
+            .then(() => handleFormSubmit(false))
+            .then(() => getUpdatedData(data)), {
             loading: "Updating...",
             success: "Bookmark Updated",
             error: "Could not update bookmark"

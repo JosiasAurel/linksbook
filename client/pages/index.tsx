@@ -78,16 +78,17 @@ const HomePage: FunctionComponent = (): JSX.Element => {
     /* End side pop page */
 
     /* Tooltip Body */
+    // const [createLinkTooltip, setCreateLinkTooltip] = useState<boolean>(false);
     function CreateToolTipBody(): JSX.Element {
         return (
             <div style={{ display: "flex", flexDirection: "column" }}>
-                <Tooltip position="right" trigger="click" text={<CreateLinkForm />}>
+                <Tooltip position="right" trigger="click" text={<CreateLinkForm getUpdatedData={d => getRefreshedData(d)} />}>
                     <Button>
                         Create Link
                     </Button>
                 </Tooltip>
                 <Spacer />
-                <Tooltip position="right" trigger="click" text={<CreateCollectionForm />}>
+                <Tooltip position="right" trigger="click" text={<CreateCollectionForm getUpdatedData={d => getRefreshedData(d)} />}>
                     <Button>
                         Create Collection
                     </Button>
@@ -97,9 +98,14 @@ const HomePage: FunctionComponent = (): JSX.Element => {
     }
 
     /* End Tooltip body */
-
-    const { loading, error, data } = useQuery(FETCH_ALL);
+    let { loading, error, data } = useQuery(FETCH_ALL);
     if (data) console.log(data);
+
+    // update all links after edit
+    function getRefreshedData(datav: any): void {
+        data = datav;
+    }
+
 
     if (loading) {
         toast.promise(new Promise((resolve, reject) => setTimeout(() => resolve("Hello"), Math.floor(Math.random() * 4000))), { loading: "Fetching Latest Data...", success: "Done", error: "Something Wrong Occurred" });
@@ -156,7 +162,7 @@ const HomePage: FunctionComponent = (): JSX.Element => {
 
                 <section className={styles.linksSection}>
                     <div className={styles.links}>
-                        <Spacer y={2} />
+                        <Spacer y={5} />
                         {data.user.links.map(link => {
                             console.log({ link: link })
                             return (
@@ -167,10 +173,11 @@ const HomePage: FunctionComponent = (): JSX.Element => {
                                     url={link.url}
                                     tags={link.tags}
                                     editAction={() => editActionHandler(link.id, link.annotation, link.url, link.tags, link.note)}
+                                    getUpdatedData={d => getRefreshedData(d)}
                                 />
                             )
                         })}
-                        <Spacer y={2} />
+                        <Spacer y={3} />
                     </div>
                 </section>
                 <section style={showPopPage ? { display: "flex" } : { display: "none" }} className={styles.sidePopPage}>
@@ -201,9 +208,7 @@ const HomePage: FunctionComponent = (): JSX.Element => {
 
 
             {/* Toasts */}
-            <Toaster
-                position="bottom-right"
-            />
+            <Toaster />
             {/* End Toasts */}
 
             {/* Modals */}
@@ -219,6 +224,8 @@ const HomePage: FunctionComponent = (): JSX.Element => {
                         tags={spTags.join(" ")}
                         note={spNote}
                         currentLink={currentLink}
+                        handleFormSubmit={v => setEditLinkModal(v)}
+                        getUpdatedData={v => getRefreshedData(v)}
                     />
                 </Modal.Content>
                 <Modal.Action passive onClick={() => setEditLinkModal(false)}>
