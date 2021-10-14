@@ -29,24 +29,21 @@ async function handleSumbit() {
     if (result.status === "Success") {
         
         const pinDialog = document.getElementById("pin-dialog");
-        const _pin = document.getElementById("pin-dialog-pin").value;
         const validatePin = document.getElementById("validate-pin");
         pinDialog.showModal();
 
         // try to validate the pin
-        validatePin.addEventListener("click", _ => {
-
+        validatePin.addEventListener("click", async _ => {
+            const _pin = document.getElementById("pin-dialog-pin").value;
             const lastStep = await makeRequest("complete-login", { pin: _pin, email });
 
             if (lastStep.status === "Success") {
-                // location.href = `https://extauth.linksbook.me/linksbook-extension-authentication#authToken=${lastStep.token}`;
+                location.href = `https://extauth.linksbook.me/linksbook-extension-authentication#authToken=${lastStep.token}`;
             } else { alert("Wrong Pin. Try again."); }
             console.log(lastStep);
         }); // done... 
 
-    } else {
-        alert("Something wrong occurred... Maker sure your email is correct and try again.");
-    }
+    } else { alert("Something wrong occurred.") }
 }
 
 const createLoginAction = document.getElementById("create-login-action");
