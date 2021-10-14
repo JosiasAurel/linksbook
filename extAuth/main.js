@@ -30,7 +30,7 @@ async function handleSumbit(event) {
         const lastStep = await makeRequest("complete-login", { pin: _pin, email });
 
         if (lastStep.status === "Success") {
-            location.href = `https://extauth.linksbook.me/linksbook?token=${lastStep.token}`;
+            location.href = `https://extauth.linksbook.me/linksbook-extension-authentication#authToken=${lastStep.token}`;
         } else { alert("Wrong Pin. Try again."); }
         // console.log(lastStep);
     } else {
