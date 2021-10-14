@@ -1,7 +1,9 @@
 
-const AUTH_SERVICE_URI = "";
+const AUTH_SERVICE_URI = "https://celestial-unmarred-patella.glitch.me";
 
-async function makeRequest(route) {
+const form = document.getElementById("create-login-form");
+
+async function makeRequest(route, body) {
     let response = await fetch(`${AUTH_SERVICE_URI}/${route}`, {
         method: "POST",
         headers: {
@@ -14,3 +16,17 @@ async function makeRequest(route) {
 
     return data;
 }
+
+async function handleSumbit(event) {
+    event.preventDefault(); // prevent auto reload
+
+    const email = document.getElementById("create-login-email").value;
+
+    const result = await makeRequest("create-login", { email });
+
+    console.log(result);
+}
+
+form.addEventListener("submit", event => {
+    handleSumbit(event);
+});
