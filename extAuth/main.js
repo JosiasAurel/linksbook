@@ -1,7 +1,10 @@
 
-const AUTH_SERVICE_URI = "https://celestial-unmarred-patella.glitch.me";
+// init dialog polyfill
+const pinDialog = document.getElementById("pin-dialog");
+dialogPolyfill.registerDialog(pinDialog);
 
-const form = document.getElementById("create-login-form");
+
+const AUTH_SERVICE_URI = "https://celestial-unmarred-patella.glitch.me";
 
 async function makeRequest(route, body) {
     let response = await fetch(`${AUTH_SERVICE_URI}/${route}`, {
@@ -17,27 +20,37 @@ async function makeRequest(route, body) {
     return data;
 }
 
-async function handleSumbit(event) {
-    event.preventDefault(); // prevent auto reload
+async function handleSumbit() {
 
     const email = document.getElementById("create-login-email").value;
 
     const result = await makeRequest("create-login", { email });
 
     if (result.status === "Success") {
-        const _pin = prompt("Enter your login pin");
+        
+        const pinDialog = document.getElementById("pin-dialog");
+        const _pin = document.getElementById("pin-dialog-pin").value;
+        const validatePin = document.getElementById("validate-pin");
+        pinDialog.showModal();
 
-        const lastStep = await makeRequest("complete-login", { pin: _pin, email });
+        // try to validate the pin
+        validatePin.addEventListener("click", _ => {
 
-        if (lastStep.status === "Success") {
-            location.href = `https://extauth.linksbook.me/linksbook-extension-authentication#authToken=${lastStep.token}`;
-        } else { alert("Wrong Pin. Try again."); }
-        // console.log(lastStep);
+            const lastStep = await makeRequest("complete-login", { pin: _pin, email });
+
+            if (lastStep.status === "Success") {
+                // location.href = `https://extauth.linksbook.me/linksbook-extension-authentication#authToken=${lastStep.token}`;
+            } else { alert("Wrong Pin. Try again."); }
+            console.log(lastStep);
+        }); // done... 
+
     } else {
         alert("Something wrong occurred... Maker sure your email is correct and try again.");
     }
 }
 
-form.addEventListener("submit", event => {
-    handleSumbit(event);
+const createLoginAction = document.getElementById("create-login-action");
+
+createLoginAction.addEventListener("click", _ => {
+    handleSumbit();
 });

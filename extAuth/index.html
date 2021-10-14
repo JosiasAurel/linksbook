@@ -14,12 +14,18 @@
 <body>
     <main>
         <h2>LinksBook Log-In</h2>
-        <form id="create-login-form" class="zi-card shadow">
+        <div class="zi-card shadow">
             <input id="create-login-email" class="zi-input" type="email" placeholder="kylee@example.com" />
-            <button class="zi-btn primary small auto">
+            <button id="create-login-action" class="zi-btn primary small auto">
                 Log In
             </button>
-        </form>
+        </div>
+        <dialog id="pin-dialog">
+            <input id="pin-dialog-pin" class="zi-input" type="email" placeholder="Login Pin" />
+            <button id="validate-pin" class="zi-btn primary small auto">
+                Log In
+            </button>
+        </dialog>
     </main>
 </body>
 </html>
