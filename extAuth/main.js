@@ -24,7 +24,18 @@ async function handleSumbit(event) {
 
     const result = await makeRequest("create-login", { email });
 
-    console.log(result);
+    if (result.status === "Success") {
+        const _pin = prompt("Enter your login pin");
+
+        const lastStep = await makeRequest("complete-login", { pin: _pin, email });
+
+        if (lastStep.status === "Success") {
+            location.href = `https://extauth.linksbook.me/linksbook?token=${lastStep.token}`;
+        } else { alert("Wrong Pin. Try again."); }
+        // console.log(lastStep);
+    } else {
+        alert("Something wrong occurred... Maker sure your email is correct and try again.");
+    }
 }
 
 form.addEventListener("submit", event => {
