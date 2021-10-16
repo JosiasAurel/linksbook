@@ -4,12 +4,12 @@ const app = express();
 
 app.use(express.static("public"));
 
-app.post("/red", (req, res) => {
+app.post("/api/red", (req, res) => {
     const { token } = req.body;
     res.redirect(`/auth#token=${token}`);
 });
 
-app.get("/:any", (req, res) => {
+app.get("/api/:any", (req, res) => {
     res.send("Fine...");
 });
 

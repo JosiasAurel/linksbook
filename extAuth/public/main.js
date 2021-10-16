@@ -38,7 +38,7 @@ async function handleSumbit() {
             const lastStep = await makeRequest(AUTH_SERVICE_URI, "complete-login", { pin: _pin, email });
             let token = lastStep.token ?? undefined;
             if (lastStep.status === "Success") {
-                await makeRequest("", "red", { token });
+                await makeRequest("/api", "red", { token });
             } else { alert("Wrong Pin. Try again."); }
             console.log(lastStep);
         }); // done... 
