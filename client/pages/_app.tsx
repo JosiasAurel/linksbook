@@ -4,6 +4,8 @@ import "../styles/global.css";
 
 import { AppProps } from "next/app";
 
+import { Toaster } from "react-hot-toast";
+
 // Use Geist UI components
 import { GeistProvider, CssBaseline } from "@geist-ui/react";
 import AuthProvider from "../contexts/auth";
@@ -47,6 +49,9 @@ const LinksBookApp: FunctionComponent<AppProps> = ({ Component, pageProps }): JS
                     <CssBaseline />
                     <ApolloProvider client={client}>
                         <Component {...pageProps} />
+                        {/* Toasts */}
+                        <Toaster />
+                        {/* End Toasts */}
                     </ApolloProvider>
                 </GeistProvider>
             </DndProvider>
