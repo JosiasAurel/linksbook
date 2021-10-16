@@ -13,6 +13,9 @@ import { truncateStr } from "../utils/string";
 import { useMutation } from "@apollo/client";
 import { DELETE_LINK, FETCH_ALL } from "../graphql/actions";
 
+import { ItemTypes } from "../utils/constants";
+import { useDrag } from "react-dnd";
+
 interface LinkCardProps {
     readonly name: string
     readonly url: string
@@ -26,6 +29,14 @@ interface LinkCardProps {
 
 const LinkCard: React.FC<LinkCardProps> = ({ name, url, tags, viewAction, editAction, id, getUpdatedData }): JSX.Element => {
 
+    const [{ isDragging }, drag] = useDrag(() => ({
+        type: ItemTypes.BOOKMARK,
+        collect: monitor => ({
+            isDragging: !!monitor.isDragging()
+        })
+    }));
+
+    console.log(isDragging);
     // modal state
     const [confimDeleteModal, setConfirmDeleteModal] = React.useState<boolean>(false);
 
@@ -45,7 +56,7 @@ const LinkCard: React.FC<LinkCardProps> = ({ name, url, tags, viewAction, editAc
     }
 
     return (
-        <div className={styles.linkCard}>
+        <div style={{ opacity: isDragging ? 0.5 : 1 }} ref={drag} className={styles.linkCard}>
             <p> {truncateStr(name, 30)} </p>
             <div className={styles.linkTags}>
                 {tags.map(tag => {
