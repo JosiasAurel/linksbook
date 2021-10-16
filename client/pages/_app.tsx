@@ -12,6 +12,10 @@ import AuthProvider from "../contexts/auth";
 import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 
+// react drag-n-drop
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
+
 const httpLink = createHttpLink({
     uri: `${process.env.NEXT_PUBLIC_SERVER_URI}/graphql`
 });
@@ -38,12 +42,14 @@ const LinksBookApp: FunctionComponent<AppProps> = ({ Component, pageProps }): JS
 
     return (
         <AuthProvider>
-            <GeistProvider>
-                <CssBaseline />
-                <ApolloProvider client={client}>
-                    <Component {...pageProps} />
-                </ApolloProvider>
-            </GeistProvider>
+            <DndProvider backend={HTML5Backend}>
+                <GeistProvider>
+                    <CssBaseline />
+                    <ApolloProvider client={client}>
+                        <Component {...pageProps} />
+                    </ApolloProvider>
+                </GeistProvider>
+            </DndProvider>
         </AuthProvider>
     )
 }
