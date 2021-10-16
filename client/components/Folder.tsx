@@ -31,12 +31,8 @@ const Folder: React.FC<FolderProps> = ({ id, label, thirdPartyAction, getUpdated
         })
     }));
 
-    function toggleFolderSelected(): void {
-        thirdPartyAction(); // execute an external action
-    }
-
     return (
-        <div ref={drop} onClick={e => toggleFolderSelected()} className={styles.folder}>
+        <div ref={drop} onClick={() => thirdPartyAction()} className={styles.folder}>
             <h2> {label} </h2>
         </div>
     )
