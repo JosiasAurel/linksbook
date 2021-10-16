@@ -51,11 +51,11 @@ const UpdateLink: React.FC<UpdateLinkProps> = ({ title, url, tags, note, handleF
 
     return (
         <form onSubmit={e => handleUpdateLink(e)} className={styles.editLinkModalForm}>
-            <Input width="100%" value={eTitle} onChange={e => handleChange(e, setETitle)} placeholder="Note title/annotation" />
+            <Input label="Annotation" width="100%" value={eTitle} onChange={e => handleChange(e, setETitle)} placeholder="Note title/annotation" />
             <Spacer />
-            <Input width="100%" value={eLink} onChange={e => handleChange(e, setELink)} placeholder="some-url.example.com" />
+            <Input label="URL" width="100%" value={eLink} onChange={e => handleChange(e, setELink)} placeholder="some-url.example.com" />
             <Spacer />
-            <Input width="100%" value={eTags} onChange={e => handleChange(e, setETags)} placeholder="Tags separated by spaces" />
+            <Input label="Tags" width="100%" value={eTags} onChange={e => handleChange(e, setETags)} placeholder="Tags separated by spaces" />
             <Spacer />
             <Textarea width="100%" h="100px" value={eNote} onChange={e => handleChange(e, setENote)} />
             <Spacer />

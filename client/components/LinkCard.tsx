@@ -5,7 +5,7 @@ import Tag from "./Tag";
 
 import toast from "react-hot-toast";
 import { Modal } from "@geist-ui/react";
-import { Copy, Edit2, ArrowUpRight, Archive, Eye } from "@geist-ui/react-icons";
+import { Copy, Edit2, ArrowUpRight, Trash2, Eye } from "@geist-ui/react-icons";
 import { Button, Spacer } from "@nextui-org/react";
 
 import { truncateStr } from "../utils/string";
@@ -128,7 +128,7 @@ const LinkCard: React.FC<LinkCardProps> = ({ name, url, tags, viewAction, editAc
                             </g>
                         </g>
                     </svg> */}
-                    <Archive />
+                    <Trash2 />
                 </div>
                 {/* End Delete Icon */}
             </div>
