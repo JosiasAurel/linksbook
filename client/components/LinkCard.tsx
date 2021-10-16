@@ -5,7 +5,7 @@ import Tag from "./Tag";
 
 import toast from "react-hot-toast";
 import { Modal } from "@geist-ui/react";
-import { Copy, Edit2, ArrowUpRight, Archive } from "@geist-ui/react-icons";
+import { Copy, Edit2, ArrowUpRight, Trash2, Eye } from "@geist-ui/react-icons";
 import { Button, Spacer } from "@nextui-org/react";
 
 import { truncateStr } from "../utils/string";
@@ -13,18 +13,31 @@ import { truncateStr } from "../utils/string";
 import { useMutation } from "@apollo/client";
 import { DELETE_LINK, FETCH_ALL } from "../graphql/actions";
 
+import { ItemTypes } from "../utils/constants";
+import { useDrag } from "react-dnd";
+
 interface LinkCardProps {
     readonly name: string
     readonly url: string
     readonly tags: Array<string>
     readonly id: string
+    viewAction?: Function
     editAction?: Function
     getUpdatedData?: Function
 }
 
 
-const LinkCard: React.FC<LinkCardProps> = ({ name, url, tags, editAction, id, getUpdatedData }): JSX.Element => {
+const LinkCard: React.FC<LinkCardProps> = ({ name, url, tags, viewAction, editAction, id, getUpdatedData }): JSX.Element => {
 
+    const [{ isDragging }, drag] = useDrag(() => ({
+        type: ItemTypes.BOOKMARK,
+        item: { id },
+        collect: monitor => ({
+            isDragging: !!monitor.isDragging()
+        })
+    }));
+
+    console.log(isDragging);
     // modal state
     const [confimDeleteModal, setConfirmDeleteModal] = React.useState<boolean>(false);
 
@@ -44,7 +57,7 @@ const LinkCard: React.FC<LinkCardProps> = ({ name, url, tags, editAction, id, ge
     }
 
     return (
-        <div className={styles.linkCard}>
+        <div style={{ opacity: isDragging ? 0.5 : 1 }} ref={drag} className={styles.linkCard}>
             <p> {truncateStr(name, 30)} </p>
             <div className={styles.linkTags}>
                 {tags.map(tag => {
@@ -75,6 +88,19 @@ const LinkCard: React.FC<LinkCardProps> = ({ name, url, tags, editAction, id, ge
                 </div>
                 {/* End Copy Icon */}
 
+                {/* View Icon */}
+                <div onClick={() => viewAction()} className={styles.editIcon}>
+                    {/* <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <g data-name="Layer 2">
+                            <g data-name="edit">
+                                <rect width="24" height="24" opacity="0" />
+                                <path d="M19.4 7.34L16.66 4.6A2 2 0 0 0 14 4.53l-9 9a2 2 0 0 0-.57 1.21L4 18.91a1 1 0 0 0 .29.8A1 1 0 0 0 5 20h.09l4.17-.38a2 2 0 0 0 1.21-.57l9-9a1.92 1.92 0 0 0-.07-2.71zM9.08 17.62l-3 .28.27-3L12 9.32l2.7 2.7zM16 10.68L13.32 8l1.95-2L18 8.73z" />
+                            </g>
+                        </g>
+                    </svg> */}
+                    <Eye />
+                </div>
+                {/* End View Icon */}
 
                 {/* Edit Icon */}
                 <div onClick={() => editAction()} className={styles.editIcon}>
@@ -102,7 +128,7 @@ const LinkCard: React.FC<LinkCardProps> = ({ name, url, tags, editAction, id, ge
                             </g>
                         </g>
                     </svg> */}
-                    <Archive />
+                    <Trash2 />
                 </div>
                 {/* End Delete Icon */}
             </div>

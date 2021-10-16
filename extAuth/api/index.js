@@ -2,18 +2,14 @@ const express = require("express");
 
 const app = express();
 
-app.use(express.static("client"));
+app.use(express.static("public"));
 
-app.get("/", (req, res) => {
-    res.sendFile(__dirname, "./client/index.html");
-});
-
-app.post("/red", (req, res) => {
+app.post("/api/red", (req, res) => {
     const { token } = req.body;
     res.redirect(`/auth#token=${token}`);
 });
 
-app.get("/:any", (req, res) => {
+app.get("/api/:any", (req, res) => {
     res.send("Fine...");
 });
 

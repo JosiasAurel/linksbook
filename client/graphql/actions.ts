@@ -18,7 +18,11 @@ const FETCH_ALL = gql`
                 name,
                 type,
                 links {
-                    annotation
+                    annotation,
+                    tags,
+                    note,
+                    id,
+                    url
                 }
             }
         }
@@ -58,4 +62,12 @@ const CREATE_COLLECTION = gql`
     }
 `;
 
-export { FETCH_ALL, CREATE_LINK, UPDATE_LINK, CREATE_COLLECTION, DELETE_LINK };
+const DROP_LINK_IN_COLLECTION = gql`
+    mutation dropLink($collectionId: String!, $linkId: String!) {
+        dropLink(collectionId: $collectionId, linkId: $linkId) {
+            status
+        }
+    }
+`;
+
+export { FETCH_ALL, CREATE_LINK, UPDATE_LINK, CREATE_COLLECTION, DELETE_LINK, DROP_LINK_IN_COLLECTION };

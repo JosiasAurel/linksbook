@@ -99,6 +99,23 @@ const resolvers = {
 
             return {status: result};
         }
+    },
+    Collection: {
+        links: async (parent: any, args: any) => {
+            const linksId: Array<any> = parent?.links;
+
+            const links = [];
+
+            for (let i = 0; i < linksId.length; i++) {
+                var link = await getLink(linksId[i]);
+                // console.log(link);
+                if (link !== null) links.push(link);
+            }
+
+            links.map(link => link.id = link.key);
+            // console.log(links)
+            return links;
+        }
     }
 }
 

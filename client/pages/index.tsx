@@ -15,10 +15,11 @@ import Folder from "../components/Folder";
 
 import styles from "../styles/index.module.css";
 
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import { Loading, Button, Tooltip, Spacer } from '@nextui-org/react';
 
 import { Modal, Button as GButton } from "@geist-ui/react";
+import { Home } from "@geist-ui/react-icons";
 
 // import graphql actions
 import { FETCH_ALL } from "../graphql/actions";
@@ -26,13 +27,6 @@ import { FETCH_ALL } from "../graphql/actions";
 import { truncateStr } from "../utils/string";
 
 const HomePage: FunctionComponent = (): JSX.Element => {
-
-    /* Create Link/Collection Modal states */
-    const [createCollection, setCreateCollection] = useState<boolean>(false);
-    function toggleModal(state, handler): void {
-        handler(!state);
-    }
-    /*  */
 
     /* link card edit button action handle */
     const [editLinkModal, setEditLinkModal] = useState<boolean>(false);
@@ -47,7 +41,7 @@ const HomePage: FunctionComponent = (): JSX.Element => {
     const [spTags, setSPTags] = useState<Array<string>>([""]);
     const [spNote, setSPNote] = useState<string>("");
 
-    function editActionHandler(id: string, annotation: string, link: string, tags: Array<string>, note: string): void {
+    function displayPopPage(id: string, annotation: string, link: string, tags: Array<string>, note: string): void {
         // set current link by ID
         setCurrentLink(id);
 
@@ -65,6 +59,18 @@ const HomePage: FunctionComponent = (): JSX.Element => {
         } else {
             setPopPage(!showPopPage);
         }
+    }
+
+    function editActionHandler(id: string, annotation: string, link: string, tags: Array<string>, note: string): void {
+        // set current link by ID
+        setCurrentLink(id);
+
+        // All this function does is replace the 
+        // state of show pop page
+        setSPTitle(annotation);
+        setSPLink(link);
+        setSPTags(tags);
+        setSPNote((note !== null) ? note : "Add note by editing link...");
     }
     /* link card edit action - end */
 
@@ -99,7 +105,21 @@ const HomePage: FunctionComponent = (): JSX.Element => {
 
     /* End Tooltip body */
     let { loading, error, data } = useQuery(FETCH_ALL);
-    if (data) console.log(data);
+    const [displayLinks, setDisplayLinks] = useState<any>([]);
+    // when the component is mounted
+    useEffect(() => {
+        if (data) {
+            setDisplayLinks(data.user.links);
+        }
+    }, [data]);
+
+    /* Folder actions */
+    // impure function
+    function handleFolderSelect(folderIndex: number): void {
+        let folderLinks = data.user.collections[folderIndex].links;
+        setDisplayLinks(folderLinks);
+    }
+    /* End Folder actions */
 
     // update all links after edit
     function getRefreshedData(datav: any): void {
@@ -108,7 +128,7 @@ const HomePage: FunctionComponent = (): JSX.Element => {
 
 
     if (loading) {
-        toast.promise(new Promise((resolve, reject) => setTimeout(() => resolve("Hello"), Math.floor(Math.random() * 4000))), { loading: "Fetching Latest Data...", success: "Done", error: "Something Wrong Occurred" });
+        toast.promise(new Promise((resolve, _reject) => setTimeout(() => resolve("Hello"), Math.floor(Math.random() * 4000))), { loading: "Fetching Latest Data...", success: "Done", error: "Something Wrong Occurred" });
         return (
             <div className={styles.dashboardPage}>
                 <Header />
@@ -122,12 +142,12 @@ const HomePage: FunctionComponent = (): JSX.Element => {
                         <Loading />
                     </section>
                 </div>
-                <Toaster />
             </div>
         )
     }
 
     if (error) {
+        console.log(error);
         toast.error("Something Wrong Ocurred.");
         toast.error("Could not load data.");
         return (
@@ -151,9 +171,14 @@ const HomePage: FunctionComponent = (): JSX.Element => {
                         </Tooltip>
                     </div>
                     <div className={styles.folders}>
-                        {data.user.collections.map(folder => {
+                        {data.user.collections.map((folder, idx) => {
                             return (
-                                <Folder label={folder.name} type={folder.type} thirdPartyAction={() => undefined} />
+                                <Folder
+                                    label={folder.name}
+                                    id={folder.id}
+                                    thirdPartyAction={index => handleFolderSelect(idx)}
+                                    getUpdatedData={data => getRefreshedData(data)}
+                                />
                             )
                         })}
                     </div>
@@ -161,9 +186,10 @@ const HomePage: FunctionComponent = (): JSX.Element => {
 
 
                 <section className={styles.linksSection}>
+                    <Home onClick={() => setDisplayLinks(data.user.links)} />
                     <div className={styles.links}>
-                        <Spacer y={5} />
-                        {data.user.links.map(link => {
+                        <Spacer y={6} />
+                        {displayLinks.map(link => {
                             console.log({ link: link })
                             return (
                                 <LinkCard
@@ -172,7 +198,8 @@ const HomePage: FunctionComponent = (): JSX.Element => {
                                     name={link.annotation}
                                     url={link.url}
                                     tags={link.tags}
-                                    editAction={() => editActionHandler(link.id, link.annotation, link.url, link.tags, link.note)}
+                                    viewAction={() => displayPopPage(link.id, link.annotation, link.url, link.tags, link.note)}
+                                    editAction={() => { editActionHandler(link.id, link.annotation, link.url, link.tags, link.note); setEditLinkModal(!editLinkModal) }}
                                     getUpdatedData={d => getRefreshedData(d)}
                                 />
                             )
@@ -205,11 +232,6 @@ const HomePage: FunctionComponent = (): JSX.Element => {
 
             </div>
             {/* Everything Else */}
-
-
-            {/* Toasts */}
-            <Toaster />
-            {/* End Toasts */}
 
             {/* Modals */}
             {/* Edit Link Modal */}
