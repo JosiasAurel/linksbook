@@ -193,6 +193,36 @@ var resolvers = {
                 }
             });
         }); }
+    },
+    Collection: {
+        links: function (parent, args) { return __awaiter(void 0, void 0, void 0, function () {
+            var linksId, links, i, link;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        linksId = parent === null || parent === void 0 ? void 0 : parent.links;
+                        links = [];
+                        i = 0;
+                        _a.label = 1;
+                    case 1:
+                        if (!(i < linksId.length)) return [3 /*break*/, 4];
+                        return [4 /*yield*/, links_1.getLink(linksId[i])];
+                    case 2:
+                        link = _a.sent();
+                        // console.log(link);
+                        if (link !== null)
+                            links.push(link);
+                        _a.label = 3;
+                    case 3:
+                        i++;
+                        return [3 /*break*/, 1];
+                    case 4:
+                        links.map(function (link) { return link.id = link.key; });
+                        // console.log(links)
+                        return [2 /*return*/, links];
+                }
+            });
+        }); }
     }
 };
 exports.resolvers = resolvers;
