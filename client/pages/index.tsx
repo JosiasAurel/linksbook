@@ -19,6 +19,7 @@ import toast from "react-hot-toast";
 import { Loading, Button, Tooltip, Spacer } from '@nextui-org/react';
 
 import { Modal, Button as GButton } from "@geist-ui/react";
+import { Home } from "@geist-ui/react-icons";
 
 // import graphql actions
 import { FETCH_ALL } from "../graphql/actions";
@@ -185,8 +186,9 @@ const HomePage: FunctionComponent = (): JSX.Element => {
 
 
                 <section className={styles.linksSection}>
+                    <Home onClick={() => setDisplayLinks(data.user.links)} />
                     <div className={styles.links}>
-                        <Spacer y={5} />
+                        <Spacer y={6} />
                         {displayLinks.map(link => {
                             console.log({ link: link })
                             return (
