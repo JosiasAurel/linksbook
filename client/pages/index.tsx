@@ -165,7 +165,12 @@ const HomePage: FunctionComponent = (): JSX.Element => {
                     <div className={styles.folders}>
                         {data.user.collections.map(folder => {
                             return (
-                                <Folder label={folder.name} type={folder.type} thirdPartyAction={() => undefined} />
+                                <Folder
+                                    label={folder.name}
+                                    id={folder.id}
+                                    thirdPartyAction={() => undefined}
+                                    getUpdatedData={data => getRefreshedData(data)}
+                                />
                             )
                         })}
                     </div>
