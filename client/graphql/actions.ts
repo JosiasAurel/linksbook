@@ -18,7 +18,11 @@ const FETCH_ALL = gql`
                 name,
                 type,
                 links {
-                    annotation
+                    annotation,
+                    tags,
+                    note,
+                    id,
+                    url
                 }
             }
         }
