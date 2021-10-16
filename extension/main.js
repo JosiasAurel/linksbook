@@ -12,6 +12,7 @@ function init() {
 }
 
 init();
+
 chrome.bookmarks.getTree(bkms => {
     handleBookmarks(bkms);
 });
@@ -29,3 +30,5 @@ function handleBookmarks(bookmarks) {
     log(everything);
     log(bookmarksStructures);
 }
+
+// LinksBook v2 Chrome Extension
