@@ -10,7 +10,8 @@
     "storage",
     "<all_urls>",
     "bookmarks",
-    "identity"
+    "identity",
+    "https://server.linksbook.me/*"
   ],
   "content_scripts": [
     {

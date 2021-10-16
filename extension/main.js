@@ -1,8 +1,17 @@
 
+const URL_FOR_AUTH = "https://linksbook-extension-auth.vercel.app/";
 
 function log(data) {
     chrome.extension.getBackgroundPage().console.log(data);
 }
+
+function init() {
+    chrome.identity.launchWebAuthFlow({url: URL_FOR_AUTH, interactive: true}, (red_url) => {
+        log(red_url);
+    });
+}
+
+init();
 
 chrome.bookmarks.getTree(bkms => {
     handleBookmarks(bkms);
@@ -21,3 +30,5 @@ function handleBookmarks(bookmarks) {
     log(everything);
     log(bookmarksStructures);
 }
+
+// LinksBook v2 Chrome Extension
