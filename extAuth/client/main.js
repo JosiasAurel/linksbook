@@ -6,8 +6,8 @@ dialogPolyfill.registerDialog(pinDialog);
 
 const AUTH_SERVICE_URI = "https://celestial-unmarred-patella.glitch.me";
 
-async function makeRequest(route, body) {
-    let response = await fetch(`${AUTH_SERVICE_URI}/${route}`, {
+async function makeRequest(host, route, body) {
+    let response = await fetch(`${host}/${route}`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -24,7 +24,7 @@ async function handleSumbit() {
 
     const email = document.getElementById("create-login-email").value;
 
-    const result = await makeRequest("create-login", { email });
+    const result = await makeRequest(AUTH_SERVICE_URI, "create-login", { email });
 
     if (result.status === "Success") {
         
@@ -35,10 +35,10 @@ async function handleSumbit() {
         // try to validate the pin
         validatePin.addEventListener("click", async _ => {
             const _pin = document.getElementById("pin-dialog-pin").value;
-            const lastStep = await makeRequest("complete-login", { pin: _pin, email });
-
+            const lastStep = await makeRequest(AUTH_SERVICE_URI, "complete-login", { pin: _pin, email });
+            let token = lastStep.token ?? undefined;
             if (lastStep.status === "Success") {
-                location.href = `https://extauth.linksbook.me/linksbook-extension-authentication#authToken=${lastStep.token}`;
+                await makeRequest("", "red", { token });
             } else { alert("Wrong Pin. Try again."); }
             console.log(lastStep);
         }); // done... 
