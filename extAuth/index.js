@@ -6,7 +6,7 @@ app.use(express.static("client"));
 
 app.get("/", (req, res) => {
     console.log(__dirname)
-    res.sendFile(__dirname, "./client/index.html");
+    res.sendFile(__dirname, "/client/index.html");
 });
 
 app.post("/red", (req, res) => {
