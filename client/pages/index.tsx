@@ -47,7 +47,7 @@ const HomePage: FunctionComponent = (): JSX.Element => {
     const [spTags, setSPTags] = useState<Array<string>>([""]);
     const [spNote, setSPNote] = useState<string>("");
 
-    function editActionHandler(id: string, annotation: string, link: string, tags: Array<string>, note: string): void {
+    function displayPopPage(id: string, annotation: string, link: string, tags: Array<string>, note: string): void {
         // set current link by ID
         setCurrentLink(id);
 
@@ -65,6 +65,18 @@ const HomePage: FunctionComponent = (): JSX.Element => {
         } else {
             setPopPage(!showPopPage);
         }
+    }
+
+    function editActionHandler(id: string, annotation: string, link: string, tags: Array<string>, note: string): void {
+        // set current link by ID
+        setCurrentLink(id);
+
+        // All this function does is replace the 
+        // state of show pop page
+        setSPTitle(annotation);
+        setSPLink(link);
+        setSPTags(tags);
+        setSPNote((note !== null) ? note : "Add note by editing link...");
     }
     /* link card edit action - end */
 
@@ -172,7 +184,8 @@ const HomePage: FunctionComponent = (): JSX.Element => {
                                     name={link.annotation}
                                     url={link.url}
                                     tags={link.tags}
-                                    editAction={() => editActionHandler(link.id, link.annotation, link.url, link.tags, link.note)}
+                                    viewAction={() => displayPopPage(link.id, link.annotation, link.url, link.tags, link.note)}
+                                    editAction={() => { editActionHandler(link.id, link.annotation, link.url, link.tags, link.note); setEditLinkModal(!editLinkModal) }}
                                     getUpdatedData={d => getRefreshedData(d)}
                                 />
                             )
