@@ -31,6 +31,7 @@ const LinkCard: React.FC<LinkCardProps> = ({ name, url, tags, viewAction, editAc
 
     const [{ isDragging }, drag] = useDrag(() => ({
         type: ItemTypes.BOOKMARK,
+        item: { id },
         collect: monitor => ({
             isDragging: !!monitor.isDragging()
         })
