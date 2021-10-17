@@ -1,6 +1,6 @@
 
 // import model CRUD handlers
-import { createCollection, deleteCollection, getAllCollections, updateCollection, dropLinkToCollection, removeLink } from "../models/collection";
+import { createCollection, deleteCollection, getAllCollections, updateCollection, dropLinkToCollection, removeLink, getCollection } from "../models/collection";
 
 // import link handlers
 import { getLink, getAllLinks, createLink, updateLink, deleteLink, searchLinks } from "../models/links";
@@ -115,6 +115,21 @@ const resolvers = {
             links.map(link => link.id = link.key);
             // console.log(links)
             return links;
+        },
+        children: async (parent: any, args: any) => {
+            const childrenId: Array<string> = parent.children;
+
+            const children = [];
+
+            for (let i = 0; i < childrenId.length; i++) {
+                var link = await getCollection(childrenId[i]);
+                // console.log(link);
+                if (link !== null) children.push(link);
+            }
+
+            children.map(child => child.id = child.key);
+            // console.log(links)
+            return children;
         }
     }
 }
