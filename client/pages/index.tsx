@@ -175,9 +175,12 @@ const HomePage: FunctionComponent = (): JSX.Element => {
                             return (
                                 <Folder
                                     label={folder.name}
+                                    index={idx}
                                     id={folder.id}
-                                    thirdPartyAction={index => handleFolderSelect(idx)}
+                                    folder={folder}
+                                    thirdPartyAction={links => setDisplayLinks(links)}
                                     getUpdatedData={data => getRefreshedData(data)}
+                                    setLinks={links => setDisplayLinks(links)}
                                 />
                             )
                         })}

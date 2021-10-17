@@ -7,19 +7,20 @@ import { ItemTypes } from "../utils/constants";
 
 import { DROP_LINK_IN_COLLECTION, FETCH_ALL } from "../graphql/actions";
 import { useMutation } from "@apollo/client";
-import { Collapse } from "@geist-ui/react";
 import toast from "react-hot-toast";
-import { Spacer } from "@nextui-org/react";
 
 interface FolderProps {
     readonly type?: string // Parent or Child
     readonly label: string
     readonly id: string
+    readonly index: number
+    readonly folder: any
     thirdPartyAction?: Function
     getUpdatedData?: Function
+    setLinks?: Function
 }
 
-const Folder: React.FC<FolderProps> = ({ id, label, thirdPartyAction, getUpdatedData }): JSX.Element => {
+const Folder: React.FC<FolderProps> = ({ id, label, thirdPartyAction, getUpdatedData, index, folder, setLinks }): JSX.Element => {
 
     const [dropLink, { data, loading, error }] = useMutation(DROP_LINK_IN_COLLECTION);
 
@@ -32,11 +33,32 @@ const Folder: React.FC<FolderProps> = ({ id, label, thirdPartyAction, getUpdated
         })
     }));
 
+    function handleFolderClick(): void {
+        console.log("reading folder");
+        console.log(folder);
+        thirdPartyAction();
+        setLinks(folder.links);
+    }
+
     return (
-        <div style={{ marginTop: "4px", width: "80%" }} ref={drop} onClick={() => thirdPartyAction()}>
-            <Collapse height={"20px"} width={"100%"} title={label} className={styles.folder} >
-            </Collapse>
-        </div>
+        <details style={{ width: "80%" }}>
+            <summary style={{ width: "100%" }}>
+                <div style={{ width: "100%" }} ref={drop} onClick={() => handleFolderClick()} className={styles.folder}>
+                    <h2> {label} </h2>
+                </div >
+            </summary>
+            {folder.children.map((f, i) => {
+                <Folder
+                    key={i}
+                    label={folder.name}
+                    index={i}
+                    id={folder.id}
+                    folder={folder}
+                    thirdPartyAction={links => setLinks(links)}
+                    getUpdatedData={data => getUpdatedData(data)}
+                />
+            })}
+        </details>
     )
 }
 
