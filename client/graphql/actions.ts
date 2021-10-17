@@ -23,6 +23,18 @@ const FETCH_ALL = gql`
                     note,
                     id,
                     url
+                },
+                children {
+                    id,
+                    name,
+                    type,
+                    links {
+                        annotation,
+                        tags,
+                        note,
+                        id,
+                        url
+                    }
                 }
             }
         }

@@ -7,8 +7,9 @@ import { ItemTypes } from "../utils/constants";
 
 import { DROP_LINK_IN_COLLECTION, FETCH_ALL } from "../graphql/actions";
 import { useMutation } from "@apollo/client";
-
+import { Collapse } from "@geist-ui/react";
 import toast from "react-hot-toast";
+import { Spacer } from "@nextui-org/react";
 
 interface FolderProps {
     readonly type?: string // Parent or Child
@@ -32,8 +33,9 @@ const Folder: React.FC<FolderProps> = ({ id, label, thirdPartyAction, getUpdated
     }));
 
     return (
-        <div ref={drop} onClick={() => thirdPartyAction()} className={styles.folder}>
-            <h2> {label} </h2>
+        <div style={{ marginTop: "4px", width: "80%" }} ref={drop} onClick={() => thirdPartyAction()}>
+            <Collapse height={"20px"} width={"100%"} title={label} className={styles.folder} >
+            </Collapse>
         </div>
     )
 }

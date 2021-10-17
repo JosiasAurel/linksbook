@@ -18,7 +18,7 @@ import styles from "../styles/index.module.css";
 import toast from "react-hot-toast";
 import { Loading, Button, Tooltip, Spacer } from '@nextui-org/react';
 
-import { Modal, Button as GButton } from "@geist-ui/react";
+import { Modal, Button as GButton, Collapse } from "@geist-ui/react";
 import { Home } from "@geist-ui/react-icons";
 
 // import graphql actions
@@ -181,6 +181,8 @@ const HomePage: FunctionComponent = (): JSX.Element => {
                                 />
                             )
                         })}
+
+                        {/* */}
                     </div>
                 </section>
 
