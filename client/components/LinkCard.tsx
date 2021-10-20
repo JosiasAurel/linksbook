@@ -11,7 +11,7 @@ import { Button, Spacer } from "@nextui-org/react";
 import { truncateStr } from "../utils/string";
 
 import { useMutation } from "@apollo/client";
-import { DELETE_LINK, FETCH_ALL } from "../graphql/actions";
+import { DELETE_LINK, FETCH_ALL, REMOVE_LINK_FROM_COLLECTION } from "../graphql/actions";
 
 import { ItemTypes } from "../utils/constants";
 import { useDrag } from "react-dnd";
@@ -21,13 +21,15 @@ interface LinkCardProps {
     readonly url: string
     readonly tags: Array<string>
     readonly id: string
+    readonly inFolder: boolean
+    readonly folderId?: string
     viewAction?: Function
     editAction?: Function
     getUpdatedData?: Function
 }
 
 
-const LinkCard: React.FC<LinkCardProps> = ({ name, url, tags, viewAction, editAction, id, getUpdatedData }): JSX.Element => {
+const LinkCard: React.FC<LinkCardProps> = ({ name, url, tags, viewAction, editAction, id, getUpdatedData, inFolder, folderId }): JSX.Element => {
 
     const [{ isDragging }, drag] = useDrag(() => ({
         type: ItemTypes.BOOKMARK,
@@ -50,6 +52,17 @@ const LinkCard: React.FC<LinkCardProps> = ({ name, url, tags, viewAction, editAc
             { loading: "Deleting...", success: "LinkDeleted", error: "Could not delete link" });
         return;
     }
+
+    const [removeLink, { data: data_, loading: loading_, error: error_ }] = useMutation(REMOVE_LINK_FROM_COLLECTION);
+
+    function removeBookmarkFromFolder(): void {
+        toast.promise(removeLink({ variables: { linkId: id, collectionId: folderId }, refetchQueries: [{ query: FETCH_ALL }] })
+            .then(_ => getUpdatedData(data_))
+            .then(_ => setConfirmDeleteModal(false)),
+            { loading: "Deleting...", success: "LinkDeleted", error: "Could not delete link" });
+        return;
+    }
+
     function copyToClipboard(): void {
         // copy the link to the clipboard
         navigator.clipboard.writeText(url);
@@ -140,6 +153,10 @@ const LinkCard: React.FC<LinkCardProps> = ({ name, url, tags, viewAction, editAc
                     <div className={styles.confirmDeleteModalStyles}>
                         <Button onClick={() => handledeleteAction()} color="error">
                             Yes, Delete
+                        </Button>
+                        <Spacer />
+                        <Button onClick={() => removeBookmarkFromFolder()} color="error">
+                            Delete from this folder only
                         </Button>
                         <Spacer />
                         <Button onClick={() => setConfirmDeleteModal(false)} color="success">

@@ -16,13 +16,25 @@ const FETCH_ALL = gql`
             collections {
                 id,
                 name,
-                type,
+                parent,
                 links {
                     annotation,
                     tags,
                     note,
                     id,
                     url
+                },
+                children {
+                    id,
+                    name,
+                    parent,
+                    links {
+                        annotation,
+                        tags,
+                        note,
+                        id,
+                        url
+                    }
                 }
             }
         }
@@ -55,8 +67,8 @@ const DELETE_LINK = gql`
 
 
 const CREATE_COLLECTION = gql`
-    mutation createCollection($name: String!, $type: String!, $parent: String) {
-        createCollection(name: $name, type: $type, parent: $parent) {
+    mutation createCollection($name: String!, $parent: String) {
+        createCollection(name: $name, parent: $parent) {
             status
         }
     }
@@ -70,4 +82,20 @@ const DROP_LINK_IN_COLLECTION = gql`
     }
 `;
 
-export { FETCH_ALL, CREATE_LINK, UPDATE_LINK, CREATE_COLLECTION, DELETE_LINK, DROP_LINK_IN_COLLECTION };
+const REMOVE_LINK_FROM_COLLECTION = gql`
+    mutation removeLink($collectionId: String!, $linkId: String!) {
+        removeLink(collectionId: $collectionId, linkId: $linkId) {
+            status
+        }
+    }
+`;
+
+export { 
+    FETCH_ALL, 
+    CREATE_LINK, 
+    UPDATE_LINK, 
+    CREATE_COLLECTION,
+    DELETE_LINK, 
+    DROP_LINK_IN_COLLECTION,
+    REMOVE_LINK_FROM_COLLECTION
+};

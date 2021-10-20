@@ -137,7 +137,7 @@ var resolvers = {
             var newCollection;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, collection_1.createCollection(args.name, args.type, ctx.key, args.parent)];
+                    case 0: return [4 /*yield*/, collection_1.createCollection(args.name, ctx.key, false, args.parent)];
                     case 1:
                         newCollection = _a.sent();
                         return [2 /*return*/, newCollection];
@@ -220,6 +220,34 @@ var resolvers = {
                         links.map(function (link) { return link.id = link.key; });
                         // console.log(links)
                         return [2 /*return*/, links];
+                }
+            });
+        }); },
+        children: function (parent, args) { return __awaiter(void 0, void 0, void 0, function () {
+            var childrenId, children, i, link;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        childrenId = parent.children;
+                        children = [];
+                        i = 0;
+                        _a.label = 1;
+                    case 1:
+                        if (!(i < childrenId.length)) return [3 /*break*/, 4];
+                        return [4 /*yield*/, collection_1.getCollection(childrenId[i])];
+                    case 2:
+                        link = _a.sent();
+                        // console.log(link);
+                        if (link !== null)
+                            children.push(link);
+                        _a.label = 3;
+                    case 3:
+                        i++;
+                        return [3 /*break*/, 1];
+                    case 4:
+                        children.map(function (child) { return child.id = child.key; });
+                        // console.log(links)
+                        return [2 /*return*/, children];
                 }
             });
         }); }

@@ -20,7 +20,7 @@ const CreateLinkForm: React.FC<CreateLinkFormProps> = ({ getUpdatedData }): JSX.
         event.preventDefault(); // prevent page reload
 
         toast.promise(saveLink({
-            variables: { url, annotation: url, tags: [] }, refetchQueries: [{ query: FETCH_ALL }]
+            variables: { url, annotation: url, tags: ["new"] }, refetchQueries: [{ query: FETCH_ALL }]
         }).then(() => getUpdatedData(data)), { loading: "Saving", success: "Bookmark saved", error: "Could not save bookmark" });
 
     }

@@ -28,7 +28,7 @@ async function syncBookmarks(data: any, parent: string = "NONE", owner: string):
                 syncBookmarks(data[item], exists.id, owner)
             }
 
-            const newFolder: any = await createCollection(data[item].title, "", owner, true);
+            const newFolder: any = await createCollection(data[item].title, owner, true, "NONE");
 
             await dropCollectionToCollection(parent, newFolder.key);
             syncBookmarks(data[item], newFolder.key, owner);

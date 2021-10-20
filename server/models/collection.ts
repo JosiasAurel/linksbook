@@ -13,15 +13,14 @@ interface CollectionData {
     id: string
 }
 
-async function createCollection(name: string, type: string, owner: string, returnData?: boolean, parent?: string): Promise<any> {
+async function createCollection(name: string, owner: string, returnData?: boolean, parent?: string): Promise<any> {
     try {
         const newCollection = collections.put({
             name,
-            type: (!parent && type === "Parent") ? "Parent" : "Child",
             owner,
             links: [],
             children: [],
-            parent: parent ? parent : false
+            parent: parent ? parent : "NONE"
         }, generateModelKey());
 
         if (returnData) {

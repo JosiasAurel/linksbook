@@ -1,5 +1,4 @@
 import React, { FunctionComponent, useState, useContext, useEffect } from "react";
-
 import { useQuery } from "@apollo/client";
 
 import Header from "../components/Header";
@@ -18,7 +17,7 @@ import styles from "../styles/index.module.css";
 import toast from "react-hot-toast";
 import { Loading, Button, Tooltip, Spacer } from '@nextui-org/react';
 
-import { Modal, Button as GButton } from "@geist-ui/react";
+import { Modal, Button as GButton, Collapse } from "@geist-ui/react";
 import { Home } from "@geist-ui/react-icons";
 
 // import graphql actions
@@ -33,6 +32,9 @@ const HomePage: FunctionComponent = (): JSX.Element => {
     /* edit link modal form fields props */
     const [currentLink, setCurrentLink] = useState<string>("");
     /* edit link modal form fields props - end */
+
+    const [inFolder, setInFolder] = useState<boolean>(false);
+    const [whichFolder, setWhichFolder] = useState<string>("");
 
     /* Show Pop page props; abbreviated 'sp' */
 
@@ -106,6 +108,15 @@ const HomePage: FunctionComponent = (): JSX.Element => {
     /* End Tooltip body */
     let { loading, error, data } = useQuery(FETCH_ALL);
     const [displayLinks, setDisplayLinks] = useState<any>([]);
+
+    function setToDisplayLinks(links: Array<any>, folderId: string): any {
+        setDisplayLinks(links);
+        setInFolder(true);
+        setWhichFolder(folderId);
+        console.log("To Display Links and Folder")
+        console.table({ links, folderId, inFolder });
+    }
+
     // when the component is mounted
     useEffect(() => {
         if (data) {
@@ -172,15 +183,22 @@ const HomePage: FunctionComponent = (): JSX.Element => {
                     </div>
                     <div className={styles.folders}>
                         {data.user.collections.map((folder, idx) => {
-                            return (
-                                <Folder
-                                    label={folder.name}
-                                    id={folder.id}
-                                    thirdPartyAction={index => handleFolderSelect(idx)}
-                                    getUpdatedData={data => getRefreshedData(data)}
-                                />
-                            )
+                            if ((folder.parent).match(/NONE/)) {
+                                return (
+                                    <Folder
+                                        label={folder.name}
+                                        index={idx}
+                                        id={folder.id}
+                                        folder={folder}
+                                        /* thirdPartyAction={(links, folderId) => setToDisplayLinks(links, folder.id)} */
+                                        getUpdatedData={data => getRefreshedData(data)}
+                                        setLinks={(links, fId) => setToDisplayLinks(links, fId)}
+                                    />
+                                )
+                            } else { return "" }
                         })}
+
+                        {/* */}
                     </div>
                 </section>
 
@@ -198,6 +216,8 @@ const HomePage: FunctionComponent = (): JSX.Element => {
                                     name={link.annotation}
                                     url={link.url}
                                     tags={link.tags}
+                                    inFolder={inFolder}
+                                    folderId={whichFolder}
                                     viewAction={() => displayPopPage(link.id, link.annotation, link.url, link.tags, link.note)}
                                     editAction={() => { editActionHandler(link.id, link.annotation, link.url, link.tags, link.note); setEditLinkModal(!editLinkModal) }}
                                     getUpdatedData={d => getRefreshedData(d)}

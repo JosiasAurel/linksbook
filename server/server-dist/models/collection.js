@@ -60,18 +60,17 @@ exports.dropCollectionToCollection = exports.collectionWithName = exports.remove
 var index_1 = require("./index");
 // collections database table
 var collections = index_1.deta.Base("collections");
-function createCollection(name, type, owner, returnData, parent) {
+function createCollection(name, owner, returnData, parent) {
     return __awaiter(this, void 0, void 0, function () {
         var newCollection;
         return __generator(this, function (_a) {
             try {
                 newCollection = collections.put({
                     name: name,
-                    type: (!parent && type === "Parent") ? "Parent" : "Child",
                     owner: owner,
                     links: [],
                     children: [],
-                    parent: parent ? parent : false
+                    parent: parent ? parent : "NONE"
                 }, index_1.generateModelKey());
                 if (returnData) {
                     return [2 /*return*/, newCollection];

@@ -7,18 +7,20 @@ import { ItemTypes } from "../utils/constants";
 
 import { DROP_LINK_IN_COLLECTION, FETCH_ALL } from "../graphql/actions";
 import { useMutation } from "@apollo/client";
-
 import toast from "react-hot-toast";
 
 interface FolderProps {
     readonly type?: string // Parent or Child
     readonly label: string
     readonly id: string
-    thirdPartyAction?: Function
+    readonly index: number
+    readonly folder: any
+    // thirdPartyAction?: Function
     getUpdatedData?: Function
+    setLinks?: Function
 }
 
-const Folder: React.FC<FolderProps> = ({ id, label, thirdPartyAction, getUpdatedData }): JSX.Element => {
+const Folder: React.FC<FolderProps> = ({ id, label, getUpdatedData, index, folder, setLinks }): JSX.Element => {
 
     const [dropLink, { data, loading, error }] = useMutation(DROP_LINK_IN_COLLECTION);
 
@@ -31,10 +33,35 @@ const Folder: React.FC<FolderProps> = ({ id, label, thirdPartyAction, getUpdated
         })
     }));
 
+    function handleFolderClick(): void {
+        // thirdPartyAction();
+        setLinks(folder.links, folder.parent);
+    }
+
     return (
-        <div ref={drop} onClick={() => thirdPartyAction()} className={styles.folder}>
-            <h2> {label} </h2>
-        </div>
+        <details style={{ width: "80%" }}>
+            <summary style={{ width: "100%" }}>
+                <div style={{ width: "100%", backgroundColor: isOver ? "aquamarine" : "white" }} ref={drop} onClick={() => handleFolderClick()} className={styles.folder}>
+                    <h2> {label} </h2>
+                </div>
+            </summary>
+            <div className="folder-children">
+                {folder?.children?.map((f: any, i: any) => {
+                    return (
+                        <Folder
+                            key={i}
+                            label={f.name}
+                            index={i}
+                            id={f.id}
+                            folder={f}
+                            /* thirdPartyAction={(links: any, fId: any) => thirdPartyAction(links, fId)} */
+                            getUpdatedData={(data: any) => getUpdatedData(data)}
+                            setLinks={(links: any, fId: any) => setLinks(links, f.id)}
+                        />
+                    )
+                })}
+            </div>
+        </details>
     )
 }
 
