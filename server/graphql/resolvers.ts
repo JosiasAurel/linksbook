@@ -70,7 +70,7 @@ const resolvers = {
             return {status: result};
         },
         createCollection: async (parent: any, args: any, ctx: any): Promise<any> => {
-            const newCollection = await createCollection(args.name, args.type, ctx.key, args.parent);
+            const newCollection = await createCollection(args.name, ctx.key, false, args.parent);
 
             return newCollection;
         },

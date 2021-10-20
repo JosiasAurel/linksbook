@@ -27,7 +27,7 @@ type Collection {
     name: String!
     children: [Collection]
     createdAt: String!
-    type: String!
+    parent: String!
     owner: String!
 }
 
@@ -46,7 +46,7 @@ type Mutation {
     createLink(annotation: String!, url: String!, tags: [String]!): ActionStatus
     updateLink(linkId: String!, annotation: String, url: String, tags: [String], note: String): ActionStatus
     deleteLink(linkId: String!): ActionStatus
-    createCollection(name: String!, type: String!, parent: String): ActionStatus
+    createCollection(name: String!, parent: String): ActionStatus
     updateCollection(collectionId: String!, name: String, tags: [String], links: [String]): ActionStatus
     deleteCollection(collectionId: String!): ActionStatus
     dropLink(collectionId: String!, linkId: String!): ActionStatus
