@@ -15,12 +15,12 @@ interface FolderProps {
     readonly id: string
     readonly index: number
     readonly folder: any
-    thirdPartyAction?: Function
+    // thirdPartyAction?: Function
     getUpdatedData?: Function
     setLinks?: Function
 }
 
-const Folder: React.FC<FolderProps> = ({ id, label, thirdPartyAction, getUpdatedData, index, folder, setLinks }): JSX.Element => {
+const Folder: React.FC<FolderProps> = ({ id, label, getUpdatedData, index, folder, setLinks }): JSX.Element => {
 
     const [dropLink, { data, loading, error }] = useMutation(DROP_LINK_IN_COLLECTION);
 
@@ -34,8 +34,8 @@ const Folder: React.FC<FolderProps> = ({ id, label, thirdPartyAction, getUpdated
     }));
 
     function handleFolderClick(): void {
-        thirdPartyAction();
-        setLinks(folder.links);
+        // thirdPartyAction();
+        setLinks(folder.links, folder.parent);
     }
 
     return (
@@ -46,7 +46,7 @@ const Folder: React.FC<FolderProps> = ({ id, label, thirdPartyAction, getUpdated
                 </div>
             </summary>
             <div className="folder-children">
-                {folder?.children?.map((f: { name: string; id: string; }, i: any) => {
+                {folder?.children?.map((f: any, i: any) => {
                     return (
                         <Folder
                             key={i}
@@ -54,9 +54,9 @@ const Folder: React.FC<FolderProps> = ({ id, label, thirdPartyAction, getUpdated
                             index={i}
                             id={f.id}
                             folder={f}
-                            thirdPartyAction={(links: any) => thirdPartyAction(links)}
+                            /* thirdPartyAction={(links: any, fId: any) => thirdPartyAction(links, fId)} */
                             getUpdatedData={(data: any) => getUpdatedData(data)}
-                            setLinks={(v: any) => setLinks(v)}
+                            setLinks={(links: any, fId: any) => setLinks(links, f.id)}
                         />
                     )
                 })}

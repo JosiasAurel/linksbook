@@ -27,6 +27,7 @@ const FETCH_ALL = gql`
                 children {
                     id,
                     name,
+                    parent,
                     links {
                         annotation,
                         tags,

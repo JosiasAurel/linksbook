@@ -1,5 +1,4 @@
 import React, { FunctionComponent, useState, useContext, useEffect } from "react";
-
 import { useQuery } from "@apollo/client";
 
 import Header from "../components/Header";
@@ -33,6 +32,9 @@ const HomePage: FunctionComponent = (): JSX.Element => {
     /* edit link modal form fields props */
     const [currentLink, setCurrentLink] = useState<string>("");
     /* edit link modal form fields props - end */
+
+    const [inFolder, setInFolder] = useState<boolean>(false);
+    const [whichFolder, setWhichFolder] = useState<string>("");
 
     /* Show Pop page props; abbreviated 'sp' */
 
@@ -106,6 +108,15 @@ const HomePage: FunctionComponent = (): JSX.Element => {
     /* End Tooltip body */
     let { loading, error, data } = useQuery(FETCH_ALL);
     const [displayLinks, setDisplayLinks] = useState<any>([]);
+
+    function setToDisplayLinks(links: Array<any>, folderId: string): any {
+        setDisplayLinks(links);
+        setInFolder(true);
+        setWhichFolder(folderId);
+        console.log("To Display Links and Folder")
+        console.table({ links, folderId, inFolder });
+    }
+
     // when the component is mounted
     useEffect(() => {
         if (data) {
@@ -172,7 +183,6 @@ const HomePage: FunctionComponent = (): JSX.Element => {
                     </div>
                     <div className={styles.folders}>
                         {data.user.collections.map((folder, idx) => {
-                            console.log(folder);
                             if ((folder.parent).match(/NONE/)) {
                                 return (
                                     <Folder
@@ -180,9 +190,9 @@ const HomePage: FunctionComponent = (): JSX.Element => {
                                         index={idx}
                                         id={folder.id}
                                         folder={folder}
-                                        thirdPartyAction={links => setDisplayLinks(links)}
+                                        /* thirdPartyAction={(links, folderId) => setToDisplayLinks(links, folder.id)} */
                                         getUpdatedData={data => getRefreshedData(data)}
-                                        setLinks={links => setDisplayLinks(links)}
+                                        setLinks={(links, fId) => setToDisplayLinks(links, fId)}
                                     />
                                 )
                             } else { return "" }
