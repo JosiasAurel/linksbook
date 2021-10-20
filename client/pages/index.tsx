@@ -216,6 +216,8 @@ const HomePage: FunctionComponent = (): JSX.Element => {
                                     name={link.annotation}
                                     url={link.url}
                                     tags={link.tags}
+                                    inFolder={inFolder}
+                                    folderId={whichFolder}
                                     viewAction={() => displayPopPage(link.id, link.annotation, link.url, link.tags, link.note)}
                                     editAction={() => { editActionHandler(link.id, link.annotation, link.url, link.tags, link.note); setEditLinkModal(!editLinkModal) }}
                                     getUpdatedData={d => getRefreshedData(d)}

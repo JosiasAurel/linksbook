@@ -82,4 +82,20 @@ const DROP_LINK_IN_COLLECTION = gql`
     }
 `;
 
-export { FETCH_ALL, CREATE_LINK, UPDATE_LINK, CREATE_COLLECTION, DELETE_LINK, DROP_LINK_IN_COLLECTION };
+const REMOVE_LINK_FROM_COLLECTION = gql`
+    mutation removeLink($collectionId: String!, $linkId: String!) {
+        removeLink(collectionId: $collectionId, linkId: $linkId) {
+            status
+        }
+    }
+`;
+
+export { 
+    FETCH_ALL, 
+    CREATE_LINK, 
+    UPDATE_LINK, 
+    CREATE_COLLECTION,
+    DELETE_LINK, 
+    DROP_LINK_IN_COLLECTION,
+    REMOVE_LINK_FROM_COLLECTION
+};
