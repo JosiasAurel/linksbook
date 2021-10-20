@@ -38,8 +38,6 @@ const Folder: React.FC<FolderProps> = ({ id, label, thirdPartyAction, getUpdated
         setLinks(folder.links);
     }
 
-    console.log("Folder Children");
-    console.log(folder?.children || "NONE");
     return (
         <details style={{ width: "80%" }}>
             <summary style={{ width: "100%" }}>
@@ -47,17 +45,20 @@ const Folder: React.FC<FolderProps> = ({ id, label, thirdPartyAction, getUpdated
                     <h2> {label} </h2>
                 </div>
             </summary>
-            <div>
-                {folder.children.map((f, i) => {
-                    <Folder
-                        key={i}
-                        label={f.name}
-                        index={i}
-                        id={f.id}
-                        folder={f}
-                        thirdPartyAction={links => setLinks(links)}
-                        getUpdatedData={data => getUpdatedData(data)}
-                    />
+            <div className="folder-children">
+                {folder?.children?.map((f: { name: string; id: string; }, i: any) => {
+                    return (
+                        <Folder
+                            key={i}
+                            label={f.name}
+                            index={i}
+                            id={f.id}
+                            folder={f}
+                            thirdPartyAction={(links: any) => thirdPartyAction(links)}
+                            getUpdatedData={(data: any) => getUpdatedData(data)}
+                            setLinks={(v: any) => setLinks(v)}
+                        />
+                    )
                 })}
             </div>
         </details>
