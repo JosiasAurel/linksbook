@@ -63,7 +63,7 @@ function syncBookmarks(data, parent, owner) {
                         // recursively go through it and pass its id
                         syncBookmarks(data[item], exists.id, owner);
                     }
-                    return [4 /*yield*/, collection_1.createCollection(data[item].title, "", owner, true)];
+                    return [4 /*yield*/, collection_1.createCollection(data[item].title, owner, true, "NONE")];
                 case 3:
                     newFolder = _c.sent();
                     return [4 /*yield*/, collection_1.dropCollectionToCollection(parent, newFolder.key)];
