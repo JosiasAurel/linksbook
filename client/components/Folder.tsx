@@ -34,12 +34,12 @@ const Folder: React.FC<FolderProps> = ({ id, label, thirdPartyAction, getUpdated
     }));
 
     function handleFolderClick(): void {
-        console.log("reading folder");
-        console.log(folder);
         thirdPartyAction();
         setLinks(folder.links);
     }
 
+    console.log("Folder Children");
+    console.log(folder?.children || "NONE");
     return (
         <details style={{ width: "80%" }}>
             <summary style={{ width: "100%" }}>

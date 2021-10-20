@@ -19,7 +19,7 @@ const CreateCollectionForm: React.FC<CreateCollectionFormProps> = ({ getUpdatedD
     async function handleCreateLink(event: any): Promise<void> {
         event.preventDefault(); // prevent page reload
 
-        toast.promise(saveCollection({ variables: { name, type: "Parent" }, refetchQueries: [{ query: FETCH_ALL }] }).then(() => getUpdatedData(data)), { loading: "Saving", success: "Folder Created", error: "Could not save Folder" });
+        toast.promise(saveCollection({ variables: { name, parent: "NONE" }, refetchQueries: [{ query: FETCH_ALL }] }).then(() => getUpdatedData(data)), { loading: "Saving", success: "Folder Created", error: "Could not save Folder" });
 
     }
 

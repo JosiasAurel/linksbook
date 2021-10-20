@@ -16,7 +16,7 @@ const FETCH_ALL = gql`
             collections {
                 id,
                 name,
-                type,
+                parent,
                 links {
                     annotation,
                     tags,
@@ -27,7 +27,6 @@ const FETCH_ALL = gql`
                 children {
                     id,
                     name,
-                    type,
                     links {
                         annotation,
                         tags,
@@ -67,8 +66,8 @@ const DELETE_LINK = gql`
 
 
 const CREATE_COLLECTION = gql`
-    mutation createCollection($name: String!, $type: String!, $parent: String) {
-        createCollection(name: $name, type: $type, parent: $parent) {
+    mutation createCollection($name: String!, $parent: String) {
+        createCollection(name: $name, parent: $parent) {
             status
         }
     }

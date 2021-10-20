@@ -172,17 +172,20 @@ const HomePage: FunctionComponent = (): JSX.Element => {
                     </div>
                     <div className={styles.folders}>
                         {data.user.collections.map((folder, idx) => {
-                            return (
-                                <Folder
-                                    label={folder.name}
-                                    index={idx}
-                                    id={folder.id}
-                                    folder={folder}
-                                    thirdPartyAction={links => setDisplayLinks(links)}
-                                    getUpdatedData={data => getRefreshedData(data)}
-                                    setLinks={links => setDisplayLinks(links)}
-                                />
-                            )
+                            console.log(folder);
+                            if ((folder.parent).match(/NONE/)) {
+                                return (
+                                    <Folder
+                                        label={folder.name}
+                                        index={idx}
+                                        id={folder.id}
+                                        folder={folder}
+                                        thirdPartyAction={links => setDisplayLinks(links)}
+                                        getUpdatedData={data => getRefreshedData(data)}
+                                        setLinks={links => setDisplayLinks(links)}
+                                    />
+                                )
+                            } else { return "" }
                         })}
 
                         {/* */}
