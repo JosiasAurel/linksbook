@@ -131,6 +131,26 @@ const HomePage: FunctionComponent = (): JSX.Element => {
     }
     /* End Search Handler */
 
+    /* Tag Search Handler */
+    function searchLinksWithTag(tag: string): void {
+        let allLinks: Array<any> = data.user.links;
+        let toDisplayLinks: Array<any> = [];
+
+        allLinks.forEach(link => {
+            if (link?.tags?.join("").includes(tag)) {
+                toDisplayLinks.push(link);
+            } else {
+            }
+        });
+
+        if (toDisplayLinks.length > 0) {
+            setDisplayLinks(toDisplayLinks);
+        } else {
+            toast.error(`Could not find bookmark with tag "${tag}"`);
+        }
+    }
+    /* End Tag Search Handler */
+
     function setToDisplayLinks(links: Array<any>, folderId?: string): any {
         setDisplayLinks(links);
         setInFolder(true);
@@ -245,6 +265,7 @@ const HomePage: FunctionComponent = (): JSX.Element => {
                                     viewAction={() => displayPopPage(link.id, link.annotation, link.url, link.tags, link.note)}
                                     editAction={() => { editActionHandler(link.id, link.annotation, link.url, link.tags, link.note); setEditLinkModal(!editLinkModal) }}
                                     getUpdatedData={d => getRefreshedData(d)}
+                                    tagSearchHandler={t => searchLinksWithTag(t)}
                                 />
                             )
                         })}
