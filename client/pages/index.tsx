@@ -115,7 +115,7 @@ const HomePage: FunctionComponent = (): JSX.Element => {
         let toDisplayLinks: Array<any> = [];
 
         allLinks.forEach(link => {
-            if (link?.annotation?.includes(query) || link?.note?.includes(query)) {
+            if (link?.annotation?.toLowerCase().includes(query.toLowerCase()) || link?.note?.toLowerCase().includes(query.toLowerCase()) || link?.url?.toLowerCase().includes(query.toLowerCase())) {
                 toDisplayLinks.push(link);
             } else { }
         });
