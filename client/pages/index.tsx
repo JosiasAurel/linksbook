@@ -117,11 +117,17 @@ const HomePage: FunctionComponent = (): JSX.Element => {
         allLinks.forEach(link => {
             if (link?.annotation?.toLowerCase().includes(query.toLowerCase()) || link?.note?.toLowerCase().includes(query.toLowerCase()) || link?.url?.toLowerCase().includes(query.toLowerCase())) {
                 toDisplayLinks.push(link);
-            } else { }
+            } else {
+            }
         });
         /* console.log("To display links")
         console.log(toDisplayLinks); */
-        setDisplayLinks(toDisplayLinks);
+
+        if (toDisplayLinks.length > 0) {
+            setDisplayLinks(toDisplayLinks);
+        } else {
+            toast.error(`Could not find bookmark matching search "${query}"`);
+        }
     }
     /* End Search Handler */
 
