@@ -24,6 +24,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
 @app.get("/")
 def _root(request: Request) -> str:
     return "Hello World from Service Root"
@@ -50,7 +51,10 @@ async def _login_user(request: Request):
     body = await request.json()
     # get user's email
     email = body["email"]  # get the user email
-    user = usersdb.fetch({"email": email}).items
+    # indirectly works as a check of user existence in db
+    # if it finds no user with that email then he does not exist
+    # and login pin is not sent
+    user = usersdb.fetch({"email": email}).__next__()
     print(user)
     if len(user) == 1:
         # ...generate unique pin and email [email]...

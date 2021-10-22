@@ -26,10 +26,11 @@ interface LinkCardProps {
     viewAction?: Function
     editAction?: Function
     getUpdatedData?: Function
+    tagSearchHandler?: Function
 }
 
 
-const LinkCard: React.FC<LinkCardProps> = ({ name, url, tags, viewAction, editAction, id, getUpdatedData, inFolder, folderId }): JSX.Element => {
+const LinkCard: React.FC<LinkCardProps> = ({ name, url, tags, viewAction, editAction, id, getUpdatedData, inFolder, folderId, tagSearchHandler }): JSX.Element => {
 
     const [{ isDragging }, drag] = useDrag(() => ({
         type: ItemTypes.BOOKMARK,
@@ -75,7 +76,7 @@ const LinkCard: React.FC<LinkCardProps> = ({ name, url, tags, viewAction, editAc
             <div className={styles.linkTags}>
                 {tags.map(tag => {
                     return (
-                        <Tag name={tag} key={tag} />
+                        <Tag name={tag} key={tag} searchByTag={name => tagSearchHandler(name)} />
                     )
                 })}
             </div>

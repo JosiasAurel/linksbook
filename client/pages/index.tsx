@@ -109,18 +109,62 @@ const HomePage: FunctionComponent = (): JSX.Element => {
     let { loading, error, data } = useQuery(FETCH_ALL);
     const [displayLinks, setDisplayLinks] = useState<any>([]);
 
-    function setToDisplayLinks(links: Array<any>, folderId: string): any {
+    /* Search Handler */
+    function handleSearch(query: string): void {
+        let allLinks: Array<any> = data.user.links;
+        let toDisplayLinks: Array<any> = [];
+
+        allLinks.forEach(link => {
+            if (link?.annotation?.toLowerCase().includes(query.toLowerCase()) || link?.note?.toLowerCase().includes(query.toLowerCase()) || link?.url?.toLowerCase().includes(query.toLowerCase())) {
+                toDisplayLinks.push(link);
+            } else {
+            }
+        });
+        /* console.log("To display links")
+        console.log(toDisplayLinks); */
+
+        if (toDisplayLinks.length > 0) {
+            setDisplayLinks(toDisplayLinks);
+        } else {
+            toast.error(`Could not find bookmark matching search "${query}"`);
+        }
+    }
+    /* End Search Handler */
+
+    /* Tag Search Handler */
+    function searchLinksWithTag(tag: string): void {
+        let allLinks: Array<any> = data.user.links;
+        let toDisplayLinks: Array<any> = [];
+
+        allLinks.forEach(link => {
+            if (link?.tags?.join("").includes(tag)) {
+                toDisplayLinks.push(link);
+            } else {
+            }
+        });
+
+        if (toDisplayLinks.length > 0) {
+            setDisplayLinks(toDisplayLinks);
+        } else {
+            toast.error(`Could not find bookmark with tag "${tag}"`);
+        }
+    }
+    /* End Tag Search Handler */
+
+    function setToDisplayLinks(links: Array<any>, folderId?: string): any {
         setDisplayLinks(links);
         setInFolder(true);
         setWhichFolder(folderId);
-        console.log("To Display Links and Folder")
-        console.table({ links, folderId, inFolder });
+        /* console.log("To Display Links and Folder")
+        console.table({ links, folderId, inFolder }); */
     }
 
     // when the component is mounted
     useEffect(() => {
         if (data) {
             setDisplayLinks(data.user.links);
+            console.log("All Links");
+            console.log(data.user.links)
         }
     }, [data]);
 
@@ -173,7 +217,7 @@ const HomePage: FunctionComponent = (): JSX.Element => {
             <Header />
             <div className={styles.dashboardSections}>
                 <section style={showPopPage ? { display: "none" } : { display: "block" }} className={styles.foldersSection}>
-                    <Search searchAction={(() => undefined)} />
+                    <Search searchAction={(q: string) => handleSearch(q)} />
                     <div className={styles.center}>
                         <Tooltip position="right" trigger="click" text={<CreateToolTipBody />}>
                             <Button>
@@ -221,6 +265,7 @@ const HomePage: FunctionComponent = (): JSX.Element => {
                                     viewAction={() => displayPopPage(link.id, link.annotation, link.url, link.tags, link.note)}
                                     editAction={() => { editActionHandler(link.id, link.annotation, link.url, link.tags, link.note); setEditLinkModal(!editLinkModal) }}
                                     getUpdatedData={d => getRefreshedData(d)}
+                                    tagSearchHandler={t => searchLinksWithTag(t)}
                                 />
                             )
                         })}
