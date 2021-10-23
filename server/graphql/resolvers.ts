@@ -1,9 +1,12 @@
 
 // import model CRUD handlers
+import { AUTH_SERVICE_URL } from "../config";
 import { createCollection, deleteCollection, getAllCollections, updateCollection, dropLinkToCollection, removeLink, getCollection } from "../models/collection";
 
 // import link handlers
 import { getLink, getAllLinks, createLink, updateLink, deleteLink, searchLinks } from "../models/links";
+
+const API_SERVICE: string = process.env.API_SERVICE_URL as string;
 
 const resolvers = {
     Query: {
@@ -48,7 +51,11 @@ const resolvers = {
             let annotation: string = args.annotation;
             let tags: Array<string> = args.tags;
             let url: string = args.url;
-            const newLink = createLink(annotation, url, tags, context.key);
+
+            const res = await fetch(`${API_SERVICE}/url/?=${url}`);
+            const pageTitle_ = await res.json();
+
+            const newLink = createLink(pageTitle_?.pageTitle, url, tags, context.key);
 
             return {status: newLink};
         },
