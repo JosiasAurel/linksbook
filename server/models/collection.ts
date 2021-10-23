@@ -110,7 +110,17 @@ async function dropCollectionToCollection(collectionId: string, childCollectionI
             children: newChildren
         }, collectionId);
 
-        return "Success";
+        try {
+            collections.update({
+                parent: collectionId
+            }, childCollectionId);
+
+            return "Success";
+        } catch(e) {
+            return "Failed";
+        }
+
+        
     } catch {
         return "Failed";
     }
