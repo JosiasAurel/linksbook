@@ -1,12 +1,12 @@
 
+import axios from "axios";
+
 // import model CRUD handlers
-import { AUTH_SERVICE_URL } from "../config";
 import { createCollection, deleteCollection, getAllCollections, updateCollection, dropLinkToCollection, removeLink, getCollection } from "../models/collection";
 
 // import link handlers
 import { getLink, getAllLinks, createLink, updateLink, deleteLink, searchLinks } from "../models/links";
-
-const API_SERVICE: string = process.env.API_SERVICE_URL as string;
+import { API_SERVICE_URL } from "../config";
 
 const resolvers = {
     Query: {
@@ -52,10 +52,10 @@ const resolvers = {
             let tags: Array<string> = args.tags;
             let url: string = args.url;
 
-            const res = await fetch(`${API_SERVICE}/url/?=${url}`);
-            const pageTitle_ = await res.json();
+            const res: any = await axios.get(`${API_SERVICE_URL}/url/?url=${url}`);
+            // console.log(res);
 
-            const newLink = createLink(pageTitle_?.pageTitle, url, tags, context.key);
+            const newLink = await createLink(res?.data?.pageTitle, url, tags, context.key);
 
             return {status: newLink};
         },
