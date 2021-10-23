@@ -1,9 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 
 import styles from "../styles/components.module.css";
 
+import { Input, Button as GButton } from "@geist-ui/react";
+import { Menu } from "@geist-ui/react-icons";
+import { Tooltip, Button } from "@nextui-org/react";
 import { useDrop } from "react-dnd";
 import { ItemTypes } from "../utils/constants";
+import { handleChange } from "../utils/string";
+import { RENAME_COLLECTION } from "../graphql/actions";
 
 import { DROP_LINK_IN_COLLECTION, FETCH_ALL } from "../graphql/actions";
 import { useMutation } from "@apollo/client";
@@ -19,6 +24,42 @@ interface FolderProps {
     getUpdatedData?: Function
     setLinks?: Function
 }
+
+
+/* Folder Edit Options */
+
+function RenameFolder({ collectionId, getUpdatedData }): JSX.Element {
+
+
+    const [name, setName] = useState<string>("");
+
+    const [renameCollection, { data, loading, error }] = useMutation(RENAME_COLLECTION);
+
+    function handleRenameCollection(event: any): void {
+        event.preventDefault();
+
+        toast.promise(renameCollection({ variables: { collectionId, name }, refetchQueries: [{ query: FETCH_ALL }] })
+            .then(_ => getUpdatedData(data)), { success: "Renamed", loading: "Renaming...", error: "Could not rename folder" })
+    }
+    return (
+        <form onSubmit={e => handleRenameCollection(e)} style={{ display: "flex" }}>
+            <Input value={name} onChange={e => handleChange(e, setName)} label="name" placeholder="Sports" />
+            <GButton htmlType="submit" style={{ margin: "0 5px" }} auto scale={0.8} type="success">Save</GButton>
+        </form>
+    )
+}
+function FolerOptions({ collectionId, getUpdatedData }): JSX.Element {
+    return (
+        <Button.Group size="large" vertical>
+            <Tooltip trigger="click" text={<RenameFolder getUpdatedData={getUpdatedData} collectionId={collectionId} />}>
+                <Button>
+                    Rename
+                </Button>
+            </Tooltip>
+        </Button.Group>
+    )
+}
+/* End Folder Edit Option */
 
 const Folder: React.FC<FolderProps> = ({ id, label, getUpdatedData, index, folder, setLinks }): JSX.Element => {
 
@@ -38,11 +79,17 @@ const Folder: React.FC<FolderProps> = ({ id, label, getUpdatedData, index, folde
         setLinks(folder.links, folder.parent);
     }
 
+
     return (
         <details style={{ width: "80%" }}>
             <summary style={{ width: "100%" }}>
                 <div style={{ width: "100%", backgroundColor: isOver ? "aquamarine" : "white" }} ref={drop} onClick={() => handleFolderClick()} className={styles.folder}>
-                    <h2> {label} </h2>
+                    <h2 onClick={() => handleFolderClick()}> {label} </h2>
+                    <Tooltip text={<FolerOptions collectionId={id} getUpdatedData={getUpdatedData} />} trigger="click" position="right">
+                        <div>
+                            <Menu />
+                        </div>
+                    </Tooltip>
                 </div>
             </summary>
             <div className="folder-children">
