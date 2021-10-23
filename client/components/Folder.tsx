@@ -8,9 +8,9 @@ import { Tooltip, Button } from "@nextui-org/react";
 import { useDrop } from "react-dnd";
 import { ItemTypes } from "../utils/constants";
 import { handleChange } from "../utils/string";
-import { RENAME_COLLECTION } from "../graphql/actions";
+import { DELETE_LINK, RENAME_COLLECTION } from "../graphql/actions";
 
-import { DROP_LINK_IN_COLLECTION, FETCH_ALL, ADD_COLLECTION_CHILD } from "../graphql/actions";
+import { DROP_LINK_IN_COLLECTION, FETCH_ALL, ADD_COLLECTION_CHILD, DELETE_COLLECTION } from "../graphql/actions";
 import { useMutation } from "@apollo/client";
 import toast from "react-hot-toast";
 
@@ -71,7 +71,16 @@ function AddChild({ collectionId, getUpdatedData }): JSX.Element {
 }
 
 
+
 function FolerOptions({ collectionId, getUpdatedData }): JSX.Element {
+
+    const [deleteCollection, { data, loading, error }] = useMutation(DELETE_COLLECTION);
+
+    function handleDeleteFolder(): void {
+        toast.promise(deleteCollection({ variables: { collectionId }, refetchQueries: [{ query: FETCH_ALL }] })
+            .then(_ => getUpdatedData(data)), { success: "Deleted", loading: "Deleting...", error: "Failed to delete folder" })
+    }
+
     return (
         <Button.Group size="large" vertical>
             <Tooltip trigger="click" text={<RenameFolder getUpdatedData={getUpdatedData} collectionId={collectionId} />}>
@@ -85,6 +94,10 @@ function FolerOptions({ collectionId, getUpdatedData }): JSX.Element {
                     Add Child
                 </Button>
             </Tooltip>
+
+            <Button color="error" onClick={_ => handleDeleteFolder()}>
+                Delete Folder
+            </Button>
         </Button.Group>
     )
 }
