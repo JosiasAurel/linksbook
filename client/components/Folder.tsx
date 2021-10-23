@@ -10,7 +10,7 @@ import { ItemTypes } from "../utils/constants";
 import { handleChange } from "../utils/string";
 import { RENAME_COLLECTION } from "../graphql/actions";
 
-import { DROP_LINK_IN_COLLECTION, FETCH_ALL } from "../graphql/actions";
+import { DROP_LINK_IN_COLLECTION, FETCH_ALL, ADD_COLLECTION_CHILD } from "../graphql/actions";
 import { useMutation } from "@apollo/client";
 import toast from "react-hot-toast";
 
@@ -48,12 +48,41 @@ function RenameFolder({ collectionId, getUpdatedData }): JSX.Element {
         </form>
     )
 }
+
+function AddChild({ collectionId, getUpdatedData }): JSX.Element {
+
+
+    const [name, setName] = useState<string>("");
+
+    const [addFolderChild, { data, loading, error }] = useMutation(ADD_COLLECTION_CHILD);
+
+    function handleAddFolderChild(event: any): void {
+        event.preventDefault();
+
+        toast.promise(addFolderChild({ variables: { collectionId, childName: name }, refetchQueries: [{ query: FETCH_ALL }] })
+            .then(_ => getUpdatedData(data)), { success: `Created ${name}`, loading: "Creating...", error: "Could not create folder" })
+    }
+    return (
+        <form onSubmit={e => handleAddFolderChild(e)} style={{ display: "flex" }}>
+            <Input value={name} onChange={e => handleChange(e, setName)} label="name" placeholder="SubFolder" />
+            <GButton htmlType="submit" style={{ margin: "0 5px" }} auto scale={0.8} type="success">Save</GButton>
+        </form>
+    )
+}
+
+
 function FolerOptions({ collectionId, getUpdatedData }): JSX.Element {
     return (
         <Button.Group size="large" vertical>
             <Tooltip trigger="click" text={<RenameFolder getUpdatedData={getUpdatedData} collectionId={collectionId} />}>
                 <Button>
                     Rename
+                </Button>
+            </Tooltip>
+
+            <Tooltip trigger="click" text={<AddChild getUpdatedData={getUpdatedData} collectionId={collectionId} />}>
+                <Button>
+                    Add Child
                 </Button>
             </Tooltip>
         </Button.Group>
