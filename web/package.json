@@ -4,7 +4,8 @@
   "description": "The official website for LinksBook v2",
   "main": "index.js",
   "scripts": {
-    "test": "jes"
+    "test": "jes",
+    "dev": "next"
   },
   "keywords": [
     "website",
