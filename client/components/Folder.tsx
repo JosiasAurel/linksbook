@@ -82,23 +82,23 @@ function FolerOptions({ collectionId, getUpdatedData }): JSX.Element {
     }
 
     return (
-        <Button.Group size="large" vertical>
+        <div>
             <Tooltip trigger="click" text={<RenameFolder getUpdatedData={getUpdatedData} collectionId={collectionId} />}>
-                <Button>
+                <GButton>
                     Rename
-                </Button>
+                </GButton>
             </Tooltip>
 
             <Tooltip trigger="click" text={<AddChild getUpdatedData={getUpdatedData} collectionId={collectionId} />}>
-                <Button>
+                <GButton>
                     Add Child
-                </Button>
+                </GButton>
             </Tooltip>
 
-            <Button color="error" onClick={_ => handleDeleteFolder()}>
+            <GButton color="error" onClick={_ => handleDeleteFolder()}>
                 Delete Folder
-            </Button>
-        </Button.Group>
+            </GButton>
+        </div>
     )
 }
 /* End Folder Edit Option */
