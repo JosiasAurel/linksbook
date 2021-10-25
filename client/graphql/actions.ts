@@ -107,7 +107,7 @@ const ADD_COLLECTION_CHILD = gql`
 `;
 
 const DELETE_COLLECTION = gql`
-    mutation deleteCollection(collectionId: String!) {
+    mutation deleteCollection($collectionId: String!) {
         deleteCollection(collectionId: $collectionId) {
             status
         }
