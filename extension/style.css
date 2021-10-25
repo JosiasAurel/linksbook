@@ -1,0 +1,18 @@
+* {
+  box-sizing: border-box;
+  font-family: sans-serif;
+  transition: all 0.2s ease-in-out;
+}
+.sign-in {
+  background-color: blue;
+  border: solid transparent;
+  color: white;
+  padding: 0.2em 0.5em;
+  border-radius: 5px;
+}
+
+.no-auth {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

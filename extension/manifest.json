@@ -11,6 +11,7 @@
     "<all_urls>",
     "bookmarks",
     "identity",
+    "storage",
     "https://server.linksbook.me/*"
   ],
   "content_scripts": [
