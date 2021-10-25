@@ -4,13 +4,11 @@ import styles from "../styles/components.module.css";
 
 import { Input, Button as GButton } from "@geist-ui/react";
 import { Menu } from "@geist-ui/react-icons";
-import { Tooltip, Button } from "@nextui-org/react";
+import { Tooltip } from "@nextui-org/react";
 import { useDrop } from "react-dnd";
 import { ItemTypes } from "../utils/constants";
 import { handleChange } from "../utils/string";
-import { DELETE_LINK, RENAME_COLLECTION } from "../graphql/actions";
-
-import { DROP_LINK_IN_COLLECTION, FETCH_ALL, ADD_COLLECTION_CHILD, DELETE_COLLECTION } from "../graphql/actions";
+import { DROP_LINK_IN_COLLECTION, FETCH_ALL, ADD_COLLECTION_CHILD, DELETE_COLLECTION, RENAME_COLLECTION } from "../graphql/actions";
 import { useMutation } from "@apollo/client";
 import toast from "react-hot-toast";
 
