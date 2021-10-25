@@ -3,7 +3,8 @@ import React from "react";
 import styles from "../styles/components.module.css";
 
 import Image from "next/image";
-import { Avatar } from "@nextui-org/react";
+import { Avatar, Tooltip } from "@nextui-org/react";
+import User from "./User";
 
 import { AuthCtx } from "../contexts/auth";
 
@@ -17,7 +18,9 @@ const Header: React.FC = (): JSX.Element => {
                 <Image src="/LinksBook.svg" width={40} height={40} />
             </div>
             <div>
-                <Avatar text={gCtx.name} />
+                <Tooltip position="left" text={<User name={gCtx.name} />} trigger="click">
+                    <Avatar text={gCtx.name} />
+                </Tooltip>
             </div>
         </header>
     )

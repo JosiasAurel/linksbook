@@ -2,6 +2,8 @@ import React from "react";
 
 import styles from "../styles/components.module.css";
 
+import { Badge, Spacer } from "@geist-ui/react";
+
 interface TagProps {
     name: string
     searchByTag?: Function
@@ -9,9 +11,15 @@ interface TagProps {
 
 const Tag: React.FC<TagProps> = ({ name, searchByTag }) => {
     return (
-        <div onClick={_ => searchByTag(name)} className={styles.tag}>
+        <>
+            <Badge type="success" onClick={_ => searchByTag(name)}>
+                {/* <div onClick={_ => searchByTag(name)} className={styles.tag}>
             <p> {name} </p>
-        </div>
+        </div> */}
+                {name}
+            </Badge>
+            <Spacer h={0.5} />
+        </>
     )
 }
 
