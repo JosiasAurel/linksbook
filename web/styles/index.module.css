@@ -1,0 +1,29 @@
+.page {
+  height: 100vh;
+  overflow: hidden;
+}
+
+.header {
+  position: fixed;
+  top: 0;
+  width: 100vw;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.content {
+  margin-top: 6em;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.heroPage {
+  max-width: 80vw;
+  max-height: 80vh;
+  position: relative;
+  right: -30vw;
+  border: solid 2px blueviolet;
+  border-radius: 5px;
+}
