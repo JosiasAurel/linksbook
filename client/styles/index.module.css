@@ -50,6 +50,8 @@
 .linksSection {
   height: 100%;
   width: 75%;
+  position: relative;
+  overflow: hidden;
 }
 
 .linksSection__loading {
@@ -62,12 +64,13 @@
 
 .links {
   width: 100%;
-  display: flex;
+  /* display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: space-evenly; */
   margin: 1em 1em 1em 0.5em;
-  max-height: 95vh;
+  height: 100%;
+  overflow-x: hidden;
   overflow-y: scroll;
   -ms-overflow-style: none;
   scrollbar-width: none;

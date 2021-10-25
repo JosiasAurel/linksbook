@@ -90,6 +90,30 @@ const REMOVE_LINK_FROM_COLLECTION = gql`
     }
 `;
 
+const RENAME_COLLECTION = gql`
+    mutation updateCollection($collectionId: String!, $name: String) {
+        updateCollection(collectionId: $collectionId, name: $name) {
+            status
+        }
+    }
+`;
+
+const ADD_COLLECTION_CHILD = gql`
+    mutation addCollectionChild($collectionId: String!, $childName: String!) {
+        	addCollectionChild(collectionId: $collectionId, childName: $childName) {
+                status
+            }
+    }
+`;
+
+const DELETE_COLLECTION = gql`
+    mutation deleteCollection($collectionId: String!) {
+        deleteCollection(collectionId: $collectionId) {
+            status
+        }
+    }
+`;
+
 export { 
     FETCH_ALL, 
     CREATE_LINK, 
@@ -97,5 +121,8 @@ export {
     CREATE_COLLECTION,
     DELETE_LINK, 
     DROP_LINK_IN_COLLECTION,
-    REMOVE_LINK_FROM_COLLECTION
+    REMOVE_LINK_FROM_COLLECTION,
+    RENAME_COLLECTION,
+    ADD_COLLECTION_CHILD,
+    DELETE_COLLECTION
 };

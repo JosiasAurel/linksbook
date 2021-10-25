@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState, useContext, useEffect } from "react";
+import React, { FunctionComponent, useState, useEffect } from "react";
 import { useQuery } from "@apollo/client";
 
 import Header from "../components/Header";
@@ -163,8 +163,6 @@ const HomePage: FunctionComponent = (): JSX.Element => {
     useEffect(() => {
         if (data) {
             setDisplayLinks(data.user.links);
-            console.log("All Links");
-            console.log(data.user.links)
         }
     }, [data]);
 
@@ -250,7 +248,7 @@ const HomePage: FunctionComponent = (): JSX.Element => {
                 <section className={styles.linksSection}>
                     <Home onClick={() => setDisplayLinks(data.user.links)} />
                     <div className={styles.links}>
-                        <Spacer y={6} />
+                        {/* <Spacer y={6} /> */}
                         {displayLinks.map(link => {
                             console.log({ link: link })
                             return (
@@ -270,6 +268,7 @@ const HomePage: FunctionComponent = (): JSX.Element => {
                             )
                         })}
                         <Spacer y={3} />
+                        {/* <Spacer y={3} /> */}
                     </div>
                 </section>
                 <section style={showPopPage ? { display: "flex" } : { display: "none" }} className={styles.sidePopPage}>

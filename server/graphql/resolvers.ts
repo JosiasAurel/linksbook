@@ -1,9 +1,29 @@
 
+import axios from "axios";
+
 // import model CRUD handlers
-import { createCollection, deleteCollection, getAllCollections, updateCollection, dropLinkToCollection, removeLink, getCollection } from "../models/collection";
+import { 
+    createCollection, 
+    deleteCollection, 
+    getAllCollections, 
+    updateCollection, 
+    dropLinkToCollection, 
+    removeLink, 
+    getCollection,
+    dropCollectionToCollection
+} from "../models/collection";
 
 // import link handlers
-import { getLink, getAllLinks, createLink, updateLink, deleteLink, searchLinks } from "../models/links";
+import { 
+    getLink, 
+    getAllLinks, 
+    createLink, 
+    updateLink, 
+    deleteLink, 
+    searchLinks 
+} from "../models/links";
+
+import { API_SERVICE_URL } from "../config";
 
 const resolvers = {
     Query: {
@@ -48,7 +68,11 @@ const resolvers = {
             let annotation: string = args.annotation;
             let tags: Array<string> = args.tags;
             let url: string = args.url;
-            const newLink = createLink(annotation, url, tags, context.key);
+
+            const res: any = await axios.get(`${API_SERVICE_URL}/url/?url=${url}`);
+            // console.log(res);
+
+            const newLink = await createLink(res?.data?.pageTitle, url, tags, context.key);
 
             return {status: newLink};
         },
@@ -84,6 +108,15 @@ const resolvers = {
 
             return {status: result};
         },
+        addCollectionChild: async (parent: any, args: any, ctx: any): Promise<any> => {
+
+            const newCollection = await createCollection(args.childName, ctx.key, true, args.collectionId);
+
+            const updatedCollection = await dropCollectionToCollection(args.collectionId, newCollection.key);
+
+            return { status: updatedCollection }
+        },
+
         deleteCollection: async (_parent: any, args: any): Promise<any> => {
             const result = await deleteCollection(args.collectionId);
 
