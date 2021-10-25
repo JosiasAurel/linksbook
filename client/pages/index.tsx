@@ -163,8 +163,6 @@ const HomePage: FunctionComponent = (): JSX.Element => {
     useEffect(() => {
         if (data) {
             setDisplayLinks(data.user.links);
-            console.log("All Links");
-            console.log(data.user.links)
         }
     }, [data]);
 

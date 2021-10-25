@@ -116,7 +116,7 @@ const Folder: React.FC<FolderProps> = ({ id, label, getUpdatedData, index, folde
 
     function handleFolderClick(): void {
         // thirdPartyAction();
-        setLinks(folder.links, folder.parent);
+        setLinks(folder.links, folder.parent === "NONE" ? folder.id : folder.parent);
     }
 
 
