@@ -57,8 +57,45 @@ async function verifyToken() {
     return result;
 }
 
-function showAppPages() {
+function showAppPage(pageTitle, pageUrl) {
+
+    /* Create basic elements */
+    const container = document.createElement("div");
+    const syncButton = document.createElement("button");
+    const syncBtnImage = document.createElement("img");
+    const form = document.createElement("form");
+    const titleInput = document.createElement("input");
+    const urlInput = document.createElement("input");
+    const saveButton = document.createElement("button");
+
+    /* Set attributs */
+    container.classList.add("container");
+    syncBtnImage.src = "cloud.png";
+    syncBtnImage.alt = "cloud";
+    titleInput.type = "text";
+    titleInput.setAttribute("placeholder", "Annotation");
+    urlInput.type = "url";
+    urlInput.setAttribute("placeholder", "URL");
+
+    /* Construct hierachy */
+
+    form.appendChild(titleInput);
+    form.appendChild(urlInput);
+    form.appendChild(saveButton);
+    saveButton.innerText = "Save";
+
+    syncButton.appendChild(syncBtnImage);
+    syncButton.innerText = "Sync Browser";
     
+    container.appendChild(syncButton);
+    container.appendChild(form);
+
+    // mount app to app component
+    const app = document.getElementById("app");
+    app.appendChild(container);
+
+    /* Handle events */
+
 }
 
 function init() {
@@ -73,7 +110,8 @@ function init() {
                 let thisPage = tabs[0];
                 const url = thisPage.url;
                 const title = thisPage.title;
-                console.log({url, title});
+                showAppPage(title, url);
+                console.log(thisPage);
                 /* Show the app pages */
 
             });
