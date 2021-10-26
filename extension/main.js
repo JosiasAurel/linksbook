@@ -1,29 +1,7 @@
 
-const AUTH_URI = "https://linksbook-ext-auth.vercel.app/";
+const AUTH_URI = "https://celestial-unmarred-patella.glitch.me";
 
 /* Utils */
-
-function setItem(key, value) {
-    chrome.local.set({key: value}, _ => "Done");
-    return "Done";
-}
-
-function getItem(key) {
-    chrome.local.get([key], _ => "Done");
-    return "Done";
-}
-
-function clearStorage() {
-    chrome.storage.local.clear(() => {
-        // done
-});
-}
-
-function removeItem(key) {
-    chrome.storage.local.remove([key], (result) => {
-        return result;
-});
-}
 
 function log(data) {
     chrome.extension.getBackgroundPage().console.log(data);
@@ -51,7 +29,7 @@ function mountAuthPage() {
         chrome.tabs.query({active: true, lastFocusedWindow: true}, tabs => {
             let thisPage = tabs[0];
             let token = thisPage.split("#");
-            setItem("token", token);
+            localStorage.setItem("token", token);
         });
 
     });
@@ -60,7 +38,16 @@ function mountAuthPage() {
 async function verifyToken() {
     let result;
 
-    const res = await fetch(`${AUTH_URI}/is-authenticated`);
+    const thisToken = localStorage.getItem("token");
+
+    const res = await fetch(`${AUTH_URI}/is-authenticated`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ token: thisToken })
+    });
+
     const data = await res.json();
 
     if (data.status === "Success") {
@@ -70,20 +57,25 @@ async function verifyToken() {
     return result;
 }
 
+function showAppPages() {
+    
+}
+
 function init() {
-    if (getItem("token") === undefined) {
+    if (localStorage.getItem("token") === undefined) {
         mountAuthPage();
 
     } else {
         const isAuth = verifyToken();
 
-        if (result !== "Failed") {
+        if (isAuth !== "Failed") {
             chrome.tabs.query({active: true, lastFocusedWindow: true}, tabs => {
                 let thisPage = tabs[0];
                 const url = thisPage.url;
                 const title = thisPage.title;
                 console.log({url, title});
                 /* Show the app pages */
+
             });
 
             /* Show the app pages */
