@@ -1,5 +1,5 @@
 
-const URL_FOR_AUTH = "https://linksbook-ext-auth.vercel.app/";
+const AUTH_URI = "https://linksbook-ext-auth.vercel.app/";
 
 /* Utils */
 
@@ -9,7 +9,7 @@ function setItem(key, value) {
 }
 
 function getItem(key) {
-    chrome.local.set([key], _ => "Done");
+    chrome.local.get([key], _ => "Done");
     return "Done";
 }
 
@@ -32,6 +32,9 @@ function log(data) {
 /* utils end */
 
 function mountAuthPage() {
+
+    const app = document.getElementById("app");
+
     let div = document.createElement("div");
     div.classList.add("no-auth");
     let authButton = document.createElement("button");
@@ -39,25 +42,54 @@ function mountAuthPage() {
 
     div.appendChild(authButton);
 
+    app.appendChild(div);
+
     authButton.addEventListener("click", e_ => {
         // do something to extract auth token from URL
+
+        /* Extract the auth token from the URL */
+        chrome.tabs.query({active: true, lastFocusedWindow: true}, tabs => {
+            let thisPage = tabs[0];
+            let token = thisPage.split("#");
+            setItem("token", token);
+        });
+
     });
 }
+
+async function verifyToken() {
+    let result;
+
+    const res = await fetch(`${AUTH_URI}/is-authenticated`);
+    const data = await res.json();
+
+    if (data.status === "Success") {
+        result = data;
+    } else { result = "Failed" }
+
+    return result;
+}
+
 function init() {
     if (getItem("token") === undefined) {
+        mountAuthPage();
 
-        chrome.tabs.query({active: true, lastFocusedWindow: true}, tabs => {
-            let thisPage = tabs[0];
-            let token = thisPage.split("#");
-            setItem("token", token);
-        });
     } else {
-        chrome.tabs.query({active: true, lastFocusedWindow: true}, tabs => {
-            let thisPage = tabs[0];
-            let token = thisPage.split("#");
-            setItem("token", token);
-        });
-    }
+        const isAuth = verifyToken();
+
+        if (result !== "Failed") {
+            chrome.tabs.query({active: true, lastFocusedWindow: true}, tabs => {
+                let thisPage = tabs[0];
+                const url = thisPage.url;
+                const title = thisPage.title;
+                console.log({url, title});
+                /* Show the app pages */
+            });
+
+            /* Show the app pages */
+
+        } else { mountAuthPage(); }
+    }   
 }
 
 init();
