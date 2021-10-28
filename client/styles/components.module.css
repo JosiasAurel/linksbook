@@ -289,3 +289,26 @@
   padding: 1em;
 }
 /* Note Card - End */
+
+/* User pref. menu */
+.userPrefMenu {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.userPrefMenu > * {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  margin: 0 0.5em;
+  padding: 2px;
+  border-radius: 5px;
+}
+
+.userPrefMenu > *:hover {
+  background-color: rgba(235, 235, 235, 0.377);
+}
+/* User pref. menu End */
