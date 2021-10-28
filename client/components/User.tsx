@@ -10,13 +10,12 @@ interface UserButtonProps {
 }
 
 const User: React.FC<UserButtonProps> = ({ name }): JSX.Element => {
-    const [menu, setMenu] = React.useState<boolean>(false);
 
     return (
         <>
             <div className={styles.userPrefMenu}>
                 <div>
-                    <ColorToggle />
+                    <ColorToggle action={_ => undefined} />
                 </div>
                 <div>
                     <Settings />

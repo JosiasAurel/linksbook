@@ -6,17 +6,18 @@ interface RotateButtonProps {
     action: any
 }
 
-const ColorToggle: React.FC = (): JSX.Element => {
+const ColorToggle: React.FC<RotateButtonProps> = ({ action }): JSX.Element => {
 
-    const [rotation, setRotation] = React.useState<number>();
+    const [rotation, setRotation] = React.useState<number>(0);
 
-    const carryAction: Function = (action: any) => {
+    const carryAction: Function = () => {
+        setRotation(rotation + 90);
         action();
 
     };
     return (
-        <div className={styles.colorToggle}>
-            <div>
+        <div onClick={_ => carryAction()} className={styles.colorToggle}>
+            <div style={{ transform: `rotate(${rotation}deg)` }}>
 
             </div>
         </div>
