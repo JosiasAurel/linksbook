@@ -2,8 +2,8 @@ from config import SECRET
 from lib.mail import send_mail_to, send_mail
 from lib.genid import generate_id
 from lib.pinmanager import create_pin, verify_and_revoke_pin
-from lib.tokenmanager import save_token, verify_token, revoke_token, name_from_token
-from models.user import get_user_by_email, create_user
+from lib.tokenmanager import save_token, verify_token, revoke_token, name_email_from_token
+from models.user import get_user_by_email, create_user, set_user_theme
 import jwt
 from fastapi import FastAPI, Request
 from deta import Deta
@@ -55,7 +55,7 @@ async def _login_user(request: Request):
     # if it finds no user with that email then he does not exist
     # and login pin is not sent
     user = usersdb.fetch({"email": email}).__next__()
-    print(user)
+    # print(user)
     if len(user) == 1:
         # ...generate unique pin and email [email]...
         # ...generate unique pin...
@@ -108,7 +108,7 @@ async def _check_is_auth(request: Request):
 
     user = get_user_by_email(data.get("email"))
 
-    result = name_from_token(auth_token, user.get("key"))
+    result = name_email_from_token(auth_token, user.get("key"))
 
     return result
 
@@ -124,3 +124,19 @@ async def _sign_out_user(request: Request):
     revoke_token(user["key"])
 
     return {"status": "Done"}
+
+
+@app.post("/set-theme")
+async def _handle_set_theme(req: Request):
+    req_headers = await req._headers
+    authToken = req_headers.get("Authorization").split(" ")[1]
+    data = jwt.decode(authToken, "SECRET", algorithms=["HS256"])
+    user_email = data.get("email")
+    req_body = await req.json()
+    theme_type = req_body.get("ThemeType")
+    theme = req_body.get("theme")
+    theme_blur = req_body.get("blur")
+
+    result = set_user_theme(user_email, theme_type, theme, theme_blur)
+
+    return {"status": result}
