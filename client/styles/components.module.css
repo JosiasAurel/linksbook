@@ -209,7 +209,6 @@
   max-height: 50px;
   width: 80%;
   border: solid 1px rgba(128, 128, 128, 0.404);
-  box-shadow: 0 2px 2px 2px whitesmoke;
   margin: 4px 2px;
   padding: 5px;
 }
@@ -221,6 +220,10 @@
 .folder h2 {
   font-size: 1em;
   margin-top: 4px;
+}
+
+.folder .folderChildren {
+  background-color: transparent;
 }
 /* End Folder styles */
 
