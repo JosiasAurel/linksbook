@@ -8,7 +8,11 @@ import User from "./User";
 
 import { AuthCtx } from "../contexts/auth";
 
-const Header: React.FC = (): JSX.Element => {
+interface HeaderProps {
+    toggleSettings?: Function
+}
+
+const Header: React.FC<HeaderProps> = ({ toggleSettings }): JSX.Element => {
 
     const gCtx = React.useContext(AuthCtx);
 
@@ -18,7 +22,7 @@ const Header: React.FC = (): JSX.Element => {
                 <Image src="/LinksBook.svg" width={40} height={40} />
             </div>
             <div>
-                <Tooltip position="left" text={<User name={gCtx.name} />} trigger="click">
+                <Tooltip position="left" text={<User toggleSettings={() => toggleSettings()} name={gCtx.name} />} trigger="click">
                     <Avatar text={gCtx.name} />
                 </Tooltip>
             </div>
