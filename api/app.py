@@ -6,6 +6,7 @@ import requests
 from deta import Deta
 from secrets import token_urlsafe
 from util import get_user_id_by_email, add_user_uploads
+import jwt
 
 app = FastAPI()
 
@@ -49,7 +50,10 @@ def _get_page_title(req: Request, url: str) -> any:
 @app.post("/upload-image")
 async def _handle_upload_image(req: Request, file: UploadFile = File(...)):
     req_headers = req.headers
-    user_email = req_headers["Authorization"].split(" ")[1]
+    auth_token = req_headers["Authorization"].split(" ")[1]
+
+    user_email = jwt.decode(auth_token, "SECRET", algorithms=[
+                            "HS256"]).get("email")
 
     user = get_user_id_by_email(user_email)
 
