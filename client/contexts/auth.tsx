@@ -32,8 +32,8 @@ const AuthProvider: React.FC<AuthCtxProps> = ({ children }): JSX.Element => {
                     setIsAuth(true);
                     setName(data.userName);
                 }
-                console.log("Auth Data");
-                console.log(data);
+                /* console.log("Auth Data");
+                console.log(data); */
             });
     }, []);
 
