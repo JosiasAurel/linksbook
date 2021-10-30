@@ -270,7 +270,9 @@ const HomePage: FunctionComponent = (): JSX.Element => {
             />
             <div className={styles.dashboardSections}>
                 <section style={showPopPage ? { display: "none" } : { display: "block" }} className={styles.foldersSection}>
-                    <Search searchAction={(q: string) => handleSearch(q)} />
+                    <div style={{ margin: "0.2em 0", display: "flex", justifyContent: "center", alignItems: "center" }}>
+                        <Search searchAction={(q: string) => handleSearch(q)} />
+                    </div>
                     <div className={styles.center}>
                         <Tooltip position="right" trigger="click" text={<CreateToolTipBody />}>
                             <Button>
