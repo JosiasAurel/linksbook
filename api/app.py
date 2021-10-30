@@ -4,6 +4,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from bs4 import BeautifulSoup
 import requests
 from deta import Deta
+from secrets import token_urlsafe
+from util import get_user_id_by_email, add_user_uploads
 
 app = FastAPI()
 
@@ -24,6 +26,9 @@ drive = deta.Drive("Background Images")
 # cocnnect to users
 db = deta.Base("users")
 
+# create or access JWT db
+tokensdb = deta.Base("tokens")
+
 
 @app.get("/")
 def _root(req: Request) -> any:
@@ -42,8 +47,17 @@ def _get_page_title(req: Request, url: str) -> any:
 
 
 @app.post("/upload-image")
-async def _handle_upload_image(file: UploadFile = File(...)):
-    filename = file.filename
+async def _handle_upload_image(req: Request, file: UploadFile = File(...)):
+    req_headers = req.headers
+    user_email = req_headers["Authorization"].split(" ")[1]
+
+    user = get_user_id_by_email(user_email)
+
+    filename = token_urlsafe(10)  # file.filename - generate unique file name
     image_file = file.file
-    result = drive.put(filename, image_file)
-    return result
+    try:
+        drive.put(filename, image_file)
+        result = add_user_uploads(user, filename)
+        return result
+    except:
+        return "Failed"
