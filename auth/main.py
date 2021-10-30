@@ -116,11 +116,10 @@ async def _check_is_auth(request: Request):
 @app.post("/sign-out")
 async def _sign_out_user(request: Request):
     auth_token = request.headers.get("Authorization").split(" ")[1]
-
     data = jwt.decode(auth_token, "SECRET", algorithms=["HS256"])
-
-    # delete token owned by the owner
-    revoke_token(data.get("key"))
+    # get owner
+    user = get_user_by_email(data.get("email"))
+    revoke_token(user.get("key"))
 
     return {"status": "Done"}
 
