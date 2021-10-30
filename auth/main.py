@@ -2,7 +2,7 @@ from config import SECRET
 from lib.mail import send_mail_to, send_mail
 from lib.genid import generate_id
 from lib.pinmanager import create_pin, verify_and_revoke_pin
-from lib.tokenmanager import save_token, verify_token, revoke_token, name_email_from_token
+from lib.tokenmanager import save_token, verify_token, revoke_token, data_from_token
 from models.user import get_user_by_email, create_user, set_user_theme
 import jwt
 from fastapi import FastAPI, Request
@@ -108,20 +108,18 @@ async def _check_is_auth(request: Request):
 
     user = get_user_by_email(data.get("email"))
 
-    result = name_email_from_token(auth_token, user.get("key"))
+    result = data_from_token(auth_token, user.get("key"))
 
     return result
 
 
 @app.post("/sign-out")
 async def _sign_out_user(request: Request):
-    req_body = await request.json()
-    user_email = req_body["email"]
-
-    user = get_user_by_email(user_email)
-
-    # delete token owned by the owner
-    revoke_token(user["key"])
+    auth_token = request.headers.get("Authorization").split(" ")[1]
+    data = jwt.decode(auth_token, "SECRET", algorithms=["HS256"])
+    # get owner
+    user = get_user_by_email(data.get("email"))
+    revoke_token(user.get("key"))
 
     return {"status": "Done"}
 
