@@ -1,6 +1,7 @@
-import React, { FunctionComponent, useState, useEffect, useContext } from "react";
+import React, { FunctionComponent, useState, useEffect, useContext, FormEvent } from "react";
 import { AuthCtx } from "../contexts/auth";
 import { useQuery } from "@apollo/client";
+
 
 import Header from "../components/Header";
 import Search from "../components/Search";
@@ -43,6 +44,46 @@ const HomePage: FunctionComponent = (): JSX.Element => {
     /* edit link modal form fields props - end */
     /* Settings modal */
     const [showSettings, setShowSettings] = useState<boolean>(false);
+    const [uploadBgFile, setUploadBgFile] = useState<any>();
+    const [fileType, setFileType] = useState<string>("");
+
+    function handleFileChange(event: any, handler: Function): void {
+        // console.log(event.target.files[0]);
+        setFileType(event.target.files[0].type.split("/")[1]);
+
+        /* const fileReader = new FileReader();
+
+        fileReader.addEventListener("load", event_ => {
+            // console.log(event_.target.result);
+            handler(event_.target.result);
+        });
+        fileReader.readAsArrayBuffer(event.target.files[0]); */
+
+        handler(event.target.files[0]);
+    }
+
+    async function handleUploadBgImage(event: FormEvent): Promise<void> {
+        event.preventDefault();
+
+        const authToken: string | undefined = localStorage.getItem("token") ?? undefined;
+
+        const formData = new FormData();
+        let file = new Blob([uploadBgFile]);
+        // file = uploadBgFile;
+
+        formData.append(`filename`, file);
+
+        const res = await fetch(`${API_SERVICE}/upload-image`, {
+            method: "POST",
+            headers: {
+                "Authorization": `Bearer ${authToken}`
+            },
+            body: formData
+        });
+
+        const data = await res.json();
+        console.log(data);
+    }
     /* End Settings modal */
 
     const [inFolder, setInFolder] = useState<boolean>(false);
@@ -352,8 +393,8 @@ const HomePage: FunctionComponent = (): JSX.Element => {
                     <Divider />
                     <h3>Upload Custom Background Image</h3>
                     <div>
-                        <form className={styles.uploadBgForm} action={`${API_SERVICE}/upload-image`} encType="multipart/form-data" method="post">
-                            <input type="file" name="bgImg" id="bgImg" placeholder="" />
+                        <form onSubmit={e => handleUploadBgImage(e)} className={styles.uploadBgForm} /* action={`${API_SERVICE}/upload-image`} */ /* encType="multipart/form-data" method="post" */>
+                            <input onChange={e => handleFileChange(e, setUploadBgFile)} type="file" name="bgImg" id="bgImg" accept="image/png, image/jpeg" />
                             <div className={styles.imageDec}>
                                 <Image />
                             </div>
