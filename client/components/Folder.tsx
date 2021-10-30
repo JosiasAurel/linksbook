@@ -145,36 +145,6 @@ const Folder: React.FC<FolderProps> = ({ id, label, getUpdatedData, index, folde
             </Tooltip>
         </div >
     )
-    return (
-        <details style={{ width: "80%", backgroundColor: "transparent" }}>
-            <summary style={{ width: "100%" }}>
-                <div style={{ width: "100%", backgroundColor: isOver ? "aquamarine" : "transparent" }} ref={drop} onClick={() => handleFolderClick()} className={styles.folder}>
-                    <h2 onClick={() => handleFolderClick()}> {label} </h2>
-                    <Tooltip text={<FolerOptions collectionId={id} getUpdatedData={getUpdatedData} />} trigger="click" position="right">
-                        <div>
-                            <MoreHorizontal />
-                        </div>
-                    </Tooltip>
-                </div>
-            </summary>
-            <div className={styles.folderChildren}>
-                {folder?.children?.map((f: any, i: any) => {
-                    return (
-                        <Folder
-                            key={i}
-                            label={f.name}
-                            index={i}
-                            id={f.id}
-                            folder={f}
-                            /* thirdPartyAction={(links: any, fId: any) => thirdPartyAction(links, fId)} */
-                            getUpdatedData={(data: any) => getUpdatedData(data)}
-                            setLinks={(links: any, fId: any) => setLinks(links, f.id)}
-                        />
-                    )
-                })}
-            </div>
-        </details>
-    )
 }
 
 export default Folder;
