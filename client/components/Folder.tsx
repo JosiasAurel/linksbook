@@ -2,8 +2,8 @@ import React, { useState } from "react";
 
 import styles from "../styles/components.module.css";
 
-import { Input, Button as GButton } from "@geist-ui/react";
-import { Menu } from "@geist-ui/react-icons";
+import { Input, Button as GButton, Tree } from "@geist-ui/react";
+import { MoreHorizontal } from "@geist-ui/react-icons";
 import { Tooltip } from "@nextui-org/react";
 import { useDrop } from "react-dnd";
 import { ItemTypes } from "../utils/constants";
@@ -119,20 +119,10 @@ const Folder: React.FC<FolderProps> = ({ id, label, getUpdatedData, index, folde
         setLinks(folder.links, folder.parent === "NONE" ? folder.id : folder.parent);
     }
 
-
+    // possible structure
     return (
-        <details style={{ width: "80%" }}>
-            <summary style={{ width: "100%" }}>
-                <div style={{ width: "100%", backgroundColor: isOver ? "aquamarine" : "white" }} ref={drop} onClick={() => handleFolderClick()} className={styles.folder}>
-                    <h2 onClick={() => handleFolderClick()}> {label} </h2>
-                    <Tooltip text={<FolerOptions collectionId={id} getUpdatedData={getUpdatedData} />} trigger="click" position="right">
-                        <div>
-                            <Menu />
-                        </div>
-                    </Tooltip>
-                </div>
-            </summary>
-            <div className="folder-children">
+        <div style={{ display: "flex", padding: "0.5em 0", alignItems: "center" }} ref={drop} onClick={() => handleFolderClick()}>
+            <Tree.Folder name={label} style={{ width: "100%", backgroundColor: isOver ? "aquamarine" : "transparent" }}>
                 {folder?.children?.map((f: any, i: any) => {
                     return (
                         <Folder
@@ -147,8 +137,13 @@ const Folder: React.FC<FolderProps> = ({ id, label, getUpdatedData, index, folde
                         />
                     )
                 })}
-            </div>
-        </details>
+            </Tree.Folder>
+            <Tooltip text={<FolerOptions collectionId={id} getUpdatedData={getUpdatedData} />} trigger="click" position="right">
+                <div>
+                    <MoreHorizontal />
+                </div>
+            </Tooltip>
+        </div >
     )
 }
 

@@ -199,7 +199,7 @@
 
 .closeShowPopPage {
   position: relative;
-  top: -15px;
+  top: -16px;
   width: 100%;
   display: flex;
   flex-direction: row;
@@ -228,4 +228,24 @@
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
+}
+
+.uploadBgForm {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.uploadBgForm input::-webkit-file-upload-button {
+  background: transparent;
+  color: transparent;
+  padding: 1em;
+  border-radius: 4px;
+  border: dotted 3px rgba(230, 227, 227, 0.589);
+}
+
+.imageDec {
+  position: relative;
+  left: -66%;
+  opacity: 0.5;
 }

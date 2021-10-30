@@ -1,0 +1,62 @@
+.page {
+  height: 100vh;
+  overflow: hidden;
+}
+
+.header {
+  position: fixed;
+  top: 0;
+  width: 100vw;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header > * {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.header .navLinks > * {
+  margin: 0 1em;
+  padding: 0.6em 1.2em;
+  border-radius: 5px;
+}
+
+.header .navLinks > *:hover {
+  background-color: rgb(113, 43, 226);
+  color: white;
+}
+
+.content {
+  margin-top: 6em;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.heroPage {
+  position: relative;
+  left: -5vw;
+  border: solid 15px rgb(202, 202, 202);
+  border-radius: 6px;
+}
+
+.heroPage img {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 40vw;
+  max-height: 70vh;
+  border-radius: 6px;
+}
+
+.announcement {
+  margin-left: 4em;
+  padding: 1em;
+  height: 70vh;
+  border: solid 2px rgb(113, 43, 226);
+  border-radius: 4px;
+}

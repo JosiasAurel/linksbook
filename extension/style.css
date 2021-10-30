@@ -1,0 +1,64 @@
+* {
+  box-sizing: border-box;
+  transition: all 0.2s ease-in-out;
+}
+
+body {
+  font-family: sans-serif;
+}
+/* .sign-in {
+  background-color: blue;
+  border: solid transparent;
+  color: white;
+  padding: 0.2em 0.5em;
+  border-radius: 5px;
+} */
+
+.no-auth {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+button {
+  background-color: rgb(41, 41, 255);
+  border: solid transparent;
+  color: white;
+  padding: 0.7em 0.5em;
+  border-radius: 3px;
+  margin: 1em 0;
+  cursor: pointer;
+}
+
+button img {
+  max-width: 20px;
+}
+
+button:active {
+  transition: scale(0.9);
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.container form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.container form input {
+  border: dotted 2px rgb(202, 202, 202);
+  border-radius: 3px;
+  padding: 0.6em 0.5em;
+  margin: 0.4em 0;
+}
+
+.container form input:focus {
+  outline: none;
+}

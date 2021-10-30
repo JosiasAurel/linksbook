@@ -48,12 +48,12 @@ def verify_token(token: str, owner: str) -> str:
     except jwt.ExpiredSignatureError:
         return "Invalid"
 
-def name_from_token(token: str, owner: str) -> any:
+def name_email_from_token(token: str, owner: str) -> any:
     verification = verify_token(token, owner)
     if verification == "Valid":
         data = jwt.decode(token, "SECRET", algorithms=["HS256"])
         # print(f" NAME FROM TOKEN {data}")
-        return {"status": "Success", "userName": data.get("name")}
+        return {"status": "Success", "userName": data.get("name"), "userEmail": data.get("email")}
     
     return {"status": "Failed"}
 

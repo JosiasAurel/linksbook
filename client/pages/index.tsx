@@ -1,5 +1,7 @@
-import React, { FunctionComponent, useState, useEffect } from "react";
+import React, { FunctionComponent, useState, useEffect, useContext, FormEvent } from "react";
+import { AuthCtx } from "../contexts/auth";
 import { useQuery } from "@apollo/client";
+
 
 import Header from "../components/Header";
 import Search from "../components/Search";
@@ -17,21 +19,72 @@ import styles from "../styles/index.module.css";
 import toast from "react-hot-toast";
 import { Loading, Button, Tooltip, Spacer } from '@nextui-org/react';
 
-import { Modal, Button as GButton, Collapse } from "@geist-ui/react";
-import { Home } from "@geist-ui/react-icons";
+import { Modal, Button as GButton, Divider, Tree } from "@geist-ui/react";
+import { Home, Image } from "@geist-ui/react-icons";
 
 // import graphql actions
 import { FETCH_ALL } from "../graphql/actions";
 
 import { truncateStr } from "../utils/string";
 
+const API_SERVICE: string = process.env.NEXT_PUBLIC_API_SERVICE;
+
 const HomePage: FunctionComponent = (): JSX.Element => {
+
+    /* The user and theme contexts */
+    const theme = useContext(AuthCtx);
+    console.log("Theme Ctx");
+    console.log(theme);
+    /* ... */
 
     /* link card edit button action handle */
     const [editLinkModal, setEditLinkModal] = useState<boolean>(false);
     /* edit link modal form fields props */
     const [currentLink, setCurrentLink] = useState<string>("");
     /* edit link modal form fields props - end */
+    /* Settings modal */
+    const [showSettings, setShowSettings] = useState<boolean>(false);
+    const [uploadBgFile, setUploadBgFile] = useState<any>();
+    const [fileType, setFileType] = useState<string>("");
+
+    function handleFileChange(event: any, handler: Function): void {
+        // console.log(event.target.files[0]);
+        setFileType(event.target.files[0].type.split("/")[1]);
+
+        /* const fileReader = new FileReader();
+
+        fileReader.addEventListener("load", event_ => {
+            // console.log(event_.target.result);
+            handler(event_.target.result);
+        });
+        fileReader.readAsArrayBuffer(event.target.files[0]); */
+
+        handler(event.target.files[0]);
+    }
+
+    async function handleUploadBgImage(event: FormEvent): Promise<void> {
+        event.preventDefault();
+
+        const authToken: string | undefined = localStorage.getItem("token") ?? undefined;
+
+        const formData = new FormData();
+        let file = new Blob([uploadBgFile]);
+        // file = uploadBgFile;
+
+        formData.append(`filename`, file);
+
+        const res = await fetch(`${API_SERVICE}/upload-image`, {
+            method: "POST",
+            headers: {
+                "Authorization": `Bearer ${authToken}`
+            },
+            body: formData
+        });
+
+        const data = await res.json();
+        console.log(data);
+    }
+    /* End Settings modal */
 
     const [inFolder, setInFolder] = useState<boolean>(false);
     const [whichFolder, setWhichFolder] = useState<string>("");
@@ -211,11 +264,15 @@ const HomePage: FunctionComponent = (): JSX.Element => {
     }
 
     return (
-        <div className={styles.dashboardPage}>
-            <Header />
+        <div /* style={{ backgroundColor: "#0d1117" }} */ className={styles.dashboardPage}>
+            <Header
+                toggleSettings={() => setShowSettings(!showSettings)}
+            />
             <div className={styles.dashboardSections}>
                 <section style={showPopPage ? { display: "none" } : { display: "block" }} className={styles.foldersSection}>
-                    <Search searchAction={(q: string) => handleSearch(q)} />
+                    <div style={{ margin: "0.2em 0", display: "flex", justifyContent: "center", alignItems: "center" }}>
+                        <Search searchAction={(q: string) => handleSearch(q)} />
+                    </div>
                     <div className={styles.center}>
                         <Tooltip position="right" trigger="click" text={<CreateToolTipBody />}>
                             <Button>
@@ -224,21 +281,24 @@ const HomePage: FunctionComponent = (): JSX.Element => {
                         </Tooltip>
                     </div>
                     <div className={styles.folders}>
-                        {data.user.collections.map((folder, idx) => {
-                            if ((folder.parent).match(/NONE/)) {
-                                return (
-                                    <Folder
-                                        label={folder.name}
-                                        index={idx}
-                                        id={folder.id}
-                                        folder={folder}
-                                        /* thirdPartyAction={(links, folderId) => setToDisplayLinks(links, folder.id)} */
-                                        getUpdatedData={data => getRefreshedData(data)}
-                                        setLinks={(links, fId) => setToDisplayLinks(links, fId)}
-                                    />
-                                )
-                            } else { return "" }
-                        })}
+                        <Tree>
+                            {data.user.collections.map((folder, idx) => {
+                                if ((folder.parent).match(/NONE/)) {
+                                    return (
+                                        <Folder
+                                            key={folder.id}
+                                            label={folder.name}
+                                            index={idx}
+                                            id={folder.id}
+                                            folder={folder}
+                                            /* thirdPartyAction={(links, folderId) => setToDisplayLinks(links, folder.id)} */
+                                            getUpdatedData={data => getRefreshedData(data)}
+                                            setLinks={(links, fId) => setToDisplayLinks(links, fId)}
+                                        />
+                                    )
+                                } else { return "" }
+                            })}
+                        </Tree>
 
                         {/* */}
                     </div>
@@ -318,6 +378,38 @@ const HomePage: FunctionComponent = (): JSX.Element => {
                     Cancel
                 </Modal.Action>
             </Modal>
+            {/* End Edit Links Modal */}
+
+            {/* Settings Modal */}
+            <Modal visible={showSettings} onClose={() => setShowSettings(false)}>
+                <Modal.Title>
+                    Settings
+                </Modal.Title>
+                <Modal.Content>
+                    <div>
+                        Some stuff here...
+                    </div>
+                    <Divider />
+                    <h3>Choose a Background Image</h3>
+                    <div>
+
+                    </div>
+                    <Divider />
+                    <h3>Upload Custom Background Image</h3>
+                    <div>
+                        <form onSubmit={e => handleUploadBgImage(e)} className={styles.uploadBgForm} /* action={`${API_SERVICE}/upload-image`} */ /* encType="multipart/form-data" method="post" */>
+                            <input onChange={e => handleFileChange(e, setUploadBgFile)} type="file" name="bgImg" id="bgImg" accept="image/png, image/jpeg" />
+                            <div className={styles.imageDec}>
+                                <Image />
+                            </div>
+                            <GButton type="success" auto width={"20%"} htmlType="submit">
+                                Save
+                            </GButton>
+                        </form>
+                    </div>
+                </Modal.Content>
+            </Modal>
+            {/* End settings modal */}
 
             {/* End Modals */}
         </div >
