@@ -23,7 +23,8 @@ const User: React.FC<UserButtonProps> = ({ name, toggleSettings }): JSX.Element 
             },
             body: JSON.stringify({ action: "LogOut" })
         });
-
+        // remove auth token
+        localStorage.removeItem("token");
     }
     return (
         <>
