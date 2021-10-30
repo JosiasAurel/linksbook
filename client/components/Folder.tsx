@@ -2,8 +2,8 @@ import React, { useState } from "react";
 
 import styles from "../styles/components.module.css";
 
-import { Input, Button as GButton } from "@geist-ui/react";
-import { Menu } from "@geist-ui/react-icons";
+import { Input, Button as GButton, Tree } from "@geist-ui/react";
+import { MoreHorizontal } from "@geist-ui/react-icons";
 import { Tooltip } from "@nextui-org/react";
 import { useDrop } from "react-dnd";
 import { ItemTypes } from "../utils/constants";
@@ -119,7 +119,32 @@ const Folder: React.FC<FolderProps> = ({ id, label, getUpdatedData, index, folde
         setLinks(folder.links, folder.parent === "NONE" ? folder.id : folder.parent);
     }
 
-
+    // possible structure
+    return (
+        <div style={{ display: "flex", padding: "0.5em 0", alignItems: "center" }} ref={drop} onClick={() => handleFolderClick()}>
+            <Tree.Folder name={label} style={{ width: "100%", backgroundColor: isOver ? "aquamarine" : "transparent" }}>
+                {folder?.children?.map((f: any, i: any) => {
+                    return (
+                        <Folder
+                            key={i}
+                            label={f.name}
+                            index={i}
+                            id={f.id}
+                            folder={f}
+                            /* thirdPartyAction={(links: any, fId: any) => thirdPartyAction(links, fId)} */
+                            getUpdatedData={(data: any) => getUpdatedData(data)}
+                            setLinks={(links: any, fId: any) => setLinks(links, f.id)}
+                        />
+                    )
+                })}
+            </Tree.Folder>
+            <Tooltip text={<FolerOptions collectionId={id} getUpdatedData={getUpdatedData} />} trigger="click" position="right">
+                <div>
+                    <MoreHorizontal />
+                </div>
+            </Tooltip>
+        </div >
+    )
     return (
         <details style={{ width: "80%", backgroundColor: "transparent" }}>
             <summary style={{ width: "100%" }}>
@@ -127,7 +152,7 @@ const Folder: React.FC<FolderProps> = ({ id, label, getUpdatedData, index, folde
                     <h2 onClick={() => handleFolderClick()}> {label} </h2>
                     <Tooltip text={<FolerOptions collectionId={id} getUpdatedData={getUpdatedData} />} trigger="click" position="right">
                         <div>
-                            <Menu />
+                            <MoreHorizontal />
                         </div>
                     </Tooltip>
                 </div>

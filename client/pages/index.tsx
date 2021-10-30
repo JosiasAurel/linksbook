@@ -19,7 +19,7 @@ import styles from "../styles/index.module.css";
 import toast from "react-hot-toast";
 import { Loading, Button, Tooltip, Spacer } from '@nextui-org/react';
 
-import { Modal, Button as GButton, Divider } from "@geist-ui/react";
+import { Modal, Button as GButton, Divider, Tree } from "@geist-ui/react";
 import { Home, Image } from "@geist-ui/react-icons";
 
 // import graphql actions
@@ -279,22 +279,24 @@ const HomePage: FunctionComponent = (): JSX.Element => {
                         </Tooltip>
                     </div>
                     <div className={styles.folders}>
-                        {data.user.collections.map((folder, idx) => {
-                            if ((folder.parent).match(/NONE/)) {
-                                return (
-                                    <Folder
-                                        key={folder.id}
-                                        label={folder.name}
-                                        index={idx}
-                                        id={folder.id}
-                                        folder={folder}
-                                        /* thirdPartyAction={(links, folderId) => setToDisplayLinks(links, folder.id)} */
-                                        getUpdatedData={data => getRefreshedData(data)}
-                                        setLinks={(links, fId) => setToDisplayLinks(links, fId)}
-                                    />
-                                )
-                            } else { return "" }
-                        })}
+                        <Tree>
+                            {data.user.collections.map((folder, idx) => {
+                                if ((folder.parent).match(/NONE/)) {
+                                    return (
+                                        <Folder
+                                            key={folder.id}
+                                            label={folder.name}
+                                            index={idx}
+                                            id={folder.id}
+                                            folder={folder}
+                                            /* thirdPartyAction={(links, folderId) => setToDisplayLinks(links, folder.id)} */
+                                            getUpdatedData={data => getRefreshedData(data)}
+                                            setLinks={(links, fId) => setToDisplayLinks(links, fId)}
+                                        />
+                                    )
+                                } else { return "" }
+                            })}
+                        </Tree>
 
                         {/* */}
                     </div>
