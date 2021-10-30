@@ -1,4 +1,5 @@
-import React, { FunctionComponent, useState, useEffect } from "react";
+import React, { FunctionComponent, useState, useEffect, useContext } from "react";
+import { AuthCtx } from "../contexts/auth";
 import { useQuery } from "@apollo/client";
 
 import Header from "../components/Header";
@@ -17,21 +18,32 @@ import styles from "../styles/index.module.css";
 import toast from "react-hot-toast";
 import { Loading, Button, Tooltip, Spacer } from '@nextui-org/react';
 
-import { Modal, Button as GButton, Collapse } from "@geist-ui/react";
-import { Home } from "@geist-ui/react-icons";
+import { Modal, Button as GButton, Divider } from "@geist-ui/react";
+import { Home, Image } from "@geist-ui/react-icons";
 
 // import graphql actions
 import { FETCH_ALL } from "../graphql/actions";
 
 import { truncateStr } from "../utils/string";
 
+const API_SERVICE: string = process.env.NEXT_PUBLIC_API_SERVICE;
+
 const HomePage: FunctionComponent = (): JSX.Element => {
+
+    /* The user and theme contexts */
+    const theme = useContext(AuthCtx);
+    console.log("Theme Ctx");
+    console.log(theme);
+    /* ... */
 
     /* link card edit button action handle */
     const [editLinkModal, setEditLinkModal] = useState<boolean>(false);
     /* edit link modal form fields props */
     const [currentLink, setCurrentLink] = useState<string>("");
     /* edit link modal form fields props - end */
+    /* Settings modal */
+    const [showSettings, setShowSettings] = useState<boolean>(false);
+    /* End Settings modal */
 
     const [inFolder, setInFolder] = useState<boolean>(false);
     const [whichFolder, setWhichFolder] = useState<string>("");
@@ -211,8 +223,10 @@ const HomePage: FunctionComponent = (): JSX.Element => {
     }
 
     return (
-        <div className={styles.dashboardPage}>
-            <Header />
+        <div /* style={{ backgroundColor: "#0d1117" }} */ className={styles.dashboardPage}>
+            <Header
+                toggleSettings={() => setShowSettings(!showSettings)}
+            />
             <div className={styles.dashboardSections}>
                 <section style={showPopPage ? { display: "none" } : { display: "block" }} className={styles.foldersSection}>
                     <Search searchAction={(q: string) => handleSearch(q)} />
@@ -228,6 +242,7 @@ const HomePage: FunctionComponent = (): JSX.Element => {
                             if ((folder.parent).match(/NONE/)) {
                                 return (
                                     <Folder
+                                        key={folder.id}
                                         label={folder.name}
                                         index={idx}
                                         id={folder.id}
@@ -318,6 +333,38 @@ const HomePage: FunctionComponent = (): JSX.Element => {
                     Cancel
                 </Modal.Action>
             </Modal>
+            {/* End Edit Links Modal */}
+
+            {/* Settings Modal */}
+            <Modal visible={showSettings} onClose={() => setShowSettings(false)}>
+                <Modal.Title>
+                    Settings
+                </Modal.Title>
+                <Modal.Content>
+                    <div>
+                        Some stuff here...
+                    </div>
+                    <Divider />
+                    <h3>Choose a Background Image</h3>
+                    <div>
+
+                    </div>
+                    <Divider />
+                    <h3>Upload Custom Background Image</h3>
+                    <div>
+                        <form className={styles.uploadBgForm} action={`${API_SERVICE}/upload-image`} encType="multipart/form-data" method="post">
+                            <input type="file" name="bgImg" id="bgImg" placeholder="" />
+                            <div className={styles.imageDec}>
+                                <Image />
+                            </div>
+                            <GButton type="success" auto width={"20%"} htmlType="submit">
+                                Save
+                            </GButton>
+                        </form>
+                    </div>
+                </Modal.Content>
+            </Modal>
+            {/* End settings modal */}
 
             {/* End Modals */}
         </div >
