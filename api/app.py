@@ -19,6 +19,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
 deta = Deta("a0ojq87u_xgq3dQQLkXj3YBsJ5iJKZ5MTAtYmCLoF")
 
 # create assets storage
@@ -67,3 +68,9 @@ async def _handle_upload_image(req: Request, file: UploadFile = File(...)):
         return result
     except:
         return "Failed"
+
+
+@app.post("/create-reminder")
+def _handle_create_reminder():
+
+    return
