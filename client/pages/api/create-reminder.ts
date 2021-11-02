@@ -15,7 +15,7 @@ export default function(req: NextApiRequest, res: NextApiResponse) {
             remindersDB.put({
                 date,
                 recipients,
-                owner
+                owner // user email
             });
 
             res.send({status: "Success"});
@@ -23,10 +23,4 @@ export default function(req: NextApiRequest, res: NextApiResponse) {
             res.send({status: "Failed"});
         }
     }
-    res.send(`
-    ${new Date()}
-    ${new Date().toUTCString()}
-    ${new Date().toISOString()}
-    ${new Date().getTimezoneOffset()}
-    `);
 }
