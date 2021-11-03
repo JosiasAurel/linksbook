@@ -2,7 +2,7 @@ import React from "react";
 
 import { useMutation } from "@apollo/client";
 
-import { Textarea, Divider } from "@geist-ui/react";
+import { Textarea } from "@geist-ui/react";
 import { Button, Spacer } from "@nextui-org/react";
 
 import DateTimePicker from "react-datetime-picker/dist/entry.nostyle";
