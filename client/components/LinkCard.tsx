@@ -73,15 +73,16 @@ const LinkCard: React.FC<LinkCardProps> = ({ name, url, tags, viewAction, editAc
     const [reminderModal, setReminderModal] = React.useState<boolean>();
 
     // set reminder form
-    const [remindCalendar, setRemindCalendar] = React.useState(new Date());
+    const [remindDate, setRemindDate] = React.useState(new Date());
+
+    function prepareUTCRemindDate(): void {
+        const gmtTime = remindDate.toUTCString();
+    }
+
     const [recipients, setRecipients] = React.useState<Array<string>>([]);
     function recipientsHandler(v: any): void {
         setRecipients(v.split(" "));
     }
-
-    React.useEffect(() => {
-        console.log(remindCalendar);
-    }, [remindCalendar]);
 
     function copyToClipboard(): void {
         // copy the link to the clipboard
@@ -178,8 +179,8 @@ const LinkCard: React.FC<LinkCardProps> = ({ name, url, tags, viewAction, editAc
                     <h2>Create New Reminder</h2>
                     <div>
                         <DateTimePicker
-                            value={remindCalendar}
-                            onChange={setRemindCalendar}
+                            value={remindDate}
+                            onChange={setRemindDate}
                         />
                         <Spacer />
                         <Textarea value={recipients.join(" ")} onChange={e => handleChange(e, recipientsHandler)} width="100%" h="100px" placeholder="Enter receivers email separated by spaces. Leave blank so you're email is used" />
