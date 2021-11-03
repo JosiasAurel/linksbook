@@ -1,6 +1,7 @@
 
 import { MailService } from "@sendgrid/mail";
 import { Deta, app } from "deta";
+import { GetResponse } from "deta/dist/types/types/base/response";
 import { ObjectType } from "deta/dist/types/types/basic";
 import { config } from "dotenv";
 
@@ -13,10 +14,10 @@ const reminders = deta.Base("reminders");
 
 const sgMail = new MailService();
 
-sgMail.setApiKey(process.env.SENDGRID_MAIL_API_KEY);
+sgMail.setApiKey(process.env.SENDGRID_MAIL_API_KEY as string);
 
 
-app.lib.cron(async event => {
+app.lib.cron(async (_event: any) => {
     const currentDate = new Date().toUTCString();
 
     const allReminders = await (await reminders.fetch()).items;
@@ -27,7 +28,7 @@ app.lib.cron(async event => {
         if (currentDate >= remindDate) {
             const bookmark: any = await resolveReminderBookmark(reminder.bookmark as string);
 
-            reminder.recipients?.forEach(recipient => {
+            reminder.recipients?.forEach((recipient: string) => {
                 sendReminder(recipient, bookmark.annotation, bookmark.url);
             });
         }
@@ -45,7 +46,7 @@ Get a reminder
 
 
 
-async function resolveReminderBookmark(linkId: string): Promise<ObjectType> {
+async function resolveReminderBookmark(linkId: string): Promise<ObjectType|GetResponse> {
     const result = await reminders.get(linkId);
     return result;
 }
