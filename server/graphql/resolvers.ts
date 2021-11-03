@@ -158,13 +158,17 @@ const resolvers = {
     },
     Link: {
         reminders: async (parent: any, args: any): Promise<any> => {
-            const reminders: Array<any> = [];
+                const reminders: Array<any> = [];
 
-            parent.reminders.forEach(async (reminder: any) => {
-                reminders.push(await getReminder(reminder));
-            });
+                if (parent.reminders) {
+                    parent.reminders.forEach(async (reminder: any) => {
+                    reminders.push(await getReminder(reminder));
+                });
 
-            return reminders;
+                return reminders;
+            } else {
+                return [];
+            }
         }
     },
     Collection: {
