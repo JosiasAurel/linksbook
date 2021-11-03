@@ -18,9 +18,10 @@ import toast from "react-hot-toast";
 interface CreateReminderProps {
     bookmarkId: string
     getUpdatedData?: Function
+    finishAction?: Function
 }
 
-const CreateReminder: React.FC<CreateReminderProps> = ({ bookmarkId, getUpdatedData }): JSX.Element => {
+const CreateReminder: React.FC<CreateReminderProps> = ({ bookmarkId, getUpdatedData, finishAction }): JSX.Element => {
 
     const [createReminder, { data, loading, error }] = useMutation(CREATE_REMINDER);
 
@@ -46,6 +47,8 @@ const CreateReminder: React.FC<CreateReminderProps> = ({ bookmarkId, getUpdatedD
             error: "Something went wrong",
             loading: "Saving Reminder"
         }).then(_ => getUpdatedData(data));
+
+        finishAction(false);
     }
 
     return (

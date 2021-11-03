@@ -184,7 +184,7 @@ const LinkCard: React.FC<LinkCardProps> = ({ name, url, tags, viewAction, editAc
                     </div>
                     <Divider />
 
-                    <CreateReminder bookmarkId={id} getUpdatedData={getUpdatedData} />
+                    <CreateReminder finishAction={v => setReminderModal(v)} bookmarkId={id} getUpdatedData={getUpdatedData} />
                 </Modal.Content>
             </Modal>
         </div >
