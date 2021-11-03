@@ -12,7 +12,12 @@ const FETCH_ALL = gql`
                 note,
                 id,
                 url,
-                reminders
+                reminders {
+                        id
+                        remindDate
+                        recipients
+                        bookmark
+                    }
             },
             collections {
                 id,
@@ -24,7 +29,12 @@ const FETCH_ALL = gql`
                     note,
                     id,
                     url,
-                    reminders
+                    reminders {
+                        id
+                        remindDate
+                        recipients
+                        bookmark
+                    }
                 },
                 children {
                     id,
@@ -36,7 +46,12 @@ const FETCH_ALL = gql`
                         note,
                         id,
                         url,
-                        reminders
+                        reminders {
+                            id
+                            remindDate
+                            recipients
+                            bookmark
+                        }
                     }
                 }
             }
