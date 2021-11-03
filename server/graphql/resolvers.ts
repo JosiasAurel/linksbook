@@ -140,9 +140,14 @@ const resolvers = {
             return {status: result};
         },
         createReminder: async (parent: any, args: any, ctx: any): Promise<any> => {
-            const result = createReminder(ctx.key, args.linkId, args.remindDate, args.recipients);
+            const result = await createReminder(ctx.key, args.linkId, args.remindDate, args.recipients);
 
             return {status: result}; 
+        },
+        updateReminder: async (parent: any, args: any): Promise<any> => {
+            const result = await updateReminder(args.reminderId, args.remindDate, args.recipients);
+
+            return {status: result};
         }
     },
     Collection: {
