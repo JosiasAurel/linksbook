@@ -2,15 +2,12 @@ import React from "react";
 
 import styles from "../styles/components.module.css";
 import Tag from "./Tag";
+import CreateReminder from "./createReminder";
 
 import toast from "react-hot-toast";
-import { Modal, Textarea, Divider } from "@geist-ui/react";
+import { Modal, } from "@geist-ui/react";
 import { Copy, Edit2, ArrowUpRight, Trash2, Eye, Clock } from "@geist-ui/react-icons";
 import { Button, Spacer } from "@nextui-org/react";
-import DateTimePicker from "react-datetime-picker/dist/entry.nostyle";
-import "react-datetime-picker/dist/DateTimePicker.css";
-import "react-calendar/dist/Calendar.css";
-import "react-clock/dist/Clock.css";
 
 import { truncateStr, handleChange } from "../utils/string";
 
@@ -69,20 +66,7 @@ const LinkCard: React.FC<LinkCardProps> = ({ name, url, tags, viewAction, editAc
         return;
     }
 
-    /* Reminder settings */
     const [reminderModal, setReminderModal] = React.useState<boolean>();
-
-    // set reminder form
-    const [remindDate, setRemindDate] = React.useState(new Date());
-
-    function prepareUTCRemindDate(): void {
-        const gmtTime = remindDate.toUTCString();
-    }
-
-    const [recipients, setRecipients] = React.useState<Array<string>>([]);
-    function recipientsHandler(v: any): void {
-        setRecipients(v.split(" "));
-    }
 
     function copyToClipboard(): void {
         // copy the link to the clipboard
@@ -170,25 +154,7 @@ const LinkCard: React.FC<LinkCardProps> = ({ name, url, tags, viewAction, editAc
                 </Modal.Title>
 
                 <Modal.Content>
-                    <h2>Existing Reminders</h2>
-                    <div>
-                        reminders...
-                    </div>
-                    <Divider />
-
-                    <h2>Create New Reminder</h2>
-                    <div>
-                        <DateTimePicker
-                            value={remindDate}
-                            onChange={setRemindDate}
-                        />
-                        <Spacer />
-                        <Textarea value={recipients.join(" ")} onChange={e => handleChange(e, recipientsHandler)} width="100%" h="100px" placeholder="Enter receivers email separated by spaces. Leave blank so you're email is used" />
-                        <Spacer />
-                        <Button>
-                            Save Reminder
-                        </Button>
-                    </div>
+                    <CreateReminder bookmarkId={id} />
                 </Modal.Content>
             </Modal>
         </div >
