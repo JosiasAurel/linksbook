@@ -19,6 +19,7 @@ type Link {
     owner: String!
     id: ID!
     createdAt: String!
+    reminders: [String]
 }
 
 type Collection {
@@ -31,6 +32,13 @@ type Collection {
     owner: String!
 }
 
+type Reminder {
+    id: ID!
+    remindDate: String!
+    recipients: [String]!
+    bookmark: String!
+    owner: String!
+}
 
 type ActionStatus {
     status: String
@@ -52,6 +60,7 @@ type Mutation {
     deleteCollection(collectionId: String!): ActionStatus
     dropLink(collectionId: String!, linkId: String!): ActionStatus
     removeLink(collectionId: String!, linkId: String!): ActionStatus
+    createReminder(linkId: String!, remindDate: String!, recipients: [String]): ActionStatus
 }
 `;
 
