@@ -27,7 +27,8 @@ import {
 import {
     createReminder,
     updateReminder,
-    deleteReminder
+    deleteReminder,
+    getReminder
 } from "../models/reminder";
 
 import { API_SERVICE_URL } from "../config";
@@ -153,6 +154,17 @@ const resolvers = {
             const result = await deleteReminder(args.reminderId);
 
             return {status: result};
+        }
+    },
+    Link: {
+        reminders: async (parent: any, args: any): Promise<any> => {
+            const reminders: Array<any> = [];
+
+            parent.reminders.forEach(async (reminder: any) => {
+                reminders.push(await getReminder(reminder));
+            });
+
+            return reminders;
         }
     },
     Collection: {

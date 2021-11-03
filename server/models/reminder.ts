@@ -19,6 +19,16 @@ async function createReminder(owner: string, bookmark: string, remindDate: strin
     }
 }
 
+async function getReminder(reminderId: string): Promise<any> {
+    try {
+        const result = await db.get(reminderId);
+        return result;
+
+    } catch(e) {
+        return false;
+    }
+}
+
 async function updateReminder(reminderId: string, remindDate: string, recipients: Array<string>): Promise<any> {
     try {
 
@@ -47,5 +57,6 @@ async function deleteReminder(reminderId: string): Promise<any> {
 export {
     createReminder,
     updateReminder,
-    deleteReminder
+    deleteReminder,
+    getReminder
 }
