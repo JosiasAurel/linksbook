@@ -20,8 +20,17 @@ import {
     createLink, 
     updateLink, 
     deleteLink, 
-    searchLinks 
+    searchLinks,
+    removeReminderFromLink
 } from "../models/links";
+
+// import reminder handlers
+import {
+    createReminder,
+    updateReminder,
+    deleteReminder,
+    getReminder
+} from "../models/reminder";
 
 import { API_SERVICE_URL } from "../config";
 
@@ -131,6 +140,41 @@ const resolvers = {
             const result = await removeLink(args.collectionId, args.linkId);
 
             return {status: result};
+        },
+        createReminder: async (parent: any, args: any, ctx: any): Promise<any> => {
+            const result = await createReminder(ctx.key, args.linkId, args.remindDate, args.recipients);
+
+            return {status: result}; 
+        },
+        updateReminder: async (parent: any, args: any): Promise<any> => {
+            const result = await updateReminder(args.reminderId, args.remindDate, args.recipients);
+
+            return {status: result};
+        },
+        deleteReminder: async (parent: any, args: any): Promise<any> => {
+            
+            let result = await deleteReminder(args.reminderId);
+
+            result = await removeReminderFromLink(args.linkId, args.reminderId);
+
+            return {status: result};
+        }
+    },
+    Link: {
+        reminders: async (parent: any, args: any): Promise<any> => {
+            const reminders: Array<any> = [];
+            // console.log(parent);
+
+            for (let i = 0; i < parent.reminders.length; i++) {
+                let resolvedReminder = await getReminder(parent.reminders[i]);
+                // console.log(resolvedReminder);
+                resolvedReminder.id = resolvedReminder.key;
+                reminders.push(resolvedReminder);
+            }
+
+            // console.log(reminders);
+
+            return reminders;
         }
     },
     Collection: {

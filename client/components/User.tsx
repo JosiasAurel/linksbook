@@ -30,7 +30,7 @@ const User: React.FC<UserButtonProps> = ({ name, toggleSettings }): JSX.Element 
         <>
             <div className={styles.userPrefMenu}>
                 <div>
-                    <ColorToggle action={_ => undefined} />
+                    <ColorToggle />
                 </div>
                 <div onClick={e_ => toggleSettings()}>
                     <Settings />

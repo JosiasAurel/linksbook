@@ -1,5 +1,5 @@
 
-from fastapi import FastAPI, Request, File, UploadFile
+from fastapi import FastAPI, Request, File, UploadFile, Form
 from fastapi.middleware.cors import CORSMiddleware
 from bs4 import BeautifulSoup
 import requests
@@ -18,6 +18,7 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
 
 deta = Deta("a0ojq87u_xgq3dQQLkXj3YBsJ5iJKZ5MTAtYmCLoF")
 
@@ -49,11 +50,13 @@ def _get_page_title(req: Request, url: str) -> any:
 
 @app.post("/upload-image")
 async def _handle_upload_image(req: Request, file: UploadFile = File(...)):
+    print(file.filename)
     req_headers = req.headers
     auth_token = req_headers["Authorization"].split(" ")[1]
+    print(auth_token)
 
     user_email = jwt.decode(auth_token, "SECRET", algorithms=[
-                            "HS256"]).get("email")
+        "HS256"]).get("email")
 
     user = get_user_id_by_email(user_email)
 
@@ -65,3 +68,9 @@ async def _handle_upload_image(req: Request, file: UploadFile = File(...)):
         return result
     except:
         return "Failed"
+
+
+@app.post("/create-reminder")
+def _handle_create_reminder():
+
+    return

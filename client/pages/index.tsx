@@ -314,6 +314,7 @@ const HomePage: FunctionComponent = (): JSX.Element => {
                             return (
                                 <LinkCard
                                     key={link.id}
+                                    linkData={link}
                                     id={link.id}
                                     name={link.annotation}
                                     url={link.url}
