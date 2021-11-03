@@ -17,9 +17,10 @@ import toast from "react-hot-toast";
 
 interface CreateReminderProps {
     bookmarkId: string
+    getUpdatedData?: Function
 }
 
-const CreateReminder: React.FC<CreateReminderProps> = ({ bookmarkId }): JSX.Element => {
+const CreateReminder: React.FC<CreateReminderProps> = ({ bookmarkId, getUpdatedData }): JSX.Element => {
 
     const [createReminder, { data, loading, error }] = useMutation(CREATE_REMINDER);
 
@@ -36,7 +37,7 @@ const CreateReminder: React.FC<CreateReminderProps> = ({ bookmarkId }): JSX.Elem
 
     const [recipients, setRecipients] = React.useState<Array<string>>([]);
     function recipientsHandler(v: any): void {
-        setRecipients(v.split(" "));
+        setRecipients(v.trim().split(" "));
     }
 
     function handleCreateReminder(): void {
@@ -44,7 +45,7 @@ const CreateReminder: React.FC<CreateReminderProps> = ({ bookmarkId }): JSX.Elem
             success: "Reminder Added",
             error: "Something went wrong",
             loading: "Saving Reminder"
-        });
+        }).then(_ => getUpdatedData(data));
     }
 
     return (

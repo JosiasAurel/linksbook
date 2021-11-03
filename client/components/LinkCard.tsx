@@ -34,6 +34,8 @@ interface LinkCardProps {
 
 const LinkCard: React.FC<LinkCardProps> = ({ name, url, tags, viewAction, editAction, id, getUpdatedData, inFolder, folderId, tagSearchHandler, linkData }): JSX.Element => {
 
+    console.log(linkData);
+
     const [{ isDragging }, drag] = useDrag(() => ({
         type: ItemTypes.BOOKMARK,
         item: { id },
@@ -42,7 +44,7 @@ const LinkCard: React.FC<LinkCardProps> = ({ name, url, tags, viewAction, editAc
         })
     }));
 
-    console.log(isDragging);
+    // console.log(isDragging);
     // modal state
     const [confimDeleteModal, setConfirmDeleteModal] = React.useState<boolean>(false);
 
@@ -150,11 +152,11 @@ const LinkCard: React.FC<LinkCardProps> = ({ name, url, tags, viewAction, editAc
 
             <Modal visible={reminderModal} onClose={() => setReminderModal(false)}>
                 <Modal.Title>
-                    Reminders
+                    Existing Reminders
                 </Modal.Title>
 
                 <Modal.Content>
-                    <CreateReminder bookmarkId={id} />
+                    <CreateReminder bookmarkId={id} getUpdatedData={getUpdatedData} />
                 </Modal.Content>
             </Modal>
         </div >
