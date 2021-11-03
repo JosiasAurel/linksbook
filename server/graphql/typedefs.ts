@@ -61,6 +61,8 @@ type Mutation {
     dropLink(collectionId: String!, linkId: String!): ActionStatus
     removeLink(collectionId: String!, linkId: String!): ActionStatus
     createReminder(linkId: String!, remindDate: String!, recipients: [String]): ActionStatus
+    updateReminder(reminderId: String!, remindDate: String!, recipients: [String]!): ActionStatus
+    deleteReminder(reminderId: String!): ActionStatus
 }
 `;
 
