@@ -23,6 +23,13 @@ import {
     searchLinks 
 } from "../models/links";
 
+// import reminder handlers
+import {
+    createReminder,
+    updateReminder,
+    deleteReminder
+} from "../models/reminder";
+
 import { API_SERVICE_URL } from "../config";
 
 const resolvers = {
@@ -132,8 +139,10 @@ const resolvers = {
 
             return {status: result};
         },
-        createReminder: async (parent: any, args: any): Promise<any> => {
-            return "Any";
+        createReminder: async (parent: any, args: any, ctx: any): Promise<any> => {
+            const result = createReminder(ctx.key, args.linkId, args.remindDate, args.recipients);
+
+            return {status: result}; 
         }
     },
     Collection: {
