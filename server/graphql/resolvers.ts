@@ -148,6 +148,11 @@ const resolvers = {
             const result = await updateReminder(args.reminderId, args.remindDate, args.recipients);
 
             return {status: result};
+        },
+        deleteReminder: async (parent: any, args: any): Promise<any> => {
+            const result = await deleteReminder(args.reminderId);
+
+            return {status: result};
         }
     },
     Collection: {
