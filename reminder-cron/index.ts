@@ -5,8 +5,12 @@ import { GetResponse } from "deta/dist/types/types/base/response";
 import { ObjectType } from "deta/dist/types/types/basic";
 import { config } from "dotenv";
 
+import express, { Application, Request, Response } from "express";
+
 // config env vars
 config();
+
+const expressApp: Application = express();
 
 const deta = Deta(process.env.a0ojq87u_xgq3dQQLkXj3YBsJ5iJKZ5MTAtYmCLoF);
 
@@ -67,3 +71,12 @@ async function sendReminder(recipient: string, bookmarkAnnotation: string, bookm
         return "Failed";
     }
 }
+
+expressApp.get("/", (req: Request, res: Response) => {
+    res.send("Hello World from the deta cron");
+});
+
+
+expressApp.listen(4000, () => console.log("Working on port 5000"));
+
+module.exports = expressApp;
