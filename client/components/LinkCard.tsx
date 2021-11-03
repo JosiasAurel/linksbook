@@ -3,9 +3,10 @@ import React from "react";
 import styles from "../styles/components.module.css";
 import Tag from "./Tag";
 import CreateReminder from "./createReminder";
+import Reminder from "./Reminder";
 
 import toast from "react-hot-toast";
-import { Modal, } from "@geist-ui/react";
+import { Modal, Divider } from "@geist-ui/react";
 import { Copy, Edit2, ArrowUpRight, Trash2, Eye, Clock } from "@geist-ui/react-icons";
 import { Button, Spacer } from "@nextui-org/react";
 
@@ -152,10 +153,35 @@ const LinkCard: React.FC<LinkCardProps> = ({ name, url, tags, viewAction, editAc
 
             <Modal visible={reminderModal} onClose={() => setReminderModal(false)}>
                 <Modal.Title>
-                    Existing Reminders
+                    Reminders
                 </Modal.Title>
 
                 <Modal.Content>
+                    <h2>Existing Reminders</h2>
+                    <div>
+                        {linkData.reminders.length > 0 ?
+
+                            <div style={{ display: "flex", flexDirection: "row" }}>
+                                {
+                                    linkData.reminders.map(reminder => {
+                                        return (
+                                            <>
+                                                <Reminder
+                                                    key={reminder.id}
+                                                    recipients={reminder.recipients}
+                                                    date={reminder.remindDate}
+                                                    id={reminder.id}
+                                                />
+                                                <Spacer />
+                                            </>
+                                        )
+                                    })
+                                }
+                            </div>
+                            : "None"}
+                    </div>
+                    <Divider />
+
                     <CreateReminder bookmarkId={id} getUpdatedData={getUpdatedData} />
                 </Modal.Content>
             </Modal>
