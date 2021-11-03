@@ -21,6 +21,7 @@ interface LinkCardProps {
     readonly url: string
     readonly tags: Array<string>
     readonly id: string
+    readonly linkData: any
     readonly inFolder: boolean
     readonly folderId?: string
     viewAction?: Function
@@ -30,7 +31,7 @@ interface LinkCardProps {
 }
 
 
-const LinkCard: React.FC<LinkCardProps> = ({ name, url, tags, viewAction, editAction, id, getUpdatedData, inFolder, folderId, tagSearchHandler }): JSX.Element => {
+const LinkCard: React.FC<LinkCardProps> = ({ name, url, tags, viewAction, editAction, id, getUpdatedData, inFolder, folderId, tagSearchHandler, linkData }): JSX.Element => {
 
     const [{ isDragging }, drag] = useDrag(() => ({
         type: ItemTypes.BOOKMARK,
@@ -168,10 +169,16 @@ const LinkCard: React.FC<LinkCardProps> = ({ name, url, tags, viewAction, editAc
                             Yes, Delete
                         </Button>
                         <Spacer />
-                        <Button onClick={() => removeBookmarkFromFolder()} color="error">
-                            Delete from this folder only
-                        </Button>
-                        <Spacer />
+
+                        {inFolder ?
+                            <>
+                                <Button onClick={() => removeBookmarkFromFolder()} color="error">
+                                    Delete from this folder only
+                                </Button>
+                                <Spacer />
+                            </>
+                            : ""}
+
                         <Button onClick={() => setConfirmDeleteModal(false)} color="success">
                             No, Cancel
                         </Button>

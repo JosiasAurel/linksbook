@@ -134,7 +134,7 @@ const UPDATE_REMINDER = gql`
 `;
 
 const DELETE_REMINDER = gql`
-    mutation deleteReminder(reminderId: String!) {
+    mutation deleteReminder($reminderId: String!) {
         deleteReminder(reminderId: $reminderId) {
             status
         }
