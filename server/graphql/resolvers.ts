@@ -131,6 +131,9 @@ const resolvers = {
             const result = await removeLink(args.collectionId, args.linkId);
 
             return {status: result};
+        },
+        createReminder: async (parent: any, args: any): Promise<any> => {
+            return "Any";
         }
     },
     Collection: {

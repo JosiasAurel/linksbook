@@ -18,3 +18,16 @@ async function createReminder(owner: string, bookmark: string, remindDate: strin
         return "Failed";
     }
 }
+
+async function updateReminder(reminderId: string, remindDate: string, recipients: Array<string>): Promise<any> {
+    try {
+        db.update({
+            remindDate,
+            recipients
+        }, reminderId);
+
+        return "Failed";
+    } catch(e) {
+        return "Failed";
+    }
+}
