@@ -5,7 +5,7 @@ import Tag from "./Tag";
 
 import toast from "react-hot-toast";
 import { Modal } from "@geist-ui/react";
-import { Copy, Edit2, ArrowUpRight, Trash2, Eye } from "@geist-ui/react-icons";
+import { Copy, Edit2, ArrowUpRight, Trash2, Eye, Clock } from "@geist-ui/react-icons";
 import { Button, Spacer } from "@nextui-org/react";
 
 import { truncateStr } from "../utils/string";
@@ -63,6 +63,12 @@ const LinkCard: React.FC<LinkCardProps> = ({ name, url, tags, viewAction, editAc
             { loading: "Deleting...", success: "LinkDeleted", error: "Could not delete link" });
         return;
     }
+
+    /* Reminder settings */
+    const [reminderModal, setReminderModal] = React.useState<boolean>();
+
+    // set reminder form
+    const [recipients, setRecipients] = React.useState<Array<string>>();
 
     function copyToClipboard(): void {
         // copy the link to the clipboard
@@ -130,6 +136,12 @@ const LinkCard: React.FC<LinkCardProps> = ({ name, url, tags, viewAction, editAc
                 </div>
                 {/* End Edit Icon */}
 
+                {/* Reminder Icon */}
+                <div onClick={_ => setReminderModal(true)}>
+                    <Clock />
+                </div>
+                {/* End Reminder Icon */}
+
                 {/* Delete Icon */}
                 <div onClick={() => setConfirmDeleteModal(true)} className={styles.deleteIcon}>
                     {/* <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -164,6 +176,16 @@ const LinkCard: React.FC<LinkCardProps> = ({ name, url, tags, viewAction, editAc
                             No, Cancel
                         </Button>
                     </div>
+                </Modal.Content>
+            </Modal>
+
+            <Modal visible={reminderModal} onClose={() => setReminderModal(false)}>
+                <Modal.Title>
+                    Reminders
+                </Modal.Title>
+
+                <Modal.Content>
+                    Whatever
                 </Modal.Content>
             </Modal>
         </div >
