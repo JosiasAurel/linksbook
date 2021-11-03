@@ -88,7 +88,8 @@ async function createLink(annotation: string, url: string, tags: Array<string>, 
             annotation,
             url,
             tags, 
-            owner
+            owner,
+            reminders: []
         }, generateModelKey());
 
         if (returnData) {
