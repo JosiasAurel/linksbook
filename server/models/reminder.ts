@@ -2,18 +2,27 @@
 import { deta, generateModelKey } from "./index";
 
 const db = deta.Base("reminders");
+const bookmarks = deta.Base("links");
 
 async function createReminder(owner: string, bookmark: string, remindDate: string, recipients: Array<string>): Promise<any> {
 
     try {
-        db.put({
+        const newReminder: any = await db.put({
             remindDate,
             bookmark,
             recipients,
             owner
         }, generateModelKey());
 
-        return "Success";
+        try {
+            await bookmarks.update({
+                reminders: db.util.append(newReminder.key)
+            }, bookmark);
+
+            return "Success";
+        } catch(e) {
+            return "Failed";
+        }
     } catch(e: any) {
         return "Failed";
     }
