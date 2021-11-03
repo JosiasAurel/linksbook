@@ -171,6 +171,8 @@ const LinkCard: React.FC<LinkCardProps> = ({ name, url, tags, viewAction, editAc
                                                     recipients={reminder.recipients}
                                                     date={reminder.remindDate}
                                                     id={reminder.id}
+                                                    getUpdatedData={d => getUpdatedData(d)}
+                                                    linkId={id}
                                                 />
                                                 <Spacer />
                                             </>
