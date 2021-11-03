@@ -37,11 +37,11 @@ const CreateReminder: React.FC<CreateReminderProps> = ({ bookmarkId, getUpdatedD
 
     const [recipients, setRecipients] = React.useState<Array<string>>([]);
     function recipientsHandler(v: any): void {
-        setRecipients(v.trim().split(" "));
+        setRecipients(v.split(" "));
     }
 
     function handleCreateReminder(): void {
-        toast.promise(createReminder({ variables: { linkId: bookmarkId, remindDate: prepareUTCRemindDate(), recipients }, refetchQueries: [{ query: FETCH_ALL }] }), {
+        toast.promise(createReminder({ variables: { linkId: bookmarkId, remindDate: prepareUTCRemindDate(), recipients: recipients.join(" ").trim().split(" ") }, refetchQueries: [{ query: FETCH_ALL }] }), {
             success: "Reminder Added",
             error: "Something went wrong",
             loading: "Saving Reminder"
@@ -50,11 +50,6 @@ const CreateReminder: React.FC<CreateReminderProps> = ({ bookmarkId, getUpdatedD
 
     return (
         <>
-            <h2>Existing Reminders</h2>
-            <div>
-                reminders...
-            </div>
-            <Divider />
 
             <h2>Create New Reminder</h2>
             <div>
