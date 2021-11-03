@@ -21,13 +21,31 @@ async function createReminder(owner: string, bookmark: string, remindDate: strin
 
 async function updateReminder(reminderId: string, remindDate: string, recipients: Array<string>): Promise<any> {
     try {
-        db.update({
-            remindDate,
-            recipients
-        }, reminderId);
 
-        return "Failed";
+        try {
+            const oldReminder: any = await db.get(reminderId);
+
+            db.update({
+                remindDate: remindDate.trim() !== "" ? remindDate : oldReminder.remindDate,
+                recipients: recipients.length !== 0 ? recipients : oldReminder.recipients
+            }, reminderId);
+
+        return "Success";
+        } catch(e) {
+            return "Failed";
+        }
     } catch(e) {
         return "Failed";
     }
+}
+
+async function deleteReminder(reminderId: string): Promise<any> {
+    db.delete(reminderId);
+    return "Done";
+}
+
+export {
+    createReminder,
+    updateReminder,
+    deleteReminder
 }
