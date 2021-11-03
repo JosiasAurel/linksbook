@@ -158,17 +158,19 @@ const resolvers = {
     },
     Link: {
         reminders: async (parent: any, args: any): Promise<any> => {
-                const reminders: Array<any> = [];
+            const reminders: Array<any> = [];
+            // console.log(parent);
 
-                if (parent.reminders) {
-                    parent.reminders.forEach(async (reminder: any) => {
-                    reminders.push(await getReminder(reminder));
-                });
-
-                return reminders;
-            } else {
-                return [];
+            for (let i = 0; i < parent.reminders.length; i++) {
+                let resolvedReminder = await getReminder(parent.reminders[i]);
+                // console.log(resolvedReminder);
+                resolvedReminder.id = resolvedReminder.key;
+                reminders.push(resolvedReminder);
             }
+
+            console.log(reminders);
+
+            return reminders;
         }
     },
     Collection: {

@@ -19,7 +19,7 @@ type Link {
     owner: String!
     id: ID!
     createdAt: String!
-    reminders: [String]
+    reminders: [Reminder]
 }
 
 type Collection {
