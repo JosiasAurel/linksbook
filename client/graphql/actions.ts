@@ -11,7 +11,8 @@ const FETCH_ALL = gql`
                 tags,
                 note,
                 id,
-                url
+                url,
+                reminders
             },
             collections {
                 id,
@@ -22,7 +23,8 @@ const FETCH_ALL = gql`
                     tags,
                     note,
                     id,
-                    url
+                    url,
+                    reminders
                 },
                 children {
                     id,
@@ -33,7 +35,8 @@ const FETCH_ALL = gql`
                         tags,
                         note,
                         id,
-                        url
+                        url,
+                        reminders
                     }
                 }
             }
@@ -114,6 +117,30 @@ const DELETE_COLLECTION = gql`
     }
 `;
 
+const CREATE_REMINDER = gql`
+    mutation createReminder($linkId: String!, $remindDate: String!, $recipients: [String]) {
+        createReminder(linkId: $linkId, remindDate: $remindDate, recipients: $recipients) {
+            status
+        }
+    }
+`;
+
+const UPDATE_REMINDER = gql`
+    mutation updateReminder($reminderId: String!, $remindDate: String!, $recipients: [String]!) {
+        updateReminder(reminderId: $reminderId, remindDate: $remindDate, recipients: $recipients) {
+            status
+        }
+    }
+`;
+
+const DELETE_REMINDER = gql`
+    mutation deleteReminder(reminderId: String!) {
+        deleteReminder(reminderId: $reminderId) {
+            status
+        }
+    }
+`;
+
 export { 
     FETCH_ALL, 
     CREATE_LINK, 
@@ -124,5 +151,8 @@ export {
     REMOVE_LINK_FROM_COLLECTION,
     RENAME_COLLECTION,
     ADD_COLLECTION_CHILD,
-    DELETE_COLLECTION
+    DELETE_COLLECTION,
+    CREATE_REMINDER,
+    UPDATE_REMINDER,
+    DELETE_REMINDER
 };
