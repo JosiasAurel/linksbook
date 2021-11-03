@@ -20,7 +20,8 @@ import {
     createLink, 
     updateLink, 
     deleteLink, 
-    searchLinks 
+    searchLinks,
+    removeReminderFromLink
 } from "../models/links";
 
 // import reminder handlers
@@ -151,7 +152,10 @@ const resolvers = {
             return {status: result};
         },
         deleteReminder: async (parent: any, args: any): Promise<any> => {
-            const result = await deleteReminder(args.reminderId);
+            
+            let result = await deleteReminder(args.reminderId);
+
+            result = await removeReminderFromLink(args.linkId, args.reminderId);
 
             return {status: result};
         }
@@ -168,7 +172,7 @@ const resolvers = {
                 reminders.push(resolvedReminder);
             }
 
-            console.log(reminders);
+            // console.log(reminders);
 
             return reminders;
         }

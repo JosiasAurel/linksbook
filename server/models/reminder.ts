@@ -44,7 +44,7 @@ async function updateReminder(reminderId: string, remindDate: string, recipients
         try {
             const oldReminder: any = await db.get(reminderId);
 
-            db.update({
+            await db.update({
                 remindDate: remindDate.trim() !== "" ? remindDate : oldReminder.remindDate,
                 recipients: recipients.length !== 0 ? recipients : oldReminder.recipients
             }, reminderId);
@@ -59,7 +59,7 @@ async function updateReminder(reminderId: string, remindDate: string, recipients
 }
 
 async function deleteReminder(reminderId: string): Promise<any> {
-    db.delete(reminderId);
+    await db.delete(reminderId);
     return "Done";
 }
 

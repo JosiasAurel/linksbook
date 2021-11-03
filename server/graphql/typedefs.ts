@@ -62,7 +62,7 @@ type Mutation {
     removeLink(collectionId: String!, linkId: String!): ActionStatus
     createReminder(linkId: String!, remindDate: String!, recipients: [String]): ActionStatus
     updateReminder(reminderId: String!, remindDate: String!, recipients: [String]!): ActionStatus
-    deleteReminder(reminderId: String!): ActionStatus
+    deleteReminder(linkId: String!, reminderId: String!): ActionStatus
 }
 `;
 

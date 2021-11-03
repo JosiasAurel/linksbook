@@ -122,6 +122,20 @@ async function deleteLink(linkId: string): Promise<string> {
     return "Done";
 }
 
+async function removeReminderFromLink(linkId: string, reminder: string): Promise<string> {
+    try {
+        const thisLink: any = await db.get(linkId);
+
+        await db.update({
+            reminders: thisLink?.reminders?.filter((rem: string) => rem !== reminder)
+        }, linkId);
+        return "Success";
+    } catch(e) {
+        return "Failed";
+    }
+
+}
+
 async function linkWithUrl(url: string, owner: string): Promise<boolean> {
     const link = await (await db.fetch({ url, owner })).items;
     if (link.length === 0) {
@@ -138,5 +152,6 @@ export {
     getLink, 
     getAllLinks, 
     searchLinks, 
-    linkWithUrl 
+    linkWithUrl,
+    removeReminderFromLink
 };
