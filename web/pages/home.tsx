@@ -1,6 +1,7 @@
 import React from "react";
 
 import Header from "../components/Header";
+import Footer from "../components/Footer";
 import { Button, Card, Badge } from "@geist-ui/react";
 
 import styles from "../styles/index.module.css";
@@ -82,6 +83,8 @@ const HomePage: React.FC = (): JSX.Element => {
                 </div>
 
             </div>
+
+            <Footer />
         </div>
     )
 }
