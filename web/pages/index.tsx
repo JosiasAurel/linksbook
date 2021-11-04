@@ -3,7 +3,7 @@ import React from "react";
 import NImage from "next/image";
 import Link from "next/link";
 
-import { Image } from "@geist-ui/react";
+import { Image, Button } from "@geist-ui/react";
 
 import styles from "../styles/index.module.css";
 
@@ -33,9 +33,15 @@ const HomePage: React.FC = (): JSX.Element => {
                     <h1>
                         Launching Soon 🙌
                     </h1>
+
+                    <a href="https://vajoozk816i.typeform.com/to/IAJVR4D6">
+                        <Button type="success-light">
+                            Request Access
+                        </Button>
+                    </a>
                 </div>
-                <Image.Browser url="app.linksbook.me">
-                    <Image width="50vw" height="60vh" src="/heroPage.png" />
+                <Image.Browser url="app.linksbook.me" invert>
+                    <Image width="600px" height="290px" src="/heroPage.PNG" />
                 </Image.Browser>
             </main>
         </div>
