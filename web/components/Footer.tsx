@@ -1,5 +1,6 @@
 import React from "react";
 
+import { Twitter, Mail } from "@geist-ui/react-icons";
 import styles from "../styles/components.module.css";
 
 const Footer: React.FC = (): JSX.Element => {
@@ -23,14 +24,16 @@ const Footer: React.FC = (): JSX.Element => {
                         </g>
                     </svg>
                 </div>
-                <h1>LinksBook</h1>
             </div>
 
             <div className={styles.footerLinks}>
-                <a href="https://josiasw.dev">Josias Aurel</a>
-                <a href="https://josiasw.dev">Open Source</a>
-                <a href="https://josiasw.dev">Twitter</a>
-                <a href="#">Indie Hackers</a>
+                <a href="https://twitter.com/linksbookhq">
+                    <Twitter />
+                </a>
+                <a href="mailto: linksbook00@gmail.com">
+                    <Mail />
+                </a>
+                <a href="https://josiasw.dev">Maker</a>
             </div>
         </footer>
     )
