@@ -1,9 +1,5 @@
 .header {
   height: 80px;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
-  align-items: center;
   position: fixed;
   top: 0;
   width: 100vw;
@@ -35,6 +31,15 @@
 .header a:hover {
   color: white;
   background-color: rgb(89, 0, 255);
+}
+
+@media screen and (min-width: 1000px) {
+  .header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+  }
 }
 
 .footer {
