@@ -117,7 +117,7 @@
   align-items: center;
 }
 
-@media screen and (min-width: 1000px) {
+@media screen and (min-width: 1200px) {
   .copy {
     max-width: 40vw;
     text-align: center;
@@ -127,6 +127,19 @@
     grid-template-columns: repeat(3, 1fr);
     grid-gap: 5em;
   }
+  .pricings {
+    display: flex;
+    flex-direction: row;
+  }
+}
+
+@media screen and (min-width: 1000px) {
+  .features {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 5em;
+  }
+
   .pricings {
     display: flex;
     flex-direction: row;

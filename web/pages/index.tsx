@@ -48,7 +48,7 @@ const HomePage: React.FC = (): JSX.Element => {
                 </p>
             </div>
 
-            <div id="#features" className={styles.featuresContainer}>
+            <div id="features" className={styles.featuresContainer}>
                 <div className={styles.features}>
                     <Feature
                         title={"Nested Collections"}
@@ -99,14 +99,14 @@ const HomePage: React.FC = (): JSX.Element => {
                 <h1 style={{ textAlign: "center" }}>Start free. Upgrade when needed.</h1>
             </div>
 
-            <div className={styles.pricings}>
+            <div id="pricing" className={styles.pricings}>
                 <Pricing
                     price={0}
                     features={["Unlimited Bookmarks", "Unlimited Collections", "Tags & Search", "Drag-n-Drop", "Notes"]}
                     callToAction="Sign Up"
                 />
                 <Pricing
-                    price={0}
+                    price={25}
                     features={["All in Free plan", "Nested Collections", "Reminders", "Custom Themes", "Shareable collections"]}
                     callToAction="Buy Now"
                 />
