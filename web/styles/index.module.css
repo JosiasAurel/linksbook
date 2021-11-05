@@ -110,6 +110,13 @@
   text-align: center;
 }
 
+.pricings {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
 @media screen and (min-width: 1000px) {
   .copy {
     max-width: 40vw;
@@ -119,5 +126,9 @@
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-gap: 5em;
+  }
+  .pricings {
+    display: flex;
+    flex-direction: row;
   }
 }

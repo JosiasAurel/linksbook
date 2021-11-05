@@ -3,10 +3,8 @@ import React from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import Feature from "../components/Feature";
-import { Button, Card, Badge } from "@geist-ui/react";
-
-import Image from "next/image";
-
+import Pricing from "../components/Pricing";
+import { Button } from "@geist-ui/react";
 import styles from "../styles/index.module.css";
 
 const HomePage: React.FC = (): JSX.Element => {
@@ -95,6 +93,19 @@ const HomePage: React.FC = (): JSX.Element => {
                         badge="pro, wip"
                     />
                 </div>
+            </div>
+
+            <div className={styles.pricings}>
+                <Pricing
+                    price={0}
+                    features={["Unlimited Bookmarks", "Unlimited Collections", "Tags & Search", "Drag-n-Drop", "Notes"]}
+                    callToAction="Sign Up"
+                />
+                <Pricing
+                    price={0}
+                    features={["All in Free plan", "Nested Collections", "Reminders", "Custom Themes", "Shareable collections"]}
+                    callToAction="Buy Now"
+                />
             </div>
 
             <Footer />
