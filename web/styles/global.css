@@ -1,9 +1,10 @@
 @import url("https://fonts.googleapis.com/css2?family=Caveat&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Caveat&family=Nunito&display=swap");
 
 * {
   box-sizing: border-box;
   transition: all 0.2s ease-in-out;
-  font-family: sans-serif;
+  font-family: "Nunito", sans-serif;
 }
 body {
   margin: 0 auto;
