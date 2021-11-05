@@ -1,11 +1,17 @@
 import React from "react";
 
 import { Button, Spacer, Badge, useTheme } from "@geist-ui/react";
-import { CheckInCircleFill } from '@geist-ui/react-icons'
+import { CheckCircle } from '@geist-ui/react-icons'
 
 import styles from "../styles/components.module.css";
 
-const Pricing: React.FC = (): JSX.Element => {
+interface PricingProps {
+    price: number;
+    features: Array<string>;
+    callToAction: string;
+}
+
+const Pricing: React.FC<PricingProps> = ({ price, features, callToAction }): JSX.Element => {
 
     const theme = useTheme();
 
@@ -13,32 +19,41 @@ const Pricing: React.FC = (): JSX.Element => {
         <div style={{ margin: "1em" }}>
             <Badge.Anchor>
                 <Badge style={{ backgroundColor: theme.palette.alert }}>
-                    Free
+                    {price === 0 ? "Free" : "Pro"}
                 </Badge>
+
                 <div className={styles.pricing}>
                     <div className={styles.pricing__header}>
                         <h1>
-                            <h1> $0 </h1> /month
+                            <h1> ${price} </h1> /month
                         </h1>
                     </div>
                     <div className={styles.pricing__body}>
                         <ul className={styles.pricingFeatures}>
-                            <li> <CheckInCircleFill /> Unlimited Bookmarks </li>
-                            <li> <CheckInCircleFill /> Unlimited Collections </li>
-                            <li> <CheckInCircleFill /> Tag, Search, Notes </li>
-                            <li> <CheckInCircleFill /> Unlimited Collections </li>
+                            {features.map((feature, index) => {
+                                return (
+                                    <>
+                                        <li style={{ display: "flex", flexDirection: "row" }} key={index} >
+                                            <CheckCircle />
+                                            <Spacer />
+                                            {feature}
+                                        </li>
+                                        <Spacer />
+                                    </>
+                                )
+                            })}
                         </ul>
                     </div>
                     <Spacer />
-                    <Spacer />
-                    <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+
+                    <div style={{ position: "relative", top: "-25px" }}>
                         <Button type="success">
-                            Sign Up
+                            {callToAction}
                         </Button>
                     </div>
                 </div>
-            </Badge.Anchor>
-        </div>
+            </Badge.Anchor >
+        </div >
     )
 }
 
