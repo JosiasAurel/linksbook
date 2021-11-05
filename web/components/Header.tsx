@@ -1,5 +1,6 @@
 import React from "react";
 
+import { Button } from "@geist-ui/react";
 import styles from "../styles/components.module.css";
 
 const Header: React.FC = (): JSX.Element => {
@@ -21,7 +22,16 @@ const Header: React.FC = (): JSX.Element => {
                         <path d="M3403 566 c-40 -18 -66 -68 -67 -126 0 -108 100 -171 198 -125 45 22 66 62 66 129 0 50 -4 61 -33 92 -28 31 -41 37 -83 40 -29 3 -62 -1 -81 -10z m95 -58 c17 -17 15 -123 -3 -138 -37 -31 -79 18 -71 83 7 60 43 86 74 55z" style={{ fill: "rgb(95, 117, 255)" }} />
                     </g>
                 </svg>
+                <h1>LinksBook</h1>
             </div>
+            <nav>
+                <a href="#features">Features</a>
+                <a href="#pricing">Pricing</a>
+                <a href="#credits">Credits</a>
+            </nav>
+            <Button type="success">
+                Take Action
+            </Button>
         </header>
     )
 }
