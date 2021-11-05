@@ -13,12 +13,12 @@ interface FeatureProps {
     icon: string;
     badge: string;
 }
-const Feature: React.FC<FeatureProps> = ({ title, content, icon, badge }) => {
+const Feature: React.FC<FeatureProps> = ({ title, content, icon, badge }): JSX.Element => {
     return (
         <div className={styles.feature}>
             <div className={styles.featureHead}>
                 <Image src={`/${icon}`} width={30} height={30} />
-                <Badge>
+                <Badge type="success">
                     {badge}
                 </Badge>
             </div>
