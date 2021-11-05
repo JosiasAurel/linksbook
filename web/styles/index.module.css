@@ -66,6 +66,7 @@
 /* home */
 
 .homePage {
+  overflow: hidden;
 }
 
 .homePage .main {
@@ -98,4 +99,25 @@
 
 .featureShower p {
   max-width: 70%;
+}
+
+.arrowAndCalltoAction {
+  margin-top: 2em;
+  position: relative;
+  top: -150px;
+  left: 50vw;
+}
+
+.arrowAndCalltoAction svg {
+  transform: rotate(-30deg);
+  position: relative;
+  top: -90px;
+}
+
+.arrowAndCalltoAction p {
+  font-family: "Caveat", cursive;
+  font-size: 1.4em;
+  transform: rotate(1deg);
+  position: relative;
+  top: -1em;
 }
