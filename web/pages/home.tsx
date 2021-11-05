@@ -2,6 +2,7 @@ import React from "react";
 
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import Feature from "../components/Feature";
 import { Button, Card, Badge } from "@geist-ui/react";
 
 import Image from "next/image";
@@ -49,22 +50,51 @@ const HomePage: React.FC = (): JSX.Element => {
                 </p>
             </div>
 
-            <div className={styles.features}>
-                <div className={styles.feature}>
-                    <div className={styles.featureHead}>
-                        <Image src="/folder.png" width={30} height={30} />
-                        <Badge>
-                            free
-                        </Badge>
-                    </div>
-                    <h2 style={{ textAlign: "center" }}>Nested Collections</h2>
+            <div className={styles.featuresContainer}>
+                <div className={styles.features}>
+                    <Feature
+                        title={"Nested Collections"}
+                        content="Organize your bookmarks in a way that makes sense to you.
+                Linksbook enables you to organise your bookmarks into collections and nest them however you want."
+                        icon={"foler.png"}
+                        badge="free, wip"
+                    />
 
-                    <p>
-                        Organize your bookmarks in a way that makes sense to you.
-                        Linksbook enables you to organise your bookmarks into collections and nest them however you want.
-                    </p>
+                    <Feature
+                        title={"Reminders"}
+                        content="Add reminders to bookmarks so you won't forget to consult them. Send reminders to more than one person."
+                        icon={"reminder.png"}
+                        badge="pro, wip"
+                    />
+
+                    <Feature
+                        title={"Tag & Search"}
+                        content="Annotate, tag and search. Linksbook allows you to search through your entire set of bookmarks easily via tags and text search."
+                        icon={"search.png"}
+                        badge="free"
+                    />
+
+                    <Feature
+                        title={"Drag-n-Drop, Notes"}
+                        content="Freely throw bookmarks into various folders via drag-n-drop. Add short notes on bookmarks so you won't have to revisit links evertime."
+                        icon={"notebook.png"}
+                        badge="free"
+                    />
+
+                    <Feature
+                        title={"Custom Themes"}
+                        content="Dark, Light, Blurred Gradients anc Custom background images. Make your workspace fit your style."
+                        icon={"theme.png"}
+                        badge="pro, wip"
+                    />
+
+                    <Feature
+                        title={"Share Collections"}
+                        content="Share your carefully created collections with the public easily."
+                        icon={"share.png"}
+                        badge="pro, wip"
+                    />
                 </div>
-
             </div>
 
             <Footer />
