@@ -7,9 +7,15 @@ import Pricing from "../components/Pricing";
 import { Button } from "@geist-ui/react";
 import styles from "../styles/index.module.css";
 
+import Head from "next/head";
+
 const HomePage: React.FC = (): JSX.Element => {
     return (
         <div className={styles.homePage}>
+            <Head>
+                <title>LinksBook</title>
+                <link rel="shortcut icon" href="LinksBook.svg" type="image/x-icon" />
+            </Head>
             <Header />
 
             <div className={styles.main}>
