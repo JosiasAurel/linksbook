@@ -4,6 +4,8 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { Button, Card, Badge } from "@geist-ui/react";
 
+import Image from "next/image";
+
 import styles from "../styles/index.module.css";
 
 const HomePage: React.FC = (): JSX.Element => {
@@ -13,12 +15,14 @@ const HomePage: React.FC = (): JSX.Element => {
 
             <div className={styles.main}>
                 <main>
-                    <h2 style={{ textAlign: "center", fontSize: "180%" }}>
-                        <h2>
-                            The all-in-one bookmark manager you waited for.
+                    <h2 style={{ display: "flex", flexDirection: "column", justifyContent: "space-evenly", alignItems: "center", textAlign: "center", fontSize: "180%" }}>
+                        <h2 className={styles.copy}>
+                            Power up your browsing experience by using linksbook.
                         </h2>
-                        <p style={{ color: "gray", fontSize: "0.5em" }}>
-                            Linksbook helps you manage all of your browser bookmarks in a clean feature full environment.</p>
+                        <p style={{ color: "gray", fontSize: "0.5em", maxWidth: "80%" }}>
+                            Save time and clicks by powering your workflow with linksbook.
+                            A clean and feature full app to give you the best bookmarking experience.
+                        </p>
                     </h2>
                     <div style={{ margin: "5em", display: "flex", justifyContent: "center", alignItems: "center" }}>
                         <Button type="success-light" shadow>
@@ -34,66 +38,37 @@ const HomePage: React.FC = (): JSX.Element => {
                 </main>
             </div>
 
-            <div style={{ margin: "2em", display: "flex", justifyContent: "space-evenly", alignItems: "center", flexDirection: "column" }}>
-                <div className={styles.featureShower}>
-                    <Card shadow>
-                        Everything you need in a unified and beautiful and customizable UI
-                    </Card>
-                    <div>
-                        <p>
-                            LinksBook UI is made simple and beautiful to ensure best user experience. Enjoy dark mode and custom backgrounds images.
-                        </p>
-                    </div>
-                </div>
+            <div className={styles.description}>
+                <p>
+                    Linksbook is an app to help you manage all of your browser bookmarks in one place.
+                    <br />
+                </p>
+                <p style={{ fontSize: "0.6em", color: "gray" }}>
+                    Linksbook aim at providing a better bookmark management experience by serving
+                    a customizable environment with a number of useful features.
+                </p>
+            </div>
 
-                <div className={styles.featureShower}>
-                    <Card type="cyan" shadow>
-                        Set up reminders so you do not forget to check your saved bookmarks
-                    </Card>
-                    <div>
-
-                        <p>
-                            <Badge>
-                                Pro
-                            </Badge>
-                            <br />
-                            Never forget to actually read your links by setting one-time reminders.
-                            <br />
-                            Get emailed to read your bookmarks.
-                        </p>
+            <div className={styles.features}>
+                <div className={styles.feature}>
+                    <div className={styles.featureHead}>
+                        <Image src="/folder.png" width={30} height={30} />
+                        <Badge>
+                            free
+                        </Badge>
                     </div>
-                </div>
+                    <h2 style={{ textAlign: "center" }}>Nested Collections</h2>
 
-                <div className={styles.featureShower}>
-                    <Card type="purple" shadow>
-                        Add notes on bookmarks to save you time in the future
-                    </Card>
-                    <div>
-                        <p>
-                            Add summary notes about a bookmark content straight into the app.
-                        </p>
-                    </div>
-                </div>
-
-                <div className={styles.featureShower}>
-                    <Card shadow>
-                        Tag, Search & Nested Collections
-                    </Card>
-                    <div>
-                        <p>
-                            <Badge>
-                                Pro
-                            </Badge>
-                            <br />
-                            Create complex folder structures, tag your bookmarks and live search for easy navigation.
-                        </p>
-                    </div>
+                    <p>
+                        Organize your bookmarks in a way that makes sense to you.
+                        Linksbook enables you to organise your bookmarks into collections and nest them however you want.
+                    </p>
                 </div>
 
             </div>
 
             <Footer />
-        </div>
+        </div >
     )
 }
 
