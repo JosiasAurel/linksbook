@@ -54,7 +54,7 @@ async function sendReminder(recipient: string, bookmarkAnnotation: string, bookm
         return "Failed";
     }
 }
-
+/* 
 app.lib.cron(async (event: any) => {
     const currentDate = new Date().toUTCString();
 
@@ -79,8 +79,9 @@ app.lib.cron(async (event: any) => {
             });
         }
     });
-});
-/* 
+}); */
+
+
 const expressApp: Application = express();
 
 expressApp.get("/api/", async (req: Request, res: Response) => {
@@ -114,6 +115,6 @@ expressApp.get("/api/", async (req: Request, res: Response) => {
 
 module.exports = expressApp;
 
-expressApp.listen(4000, () => console.log("Listening on 4000")); */
+expressApp.listen(4000, () => console.log("Listening on 4000"));
 
-module.exports = app;
+// module.exports = app;
