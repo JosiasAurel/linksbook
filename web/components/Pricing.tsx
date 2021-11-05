@@ -47,9 +47,11 @@ const Pricing: React.FC<PricingProps> = ({ price, features, callToAction }): JSX
                     <Spacer />
 
                     <div style={{ position: "relative", top: "-25px" }}>
-                        <Button type="success">
-                            {callToAction}
-                        </Button>
+                        <a href="https://vajoozk816i.typeform.com/to/IAJVR4D6" target="_blank">
+                            <Button type="success">
+                                {callToAction}
+                            </Button>
+                        </a>
                     </div>
                 </div>
             </Badge.Anchor >

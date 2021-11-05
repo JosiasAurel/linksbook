@@ -24,9 +24,11 @@ const HomePage: React.FC = (): JSX.Element => {
                         </p>
                     </h2>
                     <div style={{ margin: "5em", display: "flex", justifyContent: "center", alignItems: "center" }}>
-                        <Button type="success-light" shadow>
-                            Get Started
-                        </Button>
+                        <a href="https://vajoozk816i.typeform.com/to/IAJVR4D6" target="_blank">
+                            <Button type="success-light" shadow>
+                                Get Started
+                            </Button>
+                        </a>
                     </div>
                     <div className={styles.arrowAndCalltoAction}>
                         <p>Power-up my workflow</p>
