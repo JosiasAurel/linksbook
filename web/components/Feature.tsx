@@ -7,21 +7,28 @@ import { Badge } from "@geist-ui/react";
 
 import styles from "../styles/components.module.css";
 
-const Feature: React.FC = () => {
+interface FeatureProps {
+    title: string;
+    content: string;
+    icon: string;
+    badge: string;
+}
+const Feature: React.FC<FeatureProps> = ({ title, content, icon, badge }) => {
     return (
         <div className={styles.feature}>
             <div className={styles.featureHead}>
-                <Image src="/folder.png" width={30} height={30} />
+                <Image src={`/${icon}`} width={30} height={30} />
                 <Badge>
-                    free
+                    {badge}
                 </Badge>
             </div>
-            <h2 style={{ textAlign: "center" }}>Nested Collections</h2>
+            <h2 style={{ textAlign: "center" }}>{title}</h2>
 
             <p>
-                Organize your bookmarks in a way that makes sense to you.
-                Linksbook enables you to organise your bookmarks into collections and nest them however you want.
+                {content}
             </p>
         </div>
     )
 }
+
+export default Feature;
