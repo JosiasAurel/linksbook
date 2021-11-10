@@ -19,15 +19,15 @@ import styles from "../styles/index.module.css";
 import toast from "react-hot-toast";
 import { Loading, Button, Tooltip, Spacer } from '@nextui-org/react';
 
-import { Modal, Button as GButton, Divider, Tree } from "@geist-ui/react";
-import { Home, Image } from "@geist-ui/react-icons";
+import { Modal, Button as GButton, Divider, Tree, Display, Image } from "@geist-ui/react";
+import { Home } from "@geist-ui/react-icons";
 
 // import graphql actions
 import { FETCH_ALL } from "../graphql/actions";
 
 import { truncateStr } from "../utils/string";
+import { BgPresets } from "../utils/presets";
 
-const API_SERVICE: string = process.env.NEXT_PUBLIC_API_SERVICE;
 
 const HomePage: FunctionComponent = (): JSX.Element => {
 
@@ -352,22 +352,16 @@ const HomePage: FunctionComponent = (): JSX.Element => {
                     </div>
                     <Divider />
                     <h3>Choose a Background Image</h3>
-                    <div>
-
+                    <div className={styles.userMenuBgs}>
+                        {BgPresets.map(bg => {
+                            return (
+                                <Display shadow>
+                                    <Image src={bg} width="100px" height="70px" />
+                                </Display>
+                            )
+                        })}
                     </div>
                     <Divider />
-                    <h3>Upload Custom Background Image</h3>
-                    <div>
-                        <form className={styles.uploadBgForm} action={"api/addbg"} encType="multipart/form-data" method="post" >
-                            <input type="file" name="bgImg" id="bgImg" accept="image/png, image/jpeg" />
-                            <div className={styles.imageDec}>
-                                <Image />
-                            </div>
-                            <GButton type="success" auto width={"20%"} htmlType="submit">
-                                Save
-                            </GButton>
-                        </form>
-                    </div>
                 </Modal.Content>
             </Modal>
             {/* End settings modal */}

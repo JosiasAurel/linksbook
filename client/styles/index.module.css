@@ -249,3 +249,9 @@
   left: -66%;
   opacity: 0.5;
 }
+
+.userMenuBgs {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 1em;
+}
