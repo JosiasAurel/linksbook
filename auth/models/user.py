@@ -49,14 +49,12 @@ def get_user_id_by_email(email: str) -> str:
         return None
 
 
-def set_user_theme(email: str, themeType: str, theme: str, blur: bool):
+def set_user_theme(email: str, theme: str):
     user_id = get_user_id_by_email(email)
 
     try:
         usersdb.update({
-            "themeType": themeType,
-            "theme": theme,
-            "blur": blur
+           "theme": theme
         }, user_id)
         return "Success"
     except:
