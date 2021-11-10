@@ -24,9 +24,7 @@ import {
     Divider,
     Tree,
     Display,
-    Image,
-    Toggle,
-    Select
+    Image
 } from "@geist-ui/react";
 import { Home } from "@geist-ui/react-icons";
 
@@ -46,18 +44,17 @@ const HomePage: FunctionComponent = (): JSX.Element => {
     console.log(theme);
 
     /*  */
-    const [themeType, setThemeType] = useState<string>("");
     const [backgroundImage, setBackgroundImage] = useState<string>("");
-    const [blur, setBlur] = useState<boolean>(false);
 
     async function saveUserPref() {
         fetch(`${AUTH_SERVICE_URI}/set-theme`, {
             method: "POST",
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${localStorage.getItem("token")}`
             },
             body: JSON.stringify({
-                theme: theme.theme,
+                theme: backgroundImage
             })
         });
     }
@@ -374,17 +371,6 @@ const HomePage: FunctionComponent = (): JSX.Element => {
                     Settings
                 </Modal.Title>
                 <Modal.Content>
-                    <Select placeholder="Choose Theme Type">
-                        <Select.Option value="DARK">
-                            Dark Theme
-                        </Select.Option>
-                        <Select.Option value="LIGHT">
-                            Light Theme
-                        </Select.Option>
-                        <Select.Option value="IMAGE">
-                            Custom
-                        </Select.Option>
-                    </Select>
                     <Divider />
                     <h3>Choose a Background Image</h3>
                     <div className={styles.userMenuBgs}>
@@ -396,15 +382,7 @@ const HomePage: FunctionComponent = (): JSX.Element => {
                             )
                         })}
                     </div>
-                    <GButton>
-                        None
-                    </GButton>
                     <Divider />
-
-                    <div>
-                        <p>Blur Background</p>
-                        <Toggle onChange={e => setBlur(e.target.checked)} />
-                    </div>
                 </Modal.Content>
                 <Modal.Action passive onClick={() => setShowSettings(false)}>
                     Cancel
