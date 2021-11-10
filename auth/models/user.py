@@ -17,7 +17,8 @@ def create_user(name: str, email: str) -> T.Dict[str, str]:
         return {"status": "Failed", "type": "Email Exists"}
     else:
         try:
-            user = {"email": email, "name": name}
+            user = {"email": email, "name": name,
+                    "themeType": "COLOR", "theme": "#fff", "blur": False}
             usersdb.put(user, user_id)
             return {"status": "Success"}
         except:
