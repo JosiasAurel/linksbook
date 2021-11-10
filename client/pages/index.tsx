@@ -2,7 +2,6 @@ import React, { FunctionComponent, useState, useEffect, useContext, FormEvent } 
 import { AuthCtx } from "../contexts/auth";
 import { useQuery } from "@apollo/client";
 
-
 import Header from "../components/Header";
 import Search from "../components/Search";
 import LinkCard from "../components/LinkCard";
@@ -26,7 +25,7 @@ import { Home } from "@geist-ui/react-icons";
 import { FETCH_ALL } from "../graphql/actions";
 
 import { truncateStr } from "../utils/string";
-import { BgPresets } from "../utils/presets";
+import { presetBgs } from "../utils/presets";
 
 
 const HomePage: FunctionComponent = (): JSX.Element => {
@@ -353,7 +352,7 @@ const HomePage: FunctionComponent = (): JSX.Element => {
                     <Divider />
                     <h3>Choose a Background Image</h3>
                     <div className={styles.userMenuBgs}>
-                        {BgPresets.map(bg => {
+                        {presetBgs.map(bg => {
                             return (
                                 <Display shadow>
                                     <Image src={bg} width="100px" height="70px" />
