@@ -18,7 +18,16 @@ import styles from "../styles/index.module.css";
 import toast from "react-hot-toast";
 import { Loading, Button, Tooltip, Spacer } from '@nextui-org/react';
 
-import { Modal, Button as GButton, Divider, Tree, Display, Image } from "@geist-ui/react";
+import {
+    Modal,
+    Button as GButton,
+    Divider,
+    Tree,
+    Display,
+    Image,
+    Toggle,
+    Select
+} from "@geist-ui/react";
 import { Home } from "@geist-ui/react-icons";
 
 // import graphql actions
@@ -27,6 +36,7 @@ import { FETCH_ALL } from "../graphql/actions";
 import { truncateStr } from "../utils/string";
 import { presetBgs } from "../utils/presets";
 
+const AUTH_SERVICE_URI: string = process.env.NEXT_PUBLIC_AUTH_SERVICE;
 
 const HomePage: FunctionComponent = (): JSX.Element => {
 
@@ -34,6 +44,24 @@ const HomePage: FunctionComponent = (): JSX.Element => {
     const theme = useContext(AuthCtx);
     console.log("Theme Ctx");
     console.log(theme);
+
+    /*  */
+    const [themeType, setThemeType] = useState<string>("");
+    const [backgroundImage, setBackgroundImage] = useState<string>("");
+    const [blur, setBlur] = useState<boolean>(false);
+
+    async function saveUserPref() {
+        fetch(`${AUTH_SERVICE_URI}/set-theme`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                theme: theme.theme,
+            })
+        });
+    }
+    /*  */
     /* ... */
 
     /* link card edit button action handle */
@@ -346,22 +374,44 @@ const HomePage: FunctionComponent = (): JSX.Element => {
                     Settings
                 </Modal.Title>
                 <Modal.Content>
-                    <div>
-                        Some stuff here...
-                    </div>
+                    <Select placeholder="Choose Theme Type">
+                        <Select.Option value="DARK">
+                            Dark Theme
+                        </Select.Option>
+                        <Select.Option value="LIGHT">
+                            Light Theme
+                        </Select.Option>
+                        <Select.Option value="IMAGE">
+                            Custom
+                        </Select.Option>
+                    </Select>
                     <Divider />
                     <h3>Choose a Background Image</h3>
                     <div className={styles.userMenuBgs}>
                         {presetBgs.map(bg => {
                             return (
                                 <Display shadow>
-                                    <Image src={bg} width="100px" height="70px" />
+                                    <Image onClick={() => setBackgroundImage(bg)} src={bg} width="100px" height="70px" />
                                 </Display>
                             )
                         })}
                     </div>
+                    <GButton>
+                        None
+                    </GButton>
                     <Divider />
+
+                    <div>
+                        <p>Blur Background</p>
+                        <Toggle onChange={e => setBlur(e.target.checked)} />
+                    </div>
                 </Modal.Content>
+                <Modal.Action passive onClick={() => setShowSettings(false)}>
+                    Cancel
+                </Modal.Action>
+                <Modal.Action onClick={() => saveUserPref()}>
+                    Save
+                </Modal.Action>
             </Modal>
             {/* End settings modal */}
 
