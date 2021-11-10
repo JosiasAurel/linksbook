@@ -18,7 +18,7 @@ def create_user(name: str, email: str) -> T.Dict[str, str]:
     else:
         try:
             user = {"email": email, "name": name,
-                    "themeType": "COLOR", "theme": "#fff", "blur": False}
+                    "theme": "https://products.ls.graphics/mesh-gradients/images/32.-Banana-Mania.jpg"}
             usersdb.put(user, user_id)
             return {"status": "Success"}
         except:
