@@ -53,7 +53,7 @@ def data_from_token(token: str, owner: str) -> any:
     if verification == "Valid":
         data = jwt.decode(token, "SECRET", algorithms=["HS256"])
         # print(f" NAME FROM TOKEN {data}")
-        return {"status": "Success", "userName": data.get("name"), "userEmail": data.get("email"), "themeType": data.get("themeType"), "theme": data.get("theme"), "blur": data.get("blur")}
+        return {"status": "Success", "userName": data.get("name"), "userEmail": data.get("email"), "theme": data.get("theme")}
 
     return {"status": "Failed"}
 
