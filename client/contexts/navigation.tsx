@@ -5,12 +5,20 @@ interface NavigationCtxProps {
     children: React.ReactElement
 }
 
+/*  
+ # Navigation Ctx may contain the following information:
+
+    - The theme type being used
+    - If it is an image, the image url
+    - If it is color mode, then dark or light
+*/
+
 var currentFolder;
 var setinFolder;
 
 const NavigationCtx = createContext({ inFolder: false, folder: "" });
 
-const AuthProvider: React.FC<NavigationCtxProps> = ({ children }): JSX.Element => {
+const NavProvider: React.FC<NavigationCtxProps> = ({ children }): JSX.Element => {
 
     const [inFolder, setInFolder] = React.useState<boolean>(false);
     const [folder, setFolder] = React.useState<string>("");
@@ -27,6 +35,6 @@ const AuthProvider: React.FC<NavigationCtxProps> = ({ children }): JSX.Element =
     )
 }
 
-export { NavigationCtx, currentFolder, setinFolder };
+export { NavigationCtx, currentFolder, setinFolder, NavProvider };
 
 export default NavigationCtx;
