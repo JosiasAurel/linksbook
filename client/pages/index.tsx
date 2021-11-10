@@ -39,24 +39,20 @@ const AUTH_SERVICE_URI: string = process.env.NEXT_PUBLIC_AUTH_SERVICE;
 const HomePage: FunctionComponent = (): JSX.Element => {
 
     /* The user and theme contexts */
-    const theme = useContext(AuthCtx);
-    console.log("Theme Ctx");
-    console.log(theme);
+    const bg = useContext(AuthCtx);
+    const [theme, setTheme] = useState<string>("");
+    const [bgImage, setBgImage] = useState<string>("");
+
+    useEffect(() => {
+        setTheme(localStorage.getItem("theme"));
+        setBgImage(localStorage.getItem("bgImage"));
+    }, [theme]);
 
     /*  */
     const [backgroundImage, setBackgroundImage] = useState<string>("");
 
     async function saveUserPref() {
-        fetch(`${AUTH_SERVICE_URI}/set-theme`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${localStorage.getItem("token")}`
-            },
-            body: JSON.stringify({
-                theme: backgroundImage
-            })
-        });
+        localStorage.setItem("bgImage", backgroundImage);
     }
     /*  */
     /* ... */
@@ -248,7 +244,7 @@ const HomePage: FunctionComponent = (): JSX.Element => {
     }
 
     return (
-        <div /* style={{ backgroundColor: "#0d1117" }} */ className={styles.dashboardPage}>
+        <div style={(theme === "image") ? { backgroundImage: `url("${bgImage}")`, backgroundSize: "100vw 100vh" } : theme === "dark" ? { backgroundColor: "#0d1117", color: "white" } : { backgroundColor: "white", color: "black" }} className={styles.dashboardPage}>
             <Header
                 toggleSettings={() => setShowSettings(!showSettings)}
             />
@@ -282,11 +278,11 @@ const HomePage: FunctionComponent = (): JSX.Element => {
                                     )
                                 } else { return "" }
                             })}
-                        </Tree>
+                        </Tree >
 
                         {/* */}
-                    </div>
-                </section>
+                    </div >
+                </section >
 
 
                 <section className={styles.linksSection}>
@@ -339,7 +335,7 @@ const HomePage: FunctionComponent = (): JSX.Element => {
                     </div>
                 </section>
 
-            </div>
+            </div >
             {/* Everything Else */}
 
             {/* Modals */}

@@ -7,15 +7,13 @@ interface AuthCtxProps {
     children: React.ReactElement
 }
 
-const AuthCtx = createContext({ authenticated: false, name: "", themeType: "", theme: "", themeBlur: 0 });
+const AuthCtx = createContext({ authenticated: false, name: "", theme: "" });
 
 const AuthProvider: React.FC<AuthCtxProps> = ({ children }): JSX.Element => {
 
     const [isAuth, setIsAuth] = React.useState<boolean>(false);
     const [name, setName] = React.useState<string>("");
-    const [themeType, setThemeType] = React.useState<string>("");
-    const [themeData, setThemeData] = React.useState<string>("");
-    const [themeBlur, setThemeBlur] = React.useState<number>(0);
+    const [theme, setTheme] = React.useState<string>("");
 
     React.useEffect(() => {
         /* Request... Check if user is authenticated */
@@ -34,9 +32,7 @@ const AuthProvider: React.FC<AuthCtxProps> = ({ children }): JSX.Element => {
                 if (authToken !== undefined && data.status !== "Failed") {
                     setIsAuth(true);
                     setName(data.userName);
-                    setThemeType(data.themeType);
-                    setThemeData(data.theme);
-                    setThemeBlur(data.blur);
+                    setTheme(theme)
 
                 }
                 /* console.log("Auth Data");
@@ -46,7 +42,7 @@ const AuthProvider: React.FC<AuthCtxProps> = ({ children }): JSX.Element => {
 
     return (
         <div>
-            <AuthCtx.Provider value={{ authenticated: isAuth, name: name, themeType: themeType, theme: themeData, themeBlur: themeBlur }}>
+            <AuthCtx.Provider value={{ authenticated: isAuth, name: name, theme: theme }}>
                 {children}
             </AuthCtx.Provider>
         </div>
