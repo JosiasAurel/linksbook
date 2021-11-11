@@ -131,10 +131,8 @@ async def _handle_set_theme(req: Request):
     data = jwt.decode(authToken, "SECRET", algorithms=["HS256"])
     user_email = data.get("email")
     req_body = await req.json()
-    theme_type = req_body.get("ThemeType")
     theme = req_body.get("theme")
-    theme_blur = req_body.get("blur")
 
-    result = set_user_theme(user_email, theme_type, theme, theme_blur)
+    result = set_user_theme(user_email, theme)
 
     return {"status": result}

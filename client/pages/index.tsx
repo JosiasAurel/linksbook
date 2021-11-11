@@ -2,7 +2,6 @@ import React, { FunctionComponent, useState, useEffect, useContext, FormEvent } 
 import { AuthCtx } from "../contexts/auth";
 import { useQuery } from "@apollo/client";
 
-
 import Header from "../components/Header";
 import Search from "../components/Search";
 import LinkCard from "../components/LinkCard";
@@ -19,22 +18,43 @@ import styles from "../styles/index.module.css";
 import toast from "react-hot-toast";
 import { Loading, Button, Tooltip, Spacer } from '@nextui-org/react';
 
-import { Modal, Button as GButton, Divider, Tree } from "@geist-ui/react";
-import { Home, Image } from "@geist-ui/react-icons";
+import {
+    Modal,
+    Button as GButton,
+    Divider,
+    Tree,
+    Display,
+    Image
+} from "@geist-ui/react";
+import { Home } from "@geist-ui/react-icons";
 
 // import graphql actions
 import { FETCH_ALL } from "../graphql/actions";
 
 import { truncateStr } from "../utils/string";
+import { presetBgs } from "../utils/presets";
 
-const API_SERVICE: string = process.env.NEXT_PUBLIC_API_SERVICE;
+const AUTH_SERVICE_URI: string = process.env.NEXT_PUBLIC_AUTH_SERVICE;
 
 const HomePage: FunctionComponent = (): JSX.Element => {
 
     /* The user and theme contexts */
-    const theme = useContext(AuthCtx);
-    console.log("Theme Ctx");
-    console.log(theme);
+    const bg = useContext(AuthCtx);
+    const [theme, setTheme] = useState<string>("");
+    const [bgImage, setBgImage] = useState<string>("");
+
+    useEffect(() => {
+        setTheme(localStorage.getItem("theme"));
+        setBgImage(localStorage.getItem("bgImage"));
+    }, [theme]);
+
+    /*  */
+    const [backgroundImage, setBackgroundImage] = useState<string>("");
+
+    async function saveUserPref() {
+        localStorage.setItem("bgImage", backgroundImage);
+    }
+    /*  */
     /* ... */
 
     /* link card edit button action handle */
@@ -44,46 +64,6 @@ const HomePage: FunctionComponent = (): JSX.Element => {
     /* edit link modal form fields props - end */
     /* Settings modal */
     const [showSettings, setShowSettings] = useState<boolean>(false);
-    const [uploadBgFile, setUploadBgFile] = useState<any>();
-    const [fileType, setFileType] = useState<string>("");
-
-    function handleFileChange(event: any, handler: Function): void {
-        // console.log(event.target.files[0]);
-        setFileType(event.target.files[0].type.split("/")[1]);
-
-        /* const fileReader = new FileReader();
-
-        fileReader.addEventListener("load", event_ => {
-            // console.log(event_.target.result);
-            handler(event_.target.result);
-        });
-        fileReader.readAsArrayBuffer(event.target.files[0]); */
-
-        handler(event.target.files[0]);
-    }
-
-    async function handleUploadBgImage(event: FormEvent): Promise<void> {
-        event.preventDefault();
-
-        const authToken: string | undefined = localStorage.getItem("token") ?? undefined;
-
-        const formData = new FormData();
-        let file = new Blob([uploadBgFile]);
-        // file = uploadBgFile;
-
-        formData.append(`filename`, file);
-
-        const res = await fetch(`${API_SERVICE}/upload-image`, {
-            method: "POST",
-            headers: {
-                "Authorization": `Bearer ${authToken}`
-            },
-            body: formData
-        });
-
-        const data = await res.json();
-        console.log(data);
-    }
     /* End Settings modal */
 
     const [inFolder, setInFolder] = useState<boolean>(false);
@@ -264,7 +244,7 @@ const HomePage: FunctionComponent = (): JSX.Element => {
     }
 
     return (
-        <div /* style={{ backgroundColor: "#0d1117" }} */ className={styles.dashboardPage}>
+        <div style={(theme === "image") ? { backgroundImage: `url("${bgImage}")`, backgroundSize: "100vw 100vh" } : theme === "dark" ? { backgroundColor: "#0d1117", color: "white" } : { backgroundColor: "white", color: "black" }} className={styles.dashboardPage}>
             <Header
                 toggleSettings={() => setShowSettings(!showSettings)}
             />
@@ -298,11 +278,11 @@ const HomePage: FunctionComponent = (): JSX.Element => {
                                     )
                                 } else { return "" }
                             })}
-                        </Tree>
+                        </Tree >
 
                         {/* */}
-                    </div>
-                </section>
+                    </div >
+                </section >
 
 
                 <section className={styles.linksSection}>
@@ -355,7 +335,7 @@ const HomePage: FunctionComponent = (): JSX.Element => {
                     </div>
                 </section>
 
-            </div>
+            </div >
             {/* Everything Else */}
 
             {/* Modals */}
@@ -387,28 +367,25 @@ const HomePage: FunctionComponent = (): JSX.Element => {
                     Settings
                 </Modal.Title>
                 <Modal.Content>
-                    <div>
-                        Some stuff here...
-                    </div>
                     <Divider />
                     <h3>Choose a Background Image</h3>
-                    <div>
-
+                    <div className={styles.userMenuBgs}>
+                        {presetBgs.map(bg => {
+                            return (
+                                <Display shadow>
+                                    <Image onClick={() => setBackgroundImage(bg)} src={bg} width="100px" height="70px" />
+                                </Display>
+                            )
+                        })}
                     </div>
                     <Divider />
-                    <h3>Upload Custom Background Image</h3>
-                    <div>
-                        <form onSubmit={e => handleUploadBgImage(e)} className={styles.uploadBgForm} /* action={`${API_SERVICE}/upload-image`} */ /* encType="multipart/form-data" method="post" */>
-                            <input onChange={e => handleFileChange(e, setUploadBgFile)} type="file" name="bgImg" id="bgImg" accept="image/png, image/jpeg" />
-                            <div className={styles.imageDec}>
-                                <Image />
-                            </div>
-                            <GButton type="success" auto width={"20%"} htmlType="submit">
-                                Save
-                            </GButton>
-                        </form>
-                    </div>
                 </Modal.Content>
+                <Modal.Action passive onClick={() => setShowSettings(false)}>
+                    Cancel
+                </Modal.Action>
+                <Modal.Action onClick={() => saveUserPref()}>
+                    Save
+                </Modal.Action>
             </Modal>
             {/* End settings modal */}
 

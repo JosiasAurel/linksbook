@@ -17,7 +17,8 @@ def create_user(name: str, email: str) -> T.Dict[str, str]:
         return {"status": "Failed", "type": "Email Exists"}
     else:
         try:
-            user = {"email": email, "name": name}
+            user = {"email": email, "name": name,
+                    "theme": "https://products.ls.graphics/mesh-gradients/images/32.-Banana-Mania.jpg"}
             usersdb.put(user, user_id)
             return {"status": "Success"}
         except:
@@ -48,14 +49,12 @@ def get_user_id_by_email(email: str) -> str:
         return None
 
 
-def set_user_theme(email: str, themeType: str, theme: str, blur: bool):
+def set_user_theme(email: str, theme: str):
     user_id = get_user_id_by_email(email)
 
     try:
         usersdb.update({
-            "themeType": themeType,
-            "theme": theme,
-            "blur": blur
+           "theme": theme
         }, user_id)
         return "Success"
     except:
