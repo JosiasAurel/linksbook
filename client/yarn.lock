@@ -2374,10 +2374,14 @@ util@0.12.4, util@^0.12.0:
     safe-buffer "^5.1.2"
     which-typed-array "^1.1.2"
 
-vercel-style@^1.3.0:
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/vercel-style/-/vercel-style-1.3.0.tgz#962b609b8c8c7cb2628fd17bdd5a979dbe42bc0f"
-  integrity sha512-muWWZd1aw0atqybbI5H9glmtJLN8D7snkG8Vil8xprrMruwOb6Y1iCHQZL1yfdhQKzsWGYLz/eC0wzAb4ojsKQ==
+vercel-style@^1.4.0:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/vercel-style/-/vercel-style-1.4.0.tgz#45d3ec26402ac2305f0f8d0dace1f57e553cb7ba"
+  integrity sha512-R9pEfY9hvLRh0tSRNstg3y5NjLs1Ht9BNdcck/HrJUAnt3jVx0JxZP9QrcH2xNDlFoyiohM3NOGBY8q96hDowQ==
+  dependencies:
+    react "^17.0.2"
+    react-dom "^17.0.2"
+    styled-jsx "^4.0.0"
 
 vm-browserify@1.1.2:
   version "1.1.2"

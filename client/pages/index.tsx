@@ -25,11 +25,11 @@ import {
     Tree,
     Display,
     Image
-} from "@geist-ui/react";
+} from "vercel-style";
 import { Home } from "@geist-ui/react-icons";
 
 // import graphql actions
-import { FETCH_ALL, DROP_LINK_IN_COLLECTION } from "../graphql/actions";
+import { FETCH_ALL } from "../graphql/actions";
 
 import { truncateStr } from "../utils/string";
 import { presetBgs } from "../utils/presets";

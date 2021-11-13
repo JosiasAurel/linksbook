@@ -1,11 +1,11 @@
-import React, { Children, useState } from "react";
+import React, { useState } from "react";
 
 import styles from "../styles/components.module.css";
 
 import { Input, Button as GButton, Tree } from "vercel-style";
 import { MoreHorizontal } from "@geist-ui/react-icons";
 import { Tooltip } from "@nextui-org/react";
-import { ConnectDropTarget, useDrop } from "react-dnd";
+import { useDrop } from "react-dnd";
 import { ItemTypes } from "../utils/constants";
 import { handleChange } from "../utils/string";
 import { DROP_LINK_IN_COLLECTION, FETCH_ALL, ADD_COLLECTION_CHILD, DELETE_COLLECTION, RENAME_COLLECTION } from "../graphql/actions";
