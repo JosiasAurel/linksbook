@@ -29,7 +29,7 @@ import {
 import { Home } from "@geist-ui/react-icons";
 
 // import graphql actions
-import { FETCH_ALL } from "../graphql/actions";
+import { FETCH_ALL, DROP_LINK_IN_COLLECTION } from "../graphql/actions";
 
 import { truncateStr } from "../utils/string";
 import { presetBgs } from "../utils/presets";
@@ -243,8 +243,9 @@ const HomePage: FunctionComponent = (): JSX.Element => {
         )
     }
 
+
     return (
-        <div style={(theme === "image") ? { backgroundImage: `url("${bgImage}")`, backgroundSize: "100vw 100vh" } : theme === "dark" ? { backgroundColor: "#0d1117", color: "white" } : { backgroundColor: "white", color: "black" }} className={styles.dashboardPage}>
+        <div style={(theme === "image") ? { backgroundImage: `url("${bgImage}")`, backgroundSize: "100vw 100vh" } : (theme === "image_blur") ? { backgroundImage: `url("${bgImage}")`, backgroundSize: "100vw 100vh", backdropFilter: "blur(4px)" } : theme === "dark" ? { backgroundColor: "#0d1117", color: "white" } : { backgroundColor: "white", color: "black" }} className={styles.dashboardPage}>
             <Header
                 toggleSettings={() => setShowSettings(!showSettings)}
             />
@@ -278,7 +279,8 @@ const HomePage: FunctionComponent = (): JSX.Element => {
                                     )
                                 } else { return "" }
                             })}
-                        </Tree >
+
+                        </Tree>
 
                         {/* */}
                     </div >

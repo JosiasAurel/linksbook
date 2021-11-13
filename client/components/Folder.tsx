@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { Children, useState } from "react";
 
 import styles from "../styles/components.module.css";
 
-import { Input, Button as GButton, Tree } from "@geist-ui/react";
+import { Input, Button as GButton, Tree, Collapse } from "@geist-ui/react";
 import { MoreHorizontal } from "@geist-ui/react-icons";
 import { Tooltip } from "@nextui-org/react";
-import { useDrop } from "react-dnd";
+import { ConnectDropTarget, useDrop } from "react-dnd";
 import { ItemTypes } from "../utils/constants";
 import { handleChange } from "../utils/string";
 import { DROP_LINK_IN_COLLECTION, FETCH_ALL, ADD_COLLECTION_CHILD, DELETE_COLLECTION, RENAME_COLLECTION } from "../graphql/actions";
@@ -105,7 +105,7 @@ const Folder: React.FC<FolderProps> = ({ id, label, getUpdatedData, index, folde
 
     const [dropLink, { data, loading, error }] = useMutation(DROP_LINK_IN_COLLECTION);
 
-    const [{ isOver }, drop] = useDrop(() => ({
+    const [{ isOver }, drop] = useDrop(() => (console.log(drop), {
         accept: ItemTypes.BOOKMARK,
         drop: (item: any, _) => toast.promise(dropLink({ variables: { collectionId: id, linkId: item?.id }, refetchQueries: [{ query: FETCH_ALL }] })
             .then(_ => getUpdatedData(data)), { loading: "Adding bookmark", success: `Bookmark added to ${label}`, error: "Failed" }),
@@ -121,8 +121,12 @@ const Folder: React.FC<FolderProps> = ({ id, label, getUpdatedData, index, folde
 
     // possible structure
     return (
-        <div style={{ display: "flex", padding: "0.5em 0", alignItems: "center" }} ref={drop} onClick={() => handleFolderClick()}>
-            <Tree.Folder name={label} style={{ width: "100%", backgroundColor: isOver ? "aquamarine" : "transparent" }}>
+        <div style={{ display: "flex", padding: "0.5em 0", alignItems: "center" }} /* ref={drop} */ >
+            <Tree.Folder name={<div className={styles.folderHead} onClick={() => handleFolderClick()} ref={drop}>{label} <Tooltip text={<FolerOptions collectionId={id} getUpdatedData={getUpdatedData} />} trigger="click" position="right">
+                <div>
+                    <MoreHorizontal />
+                </div>
+            </Tooltip></div>} style={{ width: "100%", backgroundColor: isOver ? "aquamarine" : "transparent" }}>
                 {folder?.children?.map((f: any, i: any) => {
                     return (
                         <Folder
@@ -138,11 +142,6 @@ const Folder: React.FC<FolderProps> = ({ id, label, getUpdatedData, index, folde
                     )
                 })}
             </Tree.Folder>
-            <Tooltip text={<FolerOptions collectionId={id} getUpdatedData={getUpdatedData} />} trigger="click" position="right">
-                <div>
-                    <MoreHorizontal />
-                </div>
-            </Tooltip>
         </div >
     )
 }
