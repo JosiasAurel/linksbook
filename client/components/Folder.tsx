@@ -2,7 +2,7 @@ import React, { Children, useState } from "react";
 
 import styles from "../styles/components.module.css";
 
-import { Input, Button as GButton, Tree, Collapse } from "@geist-ui/react";
+import { Input, Button as GButton, Tree } from "vercel-style";
 import { MoreHorizontal } from "@geist-ui/react-icons";
 import { Tooltip } from "@nextui-org/react";
 import { ConnectDropTarget, useDrop } from "react-dnd";
