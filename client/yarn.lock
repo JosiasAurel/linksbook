@@ -82,13 +82,6 @@
   resolved "https://registry.yarnpkg.com/@geist-ui/react-icons/-/react-icons-1.0.1.tgz#5da112bbc98216bf05da3aabbd7d21594440b209"
   integrity sha512-/phre1NwXT0Mrxcq3yb+KksJ16/ykptgxI7+jh5pmDZfxnIMPlBWFBGDK0yw96oi752Wuo24X6+tkWjVe/g5Bg==
 
-"@geist-ui/react@^2.2.0":
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/@geist-ui/react/-/react-2.2.0.tgz#964a2bb695edf69f8c87c9ecd8ad782bc0ba7038"
-  integrity sha512-JtdfD2ONdV3k8jK+NKMVfX9nR+L/Cwog6gvmwlWNRlyMlD5w/xslTwNbyAsblVe30yu6wpTKpubRG70EvnZIiw==
-  dependencies:
-    styled-jsx "^4.0.0"
-
 "@graphql-typed-document-node/core@^3.0.0":
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/@graphql-typed-document-node/core/-/core-3.1.0.tgz#0eee6373e11418bfe0b5638f654df7a4ca6a3950"

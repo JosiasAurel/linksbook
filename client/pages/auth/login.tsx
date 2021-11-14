@@ -1,7 +1,7 @@
 import React from "react";
 
 import { Button } from "@nextui-org/react";
-import { Input, Modal, Spacer } from "@geist-ui/react";
+import { Input, Modal, Spacer } from "vercel-style";
 import Image from "next/image";
 import Link from "next/link";
 

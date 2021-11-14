@@ -6,7 +6,7 @@ import { handleChange } from "../utils/string";
 import { UPDATE_LINK, FETCH_ALL } from "../graphql/actions";
 import { useMutation } from "@apollo/client";
 import toast from "react-hot-toast";
-import { Input, Textarea } from "@geist-ui/react";
+import { Input, Textarea } from "vercel-style";
 import { Button, Spacer } from "@nextui-org/react"
 
 interface UpdateLinkProps {

@@ -1,8 +1,6 @@
 import React from "react";
 
-import styles from "../styles/components.module.css";
-
-import { Badge, Spacer } from "@geist-ui/react";
+import { Badge, Spacer } from "vercel-style";
 
 interface TagProps {
     name: string

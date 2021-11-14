@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { Input } from "@geist-ui/react";
+import { Input } from "vercel-style";
 
 // import styles from "../styles/components.module.css";
 

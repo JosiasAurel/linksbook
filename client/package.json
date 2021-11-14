@@ -1,7 +1,6 @@
 {
   "dependencies": {
     "@apollo/client": "^3.4.11",
-    "@geist-ui/react": "^2.2.0",
     "@geist-ui/react-icons": "^1.0.1",
     "@nextui-org/react": "1.0.1-alpha.32",
     "@vercel/node": "^1.12.1",

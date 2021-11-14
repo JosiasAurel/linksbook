@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Input, Button } from "@geist-ui/react";
+import { Input, Button } from "vercel-style";
 
 import { CREATE_COLLECTION, FETCH_ALL } from "../graphql/actions";
 import { useMutation } from "@apollo/client";

@@ -9,7 +9,7 @@ import {
     Divider,
     Modal,
     Textarea
-} from "@geist-ui/react";
+} from "vercel-style";
 
 import { FETCH_ALL, DELETE_REMINDER, UPDATE_REMINDER } from "../graphql/actions";
 import { handleChange } from "../utils/string";

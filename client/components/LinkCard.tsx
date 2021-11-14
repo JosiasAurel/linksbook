@@ -6,7 +6,7 @@ import CreateReminder from "./createReminder";
 import Reminder from "./Reminder";
 
 import toast from "react-hot-toast";
-import { Modal, Divider } from "@geist-ui/react";
+import { Modal, Divider } from "vercel-style";
 import { Copy, Edit2, ArrowUpRight, Trash2, Eye, Clock } from "@geist-ui/react-icons";
 import { Button, Spacer } from "@nextui-org/react";
 
