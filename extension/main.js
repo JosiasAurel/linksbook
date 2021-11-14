@@ -1,6 +1,6 @@
 
 const AUTH_URI = "https://celestial-unmarred-patella.glitch.me";
-const SERVER_URI = "https://server.linksbook.me";
+const SERVER_URI = "http://localhost:5000" // "https://server.linksbook.me";
 
 /* Utils */
 
@@ -65,6 +65,7 @@ function showAppPage(pageTitle, pageUrl) {
     
     const syncButton = document.createElement("button");
     syncButton.innerText = "Sync Browser";
+    syncButton.setAttribute("id", "synclinks");
 
     const titleInput = document.createElement("input");
     titleInput.type = "text";
@@ -142,7 +143,16 @@ function init() {
                     const result = await response.json();
 
                     log(result);
-    });
+                });
+
+                /* Sync bookmarks */
+                const syncBookmarks = document.getElementById("synclinks");
+                syncBookmarks.addEventListener("click", async _ => {
+                    chrome.bookmarks.getTree(async bkms => {
+                        await handleBookmarks(bkms);
+                });
+
+                });
                 /* Show the app pages */
 
             });
@@ -160,14 +170,44 @@ chrome.bookmarks.getTree(bkms => {
     handleBookmarks(bkms);
 });
 
-function handleBookmarks(bookmarks) {
+var everything = [];
+
+async function handleBookmarks(bookmarks_) {
+
+    const authToken = localStorage.getItem("token");
 
     // Assuming all fetched bookmarks will always be Array(1)
     // We get all bookmark and folders from the browser
-    const bookmarksStructures = bookmarks[0].children;
-    const folders = bookmarksStructures.map(item => item);
+    const bookmarks = bookmarks_[0].children;
 
-    log(bookmarksStructures);
+    parseBookmarks(bookmarks);
+    log(everything);
+
+    const response = await fetch(`${SERVER_URI}/sync-bookmarks`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${authToken}`
+            },
+            body: JSON.stringify({ bookmarks })
+    });
+
+    const result = await response.json();
+
+    log(result);
+    // log(bookmarksStructures);
+}
+
+function parseBookmarks(data) {
+
+    for (item in data) {
+        if (data[item].hasOwnProperty("children")) {
+            everything.push({folder: data[item].title});
+            parseBookmarks(data[item].children);
+        } else {
+            everything.push({bookmark: data[item].title});
+        }
+    }
 }
 
 // LinksBook v2 Chrome Extension
