@@ -1,6 +1,6 @@
 
 const AUTH_URI = "https://celestial-unmarred-patella.glitch.me";
-const SERVER_URI = "http://localhost:5000" // "https://server.linksbook.me";
+const SERVER_URI = "https://server.linksbook.me";
 
 /* Utils */
 
