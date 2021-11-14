@@ -98,7 +98,7 @@ async function dropLinkToCollection(collectionId: string, linkId: string): Promi
 async function dropCollectionToCollection(collectionId: string, childCollectionId: string): Promise<string> {
     const currentCollection = await getCollection(collectionId);
 
-    if (childCollectionId in currentCollection.links) {
+    if (childCollectionId in currentCollection.children) {
         return "Success";
     }
 
@@ -147,17 +147,17 @@ async function removeLink(collectionId: string, linkId: string): Promise<string>
 }
 
 async function collectionWithName(name: string, owner: string, data?: boolean): Promise<boolean|ObjectType> {
-    const collection = await (await collections.fetch({ name, owner })).items;
+    const collection_ = await (await collections.fetch({ name, owner })).items;
 
-    if (collection.length === 0) {
-        return false;
+    if (collection_.length > 0) {
+        if (data) {
+            return collection_[0];
+        }
+
+        return true;
     }
 
-    if (data) {
-        return collection[0];
-    }
-
-    return true;
+    return false;
 }
 
 export { 

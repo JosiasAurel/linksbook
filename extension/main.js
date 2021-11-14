@@ -1,5 +1,6 @@
 
 const AUTH_URI = "https://celestial-unmarred-patella.glitch.me";
+const SERVER_URI = "https://server.linksbook.me";
 
 /* Utils */
 
@@ -9,9 +10,10 @@ function log(data) {
 
 /* utils end */
 
+const app = document.getElementById("app");
+
 function mountAuthPage() {
 
-    const app = document.getElementById("app");
 
     let div = document.createElement("div");
     div.classList.add("no-auth");
@@ -60,42 +62,44 @@ async function verifyToken() {
 function showAppPage(pageTitle, pageUrl) {
 
     /* Create basic elements */
-    const container = document.createElement("div");
+    
     const syncButton = document.createElement("button");
-    const syncBtnImage = document.createElement("img");
-    const form = document.createElement("form");
-    const titleInput = document.createElement("input");
-    const urlInput = document.createElement("input");
-    const saveButton = document.createElement("button");
+    syncButton.innerText = "Sync Browser";
+    syncButton.setAttribute("id", "synclinks");
 
-    /* Set attributs */
-    container.classList.add("container");
-    syncBtnImage.src = "cloud.png";
-    syncBtnImage.alt = "cloud";
+    const titleInput = document.createElement("input");
     titleInput.type = "text";
     titleInput.setAttribute("placeholder", "Annotation");
+    titleInput.value = pageTitle;
+    titleInput.setAttribute("id", "title-input");
+
+    const urlInput = document.createElement("input");
     urlInput.type = "url";
     urlInput.setAttribute("placeholder", "URL");
+    urlInput.value = pageUrl;
+    urlInput.setAttribute("id", "url-input");
+
+    const saveButton = document.createElement("button");
+    saveButton.innerText = "Save";
+    saveButton.type = "submit";
+    saveButton.setAttribute("id", "saveBtn");
+
+    /* Set input field values */
 
     /* Construct hierachy */
-
+    
+    const form = document.createElement("form");
     form.appendChild(titleInput);
     form.appendChild(urlInput);
     form.appendChild(saveButton);
-    saveButton.innerText = "Save";
+    form.setAttribute("id", "create-link");
 
-    syncButton.appendChild(syncBtnImage);
-    syncButton.innerText = "Sync Browser";
-    
+    const container = document.createElement("div");
+    container.classList.add("container");
     container.appendChild(syncButton);
     container.appendChild(form);
 
-    // mount app to app component
-    const app = document.getElementById("app");
-    app.appendChild(container);
-
-    /* Handle events */
-
+    return container;
 }
 
 function init() {
@@ -110,8 +114,45 @@ function init() {
                 let thisPage = tabs[0];
                 const url = thisPage.url;
                 const title = thisPage.title;
-                showAppPage(title, url);
-                console.log(thisPage);
+                // console.log(thisPage);
+                let container = showAppPage(title, url);
+                console.log(container);
+                app.appendChild(container);
+
+                /* wanna save the link ? */
+                const saveLinkForm = document.getElementById("create-link");
+
+                saveLinkForm.addEventListener("submit", async  e => {
+                    e.preventDefault(); // prevent reload
+                    const authToken = localStorage.getItem("token");
+
+                    const titleInput = document.getElementById("title-input");
+                    const urlInput = document.getElementById("url-input");
+
+                    let url = urlInput.value;
+                    let annotation = titleInput.value;
+                    const response = await fetch(`${SERVER_URI}/save-link`, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Authorization": `Bearer ${authToken}`
+                        },
+                        body: JSON.stringify({ annotation, url })
+                    });
+
+                    const result = await response.json();
+
+                    log(result);
+                });
+
+                /* Sync bookmarks */
+                const syncBookmarks = document.getElementById("synclinks");
+                syncBookmarks.addEventListener("click", async _ => {
+                    chrome.bookmarks.getTree(async bkms => {
+                        await handleBookmarks(bkms);
+                });
+
+                });
                 /* Show the app pages */
 
             });
@@ -124,22 +165,49 @@ function init() {
 
 init();
 
+
 chrome.bookmarks.getTree(bkms => {
     handleBookmarks(bkms);
 });
 
-function handleBookmarks(bookmarks) {
+var everything = [];
+
+async function handleBookmarks(bookmarks_) {
+
+    const authToken = localStorage.getItem("token");
 
     // Assuming all fetched bookmarks will always be Array(1)
     // We get all bookmark and folders from the browser
-    const bookmarksStructures = bookmarks[0].children;
-    const folders = bookmarksStructures.map(item => item);
+    const bookmarks = bookmarks_[0].children;
 
-    let result = parseBookmarks(bookmarksStructures);
+    parseBookmarks(bookmarks);
+    log(everything);
+
+    const response = await fetch(`${SERVER_URI}/sync-bookmarks`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${authToken}`
+            },
+            body: JSON.stringify({ bookmarks })
+    });
+
+    const result = await response.json();
 
     log(result);
-    log(everything);
-    log(bookmarksStructures);
+    // log(bookmarksStructures);
+}
+
+function parseBookmarks(data) {
+
+    for (item in data) {
+        if (data[item].hasOwnProperty("children")) {
+            everything.push({folder: data[item].title});
+            parseBookmarks(data[item].children);
+        } else {
+            everything.push({bookmark: data[item].title});
+        }
+    }
 }
 
 // LinksBook v2 Chrome Extension

@@ -138,11 +138,12 @@ async function removeReminderFromLink(linkId: string, reminder: string): Promise
 
 async function linkWithUrl(url: string, owner: string): Promise<boolean> {
     const link = await (await db.fetch({ url, owner })).items;
-    if (link.length === 0) {
-        return false;
-    } 
+    
+    if (link.length > 0) {
+        return true;
+    }
 
-    return true;
+    return false;
 }
 
 export { 

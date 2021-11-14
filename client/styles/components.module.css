@@ -207,7 +207,7 @@
   align-items: center;
   border-radius: 5px;
   max-height: 50px;
-  width: 80%;
+  width: 90%;
   border: solid 1px rgba(128, 128, 128, 0.404);
   margin: 4px 2px;
   padding: 5px;
@@ -215,6 +215,7 @@
 
 .folder > * {
   margin: 0 3px;
+  align-self: flex-end;
 }
 
 .folder h2 {
@@ -223,7 +224,26 @@
 }
 
 .folder .folderChildren {
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+  justify-content: flex-end;
   background-color: transparent;
+}
+
+.folder > * {
+  background-color: transparent !important;
+}
+
+.folderHead {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.folderHead div {
+  margin-left: 20%;
 }
 /* End Folder styles */
 
@@ -245,10 +265,6 @@
 
 .linkCard p {
   overflow: hidden;
-}
-
-.linkCard:hover {
-  box-shadow: 0 2px 2px 2px whitesmoke;
 }
 
 .linkCard .linkTags {
