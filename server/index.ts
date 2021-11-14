@@ -32,7 +32,9 @@ app.post("/save-link", async (req: Request, res: Response) => {
 
     /* Requirements include which user ? */
 
-    const { key } = getUserInfo(req);
+    const { key } = await getUserInfo(req);
+    /* console.log("Key", key);
+    console.log(await getUserInfo(req)); */
 
     const { annotation, url } = req.body;
 
@@ -50,20 +52,19 @@ app.post("/save-link", async (req: Request, res: Response) => {
     }
 
     // otherwise
-    const createdLink = await createLink(annotation, url, [], key);
+    const createdLink = await createLink(annotation, url, ["new"], key);
+    // console.log(createdLink);
     if (createdLink === "Success") {
         res.json({status: "Done", msg: "Bookmark Saved"});
     }
-
-    res.json({status: "Done", msg: "Failed"});
 });
 
 // route for pushing browser bookmarks
 app.post("/sync-bookmarks", async (req: Request, res: Response) => {
 
-    const { key } = getUserInfo(req);
+    const { key } = await getUserInfo(req);
 
-    const data = req.body;
+    const data = req.body.bookmarks;
 
     const result = await syncBookmarks(data, "NONE", key);
 

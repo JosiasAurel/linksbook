@@ -11,7 +11,7 @@ interface UserInfoRes {
 async function authenticateUser(token: string): Promise<UserInfoRes> {
     const userInfo = verifyToken(token);
 
-    const user = getUserByEmail(userInfo.email);
+    const user = await getUserByEmail(userInfo.email);
 
     return user;
 }
