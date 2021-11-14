@@ -220,7 +220,7 @@ const HomePage: FunctionComponent = (): JSX.Element => {
                 <Header />
                 <div className={styles.dashboardSections}>
                     <section className={styles.foldersSection}>
-                        <Search searchAction={(() => undefined)} />
+
                     </section>
 
 
