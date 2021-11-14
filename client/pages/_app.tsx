@@ -7,9 +7,8 @@ import { AppProps } from "next/app";
 import { Toaster } from "react-hot-toast";
 
 // Use Geist UI components
-import { GeistProvider, CssBaseline } from "@geist-ui/react";
+import { GeistProvider, CssBaseline } from "vercel-style";
 import AuthProvider from "../contexts/auth";
-import NavCtx from "../contexts/navigation";
 
 /* Init Apollo Client */
 import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink } from "@apollo/client";
