@@ -31,11 +31,13 @@ const authLink = setContext((_, { headers }) => {
         headers: {
             ...headers,
             authorization: authToken ? `Bearer ${authToken}` : "",
+            mode: "no-cors"
         }
     }
 });
 
 const client = new ApolloClient({
+    // uri: `${process.env.NEXT_PUBLIC_SERVER_URI}/graphql`,
     cache: new InMemoryCache(),
     link: authLink.concat(httpLink)
 });
