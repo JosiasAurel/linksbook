@@ -8,7 +8,7 @@ import { Toaster } from "react-hot-toast";
 
 // Use Geist UI components
 import { GeistProvider, CssBaseline } from "vercel-style";
-import AuthProvider from "../contexts/auth";
+// import AuthProvider from "../contexts/auth";
 
 /* Init Apollo Client */
 import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink } from "@apollo/client";
@@ -36,7 +36,6 @@ const authLink = setContext((_, { headers }) => {
 });
 
 const client = new ApolloClient({
-    uri: `${process.env.NEXT_PUBLIC_SERVER_URI}/graphql`,
     cache: new InMemoryCache(),
     link: authLink.concat(httpLink)
 });
@@ -44,19 +43,17 @@ const client = new ApolloClient({
 const LinksBookApp: FunctionComponent<AppProps> = ({ Component, pageProps }): JSX.Element => {
 
     return (
-        <AuthProvider>
-            <DndProvider backend={HTML5Backend}>
-                <GeistProvider>
-                    <CssBaseline />
-                    <ApolloProvider client={client}>
-                        <Component {...pageProps} />
-                        {/* Toasts */}
-                        <Toaster />
-                        {/* End Toasts */}
-                    </ApolloProvider>
-                </GeistProvider>
-            </DndProvider>
-        </AuthProvider>
+        <DndProvider backend={HTML5Backend}>
+            <GeistProvider>
+                <CssBaseline />
+                <ApolloProvider client={client}>
+                    <Component {...pageProps} />
+                    {/* Toasts */}
+                    <Toaster />
+                    {/* End Toasts */}
+                </ApolloProvider>
+            </GeistProvider>
+        </DndProvider>
     )
 }
 

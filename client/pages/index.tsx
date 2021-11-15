@@ -38,8 +38,34 @@ const AUTH_SERVICE_URI: string = process.env.NEXT_PUBLIC_AUTH_SERVICE;
 
 const HomePage: FunctionComponent = (): JSX.Element => {
 
+    const [isAuth, setIsAuth] = React.useState<boolean>(false);
+    const [name, setName] = React.useState<string>("");
+
+    React.useEffect(() => {
+        /* Request... Check if user is authenticated */
+        /* Is token in localstorage */
+        const authToken = localStorage.getItem("token") ?? undefined;
+
+        fetch(`${AUTH_SERVICE_URI}/is-authenticated`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ token: authToken })
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (authToken !== undefined && data.status !== "Failed") {
+                    setIsAuth(true);
+                    setName(data.userName);
+
+                }
+                /* console.log("Auth Data");
+                console.log(data); */
+            });
+    }, []);
+
     /* The user and theme contexts */
-    const bg = useContext(AuthCtx);
     const [theme, setTheme] = useState<string>("");
     const [bgImage, setBgImage] = useState<string>("");
 
@@ -217,7 +243,7 @@ const HomePage: FunctionComponent = (): JSX.Element => {
         toast.promise(new Promise((resolve, _reject) => setTimeout(() => resolve("Hello"), Math.floor(Math.random() * 4000))), { loading: "Fetching Latest Data...", success: "Done", error: "Something Wrong Occurred" });
         return (
             <div className={styles.dashboardPage}>
-                <Header />
+                <Header name={""} />
                 <div className={styles.dashboardSections}>
                     <section className={styles.foldersSection}>
 
@@ -247,6 +273,7 @@ const HomePage: FunctionComponent = (): JSX.Element => {
     return (
         <div style={(theme === "image") ? { backgroundImage: `url("${bgImage}")`, backgroundSize: "100vw 100vh" } : (theme === "image_blur") ? { backgroundImage: `url("${bgImage}")`, backgroundSize: "100vw 100vh", backdropFilter: "blur(4px)" } : theme === "dark" ? { backgroundColor: "#0d1117", color: "white" } : { backgroundColor: "white", color: "black" }} className={styles.dashboardPage}>
             <Header
+                name={name}
                 toggleSettings={() => setShowSettings(!showSettings)}
             />
             <div className={styles.dashboardSections}>

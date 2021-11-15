@@ -7,13 +7,12 @@ interface AuthCtxProps {
     children: React.ReactElement
 }
 
-const AuthCtx = createContext({ authenticated: false, name: "", theme: "" });
+const AuthCtx = createContext({ authenticated: false, name: "" });
 
 const AuthProvider: React.FC<AuthCtxProps> = ({ children }): JSX.Element => {
 
     const [isAuth, setIsAuth] = React.useState<boolean>(false);
     const [name, setName] = React.useState<string>("");
-    const [theme, setTheme] = React.useState<string>("");
 
     React.useEffect(() => {
         /* Request... Check if user is authenticated */
@@ -32,7 +31,6 @@ const AuthProvider: React.FC<AuthCtxProps> = ({ children }): JSX.Element => {
                 if (authToken !== undefined && data.status !== "Failed") {
                     setIsAuth(true);
                     setName(data.userName);
-                    setTheme(theme)
 
                 }
                 /* console.log("Auth Data");
@@ -42,7 +40,7 @@ const AuthProvider: React.FC<AuthCtxProps> = ({ children }): JSX.Element => {
 
     return (
         <div>
-            <AuthCtx.Provider value={{ authenticated: isAuth, name: name, theme: theme }}>
+            <AuthCtx.Provider value={{ authenticated: isAuth, name: name }}>
                 {children}
             </AuthCtx.Provider>
         </div>
