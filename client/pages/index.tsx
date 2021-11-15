@@ -1,5 +1,5 @@
 import React, { FunctionComponent, useState, useEffect, useContext, FormEvent } from "react";
-import { AuthCtx } from "../contexts/auth";
+// import { AuthCtx } from "../contexts/auth";
 import { useQuery } from "@apollo/client";
 
 import Header from "../components/Header";
@@ -221,6 +221,7 @@ const HomePage: FunctionComponent = (): JSX.Element => {
     // when the component is mounted
     useEffect(() => {
         if (data) {
+            console.log(data);
             setDisplayLinks(data.user.links);
         }
     }, [data]);
@@ -240,7 +241,7 @@ const HomePage: FunctionComponent = (): JSX.Element => {
 
 
     if (loading) {
-        toast.promise(new Promise((resolve, _reject) => setTimeout(() => resolve("Hello"), Math.floor(Math.random() * 4000))), { loading: "Fetching Latest Data...", success: "Done", error: "Something Wrong Occurred" });
+        // toast.promise(new Promise((resolve, _reject) => setTimeout(() => resolve("Hello"), Math.floor(Math.random() * 4000))), { loading: "Fetching Latest Data...", success: "Done", error: "Something Wrong Occurred" });
         return (
             <div className={styles.dashboardPage}>
                 <Header name={""} />
@@ -269,14 +270,13 @@ const HomePage: FunctionComponent = (): JSX.Element => {
         )
     }
 
-
     return (
         <div style={(theme === "image") ? { backgroundImage: `url("${bgImage}")`, backgroundSize: "100vw 100vh" } : (theme === "image_blur") ? { backgroundImage: `url("${bgImage}")`, backgroundSize: "100vw 100vh", backdropFilter: "blur(4px)" } : theme === "dark" ? { backgroundColor: "#0d1117", color: "white" } : { backgroundColor: "white", color: "black" }} className={styles.dashboardPage}>
-            <Header
+            < Header
                 name={name}
                 toggleSettings={() => setShowSettings(!showSettings)}
             />
-            <div className={styles.dashboardSections}>
+            < div className={styles.dashboardSections} >
                 <section style={showPopPage ? { display: "none" } : { display: "block" }} className={styles.foldersSection}>
                     <div style={{ margin: "0.2em 0", display: "flex", justifyContent: "center", alignItems: "center" }}>
                         <Search searchAction={(q: string) => handleSearch(q)} />
@@ -304,10 +304,10 @@ const HomePage: FunctionComponent = (): JSX.Element => {
                                             setLinks={(links, fId) => setToDisplayLinks(links, fId)}
                                         />
                                     )
-                                } else { return "" }
+                                }
                             })}
 
-                        </Tree>
+                        </Tree >
 
                         {/* */}
                     </div >

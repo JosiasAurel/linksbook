@@ -30,14 +30,14 @@ const authLink = setContext((_, { headers }) => {
     return {
         headers: {
             ...headers,
-            authorization: authToken ? `Bearer ${authToken}` : ""
+            authorization: authToken ? `Bearer ${authToken}` : "",
         }
     }
 });
 
 const client = new ApolloClient({
     cache: new InMemoryCache(),
-    link: authLink.concat(httpLink)
+    link: authLink.concat(httpLink),
 });
 
 const LinksBookApp: FunctionComponent<AppProps> = ({ Component, pageProps }): JSX.Element => {
