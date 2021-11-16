@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 import styles from "../styles/components.module.css";
 
-import { Input, Button as GButton, Tree } from "vercel-style";
+import { Input, Button as GButton, Tree, Spacer, Divider } from "vercel-style";
 import { MoreHorizontal } from "@geist-ui/react-icons";
 import { Tooltip } from "@nextui-org/react";
 import { useDrop } from "react-dnd";
@@ -136,6 +136,13 @@ function FolerOptions({ collectionId, getUpdatedData }): JSX.Element {
     );
   }
 
+  function copyToClipboard(link): void {
+    // copy the link to the clipboard
+    navigator.clipboard.writeText(link);
+
+    toast("Copied Link to Clipboard", { icon: "🔗" });
+  }
+
   return (
     <div>
       <Tooltip
@@ -149,7 +156,7 @@ function FolerOptions({ collectionId, getUpdatedData }): JSX.Element {
       >
         <GButton>Rename</GButton>
       </Tooltip>
-
+      <Spacer />
       <Tooltip
         trigger="click"
         text={
@@ -161,7 +168,20 @@ function FolerOptions({ collectionId, getUpdatedData }): JSX.Element {
       >
         <GButton>Add Child</GButton>
       </Tooltip>
-
+      <Spacer />
+      <Tooltip trigger="click" text={<div className={styles.shareFolderCard}>
+        <a href={`https://linksbook.me/p/${collectionId}`}>
+          {`https://linksbook.me/p/${collectionId}`}
+        </a>
+        <GButton onClick={() => copyToClipboard(`https://linksbook.me/p/${collectionId}`)} auto scale={0.75} type="success">
+          Share
+        </GButton>
+      </div>}>
+        <GButton>
+          Share Folder
+        </GButton>
+      </Tooltip>
+      <Spacer />
       <GButton color="error" onClick={(_) => handleDeleteFolder()}>
         Delete Folder
       </GButton>
