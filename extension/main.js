@@ -1,5 +1,6 @@
 
-const AUTH_URI = "https://celestial-unmarred-patella.glitch.me";
+const app = document.getElementById("app");
+
 const SERVER_URI = "https://server.linksbook.me";
 
 /* Utils */
@@ -9,63 +10,13 @@ function log(data) {
 }
 
 /* utils end */
-
-const app = document.getElementById("app");
-
-function mountAuthPage() {
-
-
-    let div = document.createElement("div");
-    div.classList.add("no-auth");
-    let authButton = document.createElement("button");
-    authButton.classList.add("sign-in");
-
-    div.appendChild(authButton);
-
-    app.appendChild(div);
-
-    authButton.addEventListener("click", e_ => {
-        // do something to extract auth token from URL
-
-        /* Extract the auth token from the URL */
-        chrome.tabs.query({active: true, lastFocusedWindow: true}, tabs => {
-            let thisPage = tabs[0];
-            let token = thisPage.split("#");
-            localStorage.setItem("token", token);
-        });
-
-    });
-}
-
-async function verifyToken() {
-    let result;
-
-    const thisToken = localStorage.getItem("token");
-
-    const res = await fetch(`${AUTH_URI}/is-authenticated`, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ token: thisToken })
-    });
-
-    const data = await res.json();
-
-    if (data.status === "Success") {
-        result = data;
-    } else { result = "Failed" }
-
-    return result;
-}
-
 function showAppPage(pageTitle, pageUrl) {
-
     /* Create basic elements */
     
     const syncButton = document.createElement("button");
     syncButton.innerText = "Sync Browser";
     syncButton.setAttribute("id", "synclinks");
+    syncButton.classList.add("button");
 
     const titleInput = document.createElement("input");
     titleInput.type = "text";
@@ -83,6 +34,7 @@ function showAppPage(pageTitle, pageUrl) {
     saveButton.innerText = "Save";
     saveButton.type = "submit";
     saveButton.setAttribute("id", "saveBtn");
+    saveButton.classList.add("button");
 
     /* Set input field values */
 
@@ -102,66 +54,60 @@ function showAppPage(pageTitle, pageUrl) {
     return container;
 }
 
+function Setup() {
+    const userEmail = prompt("Enter your email address");
+    localStorage.setItem("email", userEmail);
+}
+
 function init() {
-    if (localStorage.getItem("token") === undefined) {
-        mountAuthPage();
 
-    } else {
-        const isAuth = verifyToken();
+    if (localStorage.getItem("email") === null) {
+        Setup();
+    }
 
-        if (isAuth !== "Failed") {
-            chrome.tabs.query({active: true, lastFocusedWindow: true}, tabs => {
-                let thisPage = tabs[0];
-                const url = thisPage.url;
-                const title = thisPage.title;
-                // console.log(thisPage);
-                let container = showAppPage(title, url);
-                console.log(container);
-                app.appendChild(container);
+    chrome.tabs.query({active: true, lastFocusedWindow: true}, tabs => {
+        let thisPage = tabs[0];
+        const url = thisPage.url;
+        const title = thisPage.title;
+        // console.log(thisPage);
+        let container = showAppPage(title, url);
+        console.log(container);
+        app.appendChild(container);
 
-                /* wanna save the link ? */
-                const saveLinkForm = document.getElementById("create-link");
+        /* wanna save the link ? */
+        const saveLinkForm = document.getElementById("create-link");
 
-                saveLinkForm.addEventListener("submit", async  e => {
-                    e.preventDefault(); // prevent reload
-                    const authToken = localStorage.getItem("token");
+        saveLinkForm.addEventListener("submit", async  e => {
+            e.preventDefault(); // prevent reload
+            const userEmail = localStorage.getItem("email");
 
-                    const titleInput = document.getElementById("title-input");
-                    const urlInput = document.getElementById("url-input");
+            const titleInput = document.getElementById("title-input");
+            const urlInput = document.getElementById("url-input");
 
-                    let url = urlInput.value;
-                    let annotation = titleInput.value;
-                    const response = await fetch(`${SERVER_URI}/save-link`, {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json",
-                            "Authorization": `Bearer ${authToken}`
-                        },
-                        body: JSON.stringify({ annotation, url })
-                    });
-
-                    const result = await response.json();
-
-                    log(result);
-                });
-
-                /* Sync bookmarks */
-                const syncBookmarks = document.getElementById("synclinks");
-                syncBookmarks.addEventListener("click", async _ => {
-                    chrome.bookmarks.getTree(async bkms => {
-                        await handleBookmarks(bkms);
-                });
-
-                });
-                /* Show the app pages */
-
+            let url = urlInput.value;
+            let annotation = titleInput.value;
+            const response = await fetch(`${SERVER_URI}/save-link`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ email: userEmail, annotation, url })
             });
 
-            /* Show the app pages */
+            const result = await response.json();
 
-        } else { mountAuthPage(); }
-    }   
-}
+            log(result);
+            });
+
+            /* Sync bookmarks */
+            const syncBookmarks = document.getElementById("synclinks");
+            syncBookmarks.addEventListener("click", async _ => {
+                chrome.bookmarks.getTree(async bkms => {
+                    await handleBookmarks(bkms);
+                });
+            });
+    })
+}           
 
 init();
 
@@ -174,7 +120,7 @@ var everything = [];
 
 async function handleBookmarks(bookmarks_) {
 
-    const authToken = localStorage.getItem("token");
+    const userEmail = localStorage.getItem("email");
 
     // Assuming all fetched bookmarks will always be Array(1)
     // We get all bookmark and folders from the browser
@@ -187,9 +133,8 @@ async function handleBookmarks(bookmarks_) {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": `Bearer ${authToken}`
             },
-            body: JSON.stringify({ bookmarks })
+            body: JSON.stringify({ email: userEmail, bookmarks })
     });
 
     const result = await response.json();
