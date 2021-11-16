@@ -31,7 +31,6 @@ const authLink = setContext((_, { headers }) => {
         headers: {
             ...headers,
             authorization: authToken ? `Bearer ${authToken}` : "",
-            mode: "no-cors"
         }
     }
 });

@@ -47,15 +47,3 @@ def get_user_id_by_email(email: str) -> str:
         return user["key"]
     else:
         return None
-
-
-def set_user_theme(email: str, theme: str):
-    user_id = get_user_id_by_email(email)
-
-    try:
-        usersdb.update({
-           "theme": theme
-        }, user_id)
-        return "Success"
-    except:
-        return "Failed"
