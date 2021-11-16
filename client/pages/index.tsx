@@ -297,18 +297,18 @@ const HomePage: FunctionComponent = (): JSX.Element => {
       style={
         theme === "image"
           ? {
-              backgroundImage: `url("${bgImage}")`,
-              backgroundSize: "100vw 100vh",
-            }
+            backgroundImage: `url("${bgImage}")`,
+            backgroundSize: "100vw 100vh",
+          }
           : theme === "image_blur"
-          ? {
+            ? {
               backgroundImage: `url("${bgImage}")`,
               backgroundSize: "100vw 100vh",
               backdropFilter: "blur(4px)",
             }
-          : theme === "dark"
-          ? { backgroundColor: "#0d1117", color: "white" }
-          : { backgroundColor: "white", color: "black" }
+            : theme === "dark"
+              ? { backgroundColor: "#0d1117", color: "white" }
+              : { backgroundColor: "white", color: "black" }
       }
       className={styles.dashboardPage}
     >
@@ -341,7 +341,7 @@ const HomePage: FunctionComponent = (): JSX.Element => {
             </Tooltip>
           </div>
           <div className={styles.folders}>
-            <Tree>
+            <Tree style={{ overflow: "auto" }}>
               {data.user.collections.map((folder, idx) => {
                 if (folder.parent.match(/NONE/)) {
                   return (
