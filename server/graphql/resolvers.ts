@@ -43,29 +43,19 @@ const resolvers = {
             const { name, email, key } = context;
 
             return {name, email, id: key};
-        },
-        searchLinks: async (parent: any, args: any, context: any): Promise<any> => {
-
-            const searchedLinks = await searchLinks(args.search, args.type, context.key);
-
-            if (typeof searchLinks !== "string") {
-                return searchedLinks;
-            } else {
-                return [];
-            }
         }
     },
     User: {
         links: async (parent: any, _args: any): Promise<any> => {
             const allLinks = await getAllLinks(parent.id);
-
+            // console.log(allLinks)
             // change link key to link.id to match typedef
             allLinks.map((link: any) => link.id = link.key);
             return allLinks;
         },
         collections: async (parent: any, _args: any): Promise<any> => {
             const allCollections: any = await getAllCollections(parent.id);
-            
+            // console.log(allCollections)
             // set collection.id to value of collection.key
             allCollections.map((col: any) => col.id = col.key);
 

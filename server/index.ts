@@ -6,7 +6,9 @@ import { typeDefinitions } from "./graphql/typedefs";
 import { resolvers } from "./graphql/resolvers";
 
 import cors from "cors";
+import morgan from "morgan";
 import { authenticateUser } from "./utils/auth";
+import { getUserByEmail } from "./models/user";
 
 // models...
 import { linkWithUrl, createLink } from "./models/links";
@@ -18,7 +20,11 @@ const port: number = 5000;
 const app: Application = express();
 
 // Plugins
-app.use(cors());
+app.use(cors({
+    origin: "*",
+    credentials: true
+}));
+app.use(morgan("dev"));
 app.use(express.json());
 
 app.get("/", (req: Request, res: Response) => {
@@ -32,11 +38,9 @@ app.post("/save-link", async (req: Request, res: Response) => {
 
     /* Requirements include which user ? */
 
-    const { key } = await getUserInfo(req);
-    /* console.log("Key", key);
-    console.log(await getUserInfo(req)); */
+    const { annotation, url, email } = req.body;
 
-    const { annotation, url } = req.body;
+    const { key } = await getUserByEmail(email);
 
     /*
     --- Steps ---
@@ -62,7 +66,10 @@ app.post("/save-link", async (req: Request, res: Response) => {
 // route for pushing browser bookmarks
 app.post("/sync-bookmarks", async (req: Request, res: Response) => {
 
-    const { key } = await getUserInfo(req);
+    console.log(await getUserByEmail(req.body.email));
+    const email = req.body.email;
+
+    const { key } = await getUserByEmail(email);
 
     const data = req.body.bookmarks;
 
@@ -70,7 +77,7 @@ app.post("/sync-bookmarks", async (req: Request, res: Response) => {
 
     res.json({msg: result});
     
-});
+}); 
 
 /* Routes for browser extension - End */
 
@@ -91,12 +98,11 @@ function getUserInfo(req: Request): any {
 const apolloServer = new ApolloServer({
     typeDefs: typeDefinitions,
     resolvers,
-    context: ({ req }) => {
+    context: async ({ req }) => {
         // handle request context
         const userInfo = getUserInfo(req);
-
         return userInfo;
-    }
+    },
 })
 
 // mount apollo server on express
