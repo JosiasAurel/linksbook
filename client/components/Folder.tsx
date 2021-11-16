@@ -170,10 +170,10 @@ function FolerOptions({ collectionId, getUpdatedData }): JSX.Element {
       </Tooltip>
       <Spacer />
       <Tooltip trigger="click" text={<div className={styles.shareFolderCard}>
-        <a href={`https://linksbook.me/p/${collectionId}`}>
-          {`https://linksbook.me/p/${collectionId}`}
+        <a href={`https://app.linksbook.me/p/${collectionId}`}>
+          {`https://app.linksbook.me/p/${collectionId}`}
         </a>
-        <GButton onClick={() => copyToClipboard(`https://linksbook.me/p/${collectionId}`)} auto scale={0.75} type="success">
+        <GButton onClick={() => copyToClipboard(`https://app.linksbook.me/p/${collectionId}`)} auto scale={0.75} type="success">
           Share
         </GButton>
       </div>}>
