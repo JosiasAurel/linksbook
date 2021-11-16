@@ -1,7 +1,7 @@
 
 const app = document.getElementById("app");
 
-const SERVER_URI = "https://server.linksbook.me";
+const SERVER_URI = "http://localhost:5000" //"https://server.linksbook.me";
 
 /* Utils */
 
@@ -63,7 +63,7 @@ function init() {
 
     if (localStorage.getItem("email") === null) {
         Setup();
-    }
+    } else {
 
     chrome.tabs.query({active: true, lastFocusedWindow: true}, tabs => {
         let thisPage = tabs[0];
@@ -107,6 +107,7 @@ function init() {
                 });
             });
     })
+}
 }           
 
 init();
