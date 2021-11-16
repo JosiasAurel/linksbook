@@ -56,14 +56,17 @@ function showAppPage(pageTitle, pageUrl) {
 
 function Setup() {
     const userEmail = prompt("Enter your email address");
-    localStorage.setItem("email", userEmail);
+    chrome.storage.local.set({email: userEmail});
 }
 
 function init() {
 
-    if (localStorage.getItem("email") === null) {
-        Setup();
-    } else {
+    chrome.storage.local.get("email", (res) => {
+        console.log("init res");
+        console.log(res);
+        if (res.email === undefined) {
+            Setup();
+        }  else {
 
     chrome.tabs.query({active: true, lastFocusedWindow: true}, tabs => {
         let thisPage = tabs[0];
@@ -79,9 +82,8 @@ function init() {
 
         saveLinkForm.addEventListener("submit", async  e => {
             e.preventDefault(); // prevent reload
-            const userEmail = localStorage.getItem("email");
-
-            const titleInput = document.getElementById("title-input");
+            chrome.storage.local.get("email", async res => {
+                const titleInput = document.getElementById("title-input");
             const urlInput = document.getElementById("url-input");
 
             let url = urlInput.value;
@@ -91,7 +93,7 @@ function init() {
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ email: userEmail, annotation, url })
+                body: JSON.stringify({ email: res.email, annotation, url })
             });
 
             const result = await response.json();
@@ -106,10 +108,11 @@ function init() {
                     await handleBookmarks(bkms);
                 });
             });
+        })
+            });
+    	}
     })
 }
-}           
-
 init();
 
 
@@ -121,28 +124,28 @@ var everything = [];
 
 async function handleBookmarks(bookmarks_) {
 
-    const userEmail = localStorage.getItem("email");
+    chrome.storage.local.get("email", async res => {
+        // Assuming all fetched bookmarks will always be Array(1)
+        // We get all bookmark and folders from the browser
+        const bookmarks = bookmarks_[0].children;
 
-    // Assuming all fetched bookmarks will always be Array(1)
-    // We get all bookmark and folders from the browser
-    const bookmarks = bookmarks_[0].children;
+        parseBookmarks(bookmarks);
+        log(everything);
 
-    parseBookmarks(bookmarks);
-    log(everything);
+        const response = await fetch(`${SERVER_URI}/sync-bookmarks`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ email: res.email, bookmarks })
+        });
 
-    const response = await fetch(`${SERVER_URI}/sync-bookmarks`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ email: userEmail, bookmarks })
-    });
+        const result = await response.json();
 
-    const result = await response.json();
-
-    log(result);
-    // log(bookmarksStructures);
-}
+        log(result);
+        // log(bookmarksStructures);
+    })
+};
 
 function parseBookmarks(data) {
 
