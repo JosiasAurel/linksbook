@@ -7,7 +7,6 @@
   "permissions": [
     "activeTab",
     "declarativeContent",
-    "storage",
     "<all_urls>",
     "bookmarks",
     "storage",
@@ -15,16 +14,27 @@
   ],
   "content_scripts": [
     {
-      "matches": ["<all_urls>"],
-      "css": ["style.css"],
-      "js": ["main.js"]
+      "matches": [
+        "<all_urls>"
+      ],
+      "css": [
+        "style.css"
+      ],
+      "js": [
+        "main.js"
+      ]
     }
   ],
   "background": {
-    "scripts": ["main.js"]
+    "scripts": [
+      "main.js"
+    ]
   },
   "browser_action": {
     "default_title": "LinksBook",
     "default_popup": "index.html"
+  },
+  "icons": {
+    "48": "LinksBook.png"
   }
 }
