@@ -25,7 +25,7 @@ const LogInPage: React.FC = (): JSX.Element => {
       body: JSON.stringify({ email }),
     });
     const result = await response.json();
-    console.log(result);
+    //console.log(result);
     setTimeout(() => setModal(true), 3000);
     if (result.status === "Success") {
       toast.success("Success");

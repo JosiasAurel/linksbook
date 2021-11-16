@@ -204,7 +204,7 @@ const Folder: React.FC<FolderProps> = ({
 
   const [{ isOver }, drop] = useDrop(
     () => (
-      console.log(drop),
+      //console.log(drop),
       {
         accept: ItemTypes.BOOKMARK,
         drop: (item: any, _) =>

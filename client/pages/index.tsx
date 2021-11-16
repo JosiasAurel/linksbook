@@ -247,7 +247,7 @@ const HomePage: FunctionComponent = (): JSX.Element => {
   // when the component is mounted
   useEffect(() => {
     if (data) {
-      console.log(data);
+      //console.log(data);
       setDisplayLinks(data.user.links);
     }
   }, [data]);
@@ -282,7 +282,7 @@ const HomePage: FunctionComponent = (): JSX.Element => {
   }
 
   if (error) {
-    console.log(error);
+    //console.log(error);
     toast.error("Something Wrong Ocurred.");
     toast.error("Could not load data.");
     return (
@@ -369,7 +369,7 @@ const HomePage: FunctionComponent = (): JSX.Element => {
           <div className={styles.links}>
             {/* <Spacer y={6} /> */}
             {displayLinks.map((link) => {
-              console.log({ link: link });
+              //console.log({ link: link });
               return (
                 <LinkCard
                   key={link.id}
