@@ -114,7 +114,7 @@ const HomePage: React.FC = (): JSX.Element => {
                     callToAction="Sign Up"
                 />
                 <Pricing
-                    price={25}
+                    price={3}
                     features={["All in Free plan", "Nested Collections", "Reminders", "Custom Themes", "Shareable collections"]}
                     callToAction="Buy Now"
                 />

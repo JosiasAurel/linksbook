@@ -20,7 +20,7 @@ body {
   align-items: center;
 }
 
-button {
+.button {
   background-color: rgb(41, 41, 255);
   border: solid transparent;
   color: white;
@@ -30,11 +30,11 @@ button {
   cursor: pointer;
 }
 
-button img {
+.button img {
   max-width: 20px;
 }
 
-button:active {
+.button:active {
   transition: scale(0.9);
 }
 

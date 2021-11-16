@@ -1,6 +1,5 @@
-
 const ItemTypes = {
-    BOOKMARK: "bookmark"
+  BOOKMARK: "bookmark",
 };
 
 export { ItemTypes };

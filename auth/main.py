@@ -3,7 +3,7 @@ from lib.mail import send_mail_to, send_mail
 from lib.genid import generate_id
 from lib.pinmanager import create_pin, verify_and_revoke_pin
 from lib.tokenmanager import save_token, verify_token, revoke_token, data_from_token
-from models.user import get_user_by_email, create_user, set_user_theme
+from models.user import get_user_by_email, create_user
 import jwt
 from fastapi import FastAPI, Request
 from deta import Deta
@@ -122,17 +122,3 @@ async def _sign_out_user(request: Request):
     revoke_token(user.get("key"))
 
     return {"status": "Done"}
-
-
-@app.post("/set-theme")
-async def _handle_set_theme(req: Request):
-    req_headers = await req._headers
-    authToken = req_headers.get("Authorization").split(" ")[1]
-    data = jwt.decode(authToken, "SECRET", algorithms=["HS256"])
-    user_email = data.get("email")
-    req_body = await req.json()
-    theme = req_body.get("theme")
-
-    result = set_user_theme(user_email, theme)
-
-    return {"status": result}
