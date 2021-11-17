@@ -1,5 +1,6 @@
 
 from fastapi import FastAPI, Request
+from fastapi.responses import RedirectResponse
 from fastapi.middleware.cors import CORSMiddleware
 from bs4 import BeautifulSoup
 import requests
@@ -47,6 +48,11 @@ def _get_page_title(req: Request, url: str) -> any:
     return {"pageTitle": title}
 
 
+@app.get("/failed-purchase")
+def successful_purchae():
+    return "Purchase Failed"
+
+
 @app.get("/purchase")
 def _save_new_purchase():
     prods = requests.get(
@@ -67,8 +73,8 @@ def _save_new_purchase():
                 "purchase date": data["sales"][0]["daystamp"]
             }, user_id)
 
-            return {"status": "Passed"}
+            return RedirectResponse("https://app.linksbook.me")
         except:
-            return {"status": "Failed"}
+            return RedirectResponse("/failed-purchase")
     else:
-        return {"status": "NoSales"}
+        return "No Sales"
