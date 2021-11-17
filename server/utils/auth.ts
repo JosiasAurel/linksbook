@@ -1,5 +1,8 @@
+import { config } from "dotenv";
 import jwt from "jsonwebtoken";
 import { getUserByEmail } from "../models/user";
+
+config();
 
 interface UserInfoRes {
   name: string;
@@ -16,7 +19,7 @@ async function authenticateUser(token: string): Promise<UserInfoRes> {
 }
 
 function verifyToken(token: string): any {
-  const result = jwt.verify(token, "SECRET");
+  const result = jwt.verify(token, process.env.SECRET as string);
   return result;
 }
 
