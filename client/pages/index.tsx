@@ -2,8 +2,6 @@ import React, {
   FunctionComponent,
   useState,
   useEffect,
-  useContext,
-  FormEvent,
 } from "react";
 // import { AuthCtx } from "../contexts/auth";
 import { useQuery } from "@apollo/client";
