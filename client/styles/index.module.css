@@ -255,3 +255,12 @@
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 1em;
 }
+
+.aCustomBg {
+  border-radius: 10px;
+  padding: 1px;
+}
+
+.aCustomBg:active {
+  background-color: blue;
+}

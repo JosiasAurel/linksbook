@@ -83,6 +83,8 @@ const HomePage: FunctionComponent = (): JSX.Element => {
 
   async function saveUserPref() {
     localStorage.setItem("bgImage", backgroundImage);
+    setShowSettings(false)
+    toast("Saved Background Image Choice");
   }
   /*  */
   /* ... */
@@ -476,14 +478,16 @@ const HomePage: FunctionComponent = (): JSX.Element => {
           <div className={styles.userMenuBgs}>
             {presetBgs.map((bg) => {
               return (
-                <Display shadow>
-                  <Image
-                    onClick={() => setBackgroundImage(bg)}
-                    src={bg}
-                    width="100px"
-                    height="70px"
-                  />
-                </Display>
+                <div className={styles.aCustomBg}>
+                  <Display shadow>
+                    <Image
+                      onClick={() => setBackgroundImage(bg)}
+                      src={bg}
+                      width="100px"
+                      height="70px"
+                    />
+                  </Display>
+                </div>
               );
             })}
           </div>
