@@ -60,7 +60,7 @@ const MainAuthPage: React.FC = (): JSX.Element => {
             clearable
             placeholder="Kylee"
           >
-            Name
+            User Name
           </Input>
           <Input
             value={email}

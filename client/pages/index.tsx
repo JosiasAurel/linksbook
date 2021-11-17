@@ -29,8 +29,10 @@ import {
   Tree,
   Display,
   Image,
+  Card
 } from "vercel-style";
 import { Home } from "@geist-ui/react-icons";
+import Link from "next/link";
 
 // import graphql actions
 import { FETCH_ALL } from "../graphql/actions";
@@ -43,29 +45,36 @@ const AUTH_SERVICE_URI: string = process.env.NEXT_PUBLIC_AUTH_SERVICE;
 const HomePage: FunctionComponent = (): JSX.Element => {
   const [isAuth, setIsAuth] = React.useState<boolean>(false);
   const [name, setName] = React.useState<string>("");
+  const [hasToken, setHasToken] = useState<boolean>(false);
 
   React.useEffect(() => {
     /* Request... Check if user is authenticated */
     /* Is token in localstorage */
     const authToken = localStorage.getItem("token") ?? undefined;
 
-    fetch(`${AUTH_SERVICE_URI}/is-authenticated`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ token: authToken }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (authToken !== undefined && data.status !== "Failed") {
-          setIsAuth(true);
-          setName(data.userName);
-        }
-        /* console.log("Auth Data");
-                console.log(data); */
-      });
-  }, []);
+    if (authToken !== undefined) {
+      setHasToken(true);
+      fetch(`${AUTH_SERVICE_URI}/is-authenticated`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ token: authToken }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (authToken !== undefined && data.status !== "Failed") {
+            setIsAuth(true);
+            setName(data.userName);
+          }
+          /* console.log("Auth Data");
+                  console.log(data); */
+        });
+    } else {
+      setHasToken(false);
+    }
+
+  }, [hasToken]);
 
   /* The user and theme contexts */
   const [theme, setTheme] = useState<string>("");
@@ -263,6 +272,17 @@ const HomePage: FunctionComponent = (): JSX.Element => {
   // update all links after edit
   function getRefreshedData(datav: any): void {
     data = datav;
+  }
+
+  if (!hasToken) {
+    return (
+      <div style={{ height: "100vh", display: "flex", justifyContent: "center", alignItems: "center" }}>
+        <Card style={{ padding: "2em" }} shadow>
+          <h4>You cannot access this page.</h4>
+          Consider <Link href="/auth">Creating an account</Link> or <Link href="/auth/login">Logging In</Link>
+        </Card>
+      </div>
+    )
   }
 
   if (loading) {
