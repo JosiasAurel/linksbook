@@ -113,14 +113,14 @@ const HomePage: React.FC = (): JSX.Element => {
                     features={["Unlimited Bookmarks", "Unlimited Collections", "Tags & Search", "Drag-n-Drop", "Notes"]}
                     callToAction="Sign Up"
                 />
-                <Pricing
-                    price={3}
-                    features={["All in Free plan", "Nested Collections", "Reminders", "Custom Themes", "Shareable collections"]}
-                    callToAction="Buy Now"
-                />
+
+                <div className="gumroad-product-embed">
+                    <a href="https://gumroad.com/l/dWEbL">Loading...</a>
+                </div>
             </div>
 
             <Footer />
+            <script src="https://gumroad.com/js/gumroad-embed.js"></script>
         </div >
     )
 }
