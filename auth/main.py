@@ -1,4 +1,4 @@
-from config import SECRET
+
 from lib.mail import send_mail_to, send_mail
 from lib.genid import generate_id
 from lib.pinmanager import create_pin, verify_and_revoke_pin
@@ -8,8 +8,9 @@ import jwt
 from fastapi import FastAPI, Request
 from deta import Deta
 from fastapi.middleware.cors import CORSMiddleware
+from config import SECRET, PROJECT_KEY
 
-deta = Deta("a0ojq87u_xgq3dQQLkXj3YBsJ5iJKZ5MTAtYmCLoF")
+deta = Deta(PROJECT_KEY)
 
 usersdb = deta.Base("users")
 
@@ -104,7 +105,7 @@ async def _check_is_auth(request: Request):
     req_body = await request.json()
     auth_token = req_body["token"]
 
-    data = jwt.decode(auth_token, "SECRET", algorithms=["HS256"])
+    data = jwt.decode(auth_token, SECRET, algorithms=["HS256"])
 
     user = get_user_by_email(data.get("email"))
 
@@ -116,7 +117,7 @@ async def _check_is_auth(request: Request):
 @app.post("/sign-out")
 async def _sign_out_user(request: Request):
     auth_token = request.headers.get("Authorization").split(" ")[1]
-    data = jwt.decode(auth_token, "SECRET", algorithms=["HS256"])
+    data = jwt.decode(auth_token, SECRET, algorithms=["HS256"])
     # get owner
     user = get_user_by_email(data.get("email"))
     revoke_token(user.get("key"))

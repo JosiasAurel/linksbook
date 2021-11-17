@@ -3,7 +3,13 @@ import secrets
 import typing as T
 from .genid import generate_id
 
-deta = Deta("a0ojq87u_xgq3dQQLkXj3YBsJ5iJKZ5MTAtYmCLoF")
+import dotenv
+import os
+
+dotenv.load_dotenv()
+PROJECT_KEY =os.getenv("DETA_BASE_KEY")
+
+deta = Deta(PROJECT_KEY)
 
 pinsdb = deta.Base("pins")
 
