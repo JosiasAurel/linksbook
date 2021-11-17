@@ -2,4 +2,4 @@ fastapi
 requests
 beautifulsoup4
 deta
-dotenv
+python-dotenv
