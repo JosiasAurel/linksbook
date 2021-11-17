@@ -18,7 +18,7 @@ const ColorToggle: React.FC = (): JSX.Element => {
     );
   }
   React.useEffect(() => {
-    console.log(rotation);
+    //console.log(rotation);
   }, [rotation]);
 
   return (

@@ -4,9 +4,11 @@ from fastapi.middleware.cors import CORSMiddleware
 from bs4 import BeautifulSoup
 import requests
 from deta import Deta
-from secrets import token_urlsafe
-from util import get_user_id_by_email, add_user_uploads
-import jwt
+import dotenv
+import os
+from pprint import pprint
+
+dotenv.load_dotenv()
 
 app = FastAPI()
 
@@ -20,16 +22,13 @@ app.add_middleware(
 )
 
 
+PROJECT_KEY = os.getenv("PROJECT_KEY")
+GUMROAD_ACCESS_TOKEN = os.getenv("GUMROAD_APP_ACCESS_TOKEN")
+PRODUCT_ID = "UZBDIDa6af9RJijqBRVX2A=="
 deta = Deta("a0ojq87u_xgq3dQQLkXj3YBsJ5iJKZ5MTAtYmCLoF")
 
-# create assets storage
-drive = deta.Drive("Background Images")
-
-# cocnnect to users
-db = deta.Base("users")
-
-# create or access JWT db
-tokensdb = deta.Base("tokens")
+# connect to users
+users = deta.Base("users")
 
 
 @app.get("/")
@@ -48,29 +47,25 @@ def _get_page_title(req: Request, url: str) -> any:
     return {"pageTitle": title}
 
 
-@app.post("/upload-image")
-async def _handle_upload_image(req: Request, file: UploadFile = File(...)):
-    print(file.filename)
-    req_headers = req.headers
-    auth_token = req_headers["Authorization"].split(" ")[1]
-    print(auth_token)
+@app.get("/purchase")
+def _save_new_purchase():
+    prods = requests.get(
+        f"https://api.gumroad.com/v2/products?access_token={GUMROAD_ACCESS_TOKEN}")
+    req = requests.get(
+        f"https://api.gumroad.com/v2/sales?access_token={GUMROAD_ACCESS_TOKEN}&product_id={PRODUCT_ID}")
+    data = req.json()
+    pprint(data)
+    user_email = data["sales"][0]["email"]
+    user = users.fetch({"email": user_email}).__next__()
+    user_id = user[0]["key"]
 
-    user_email = jwt.decode(auth_token, "SECRET", algorithms=[
-        "HS256"]).get("email")
-
-    user = get_user_id_by_email(user_email)
-
-    filename = token_urlsafe(10)  # file.filename - generate unique file name
-    image_file = file.file
+    # set user plan to pro
     try:
-        drive.put(filename, image_file)
-        result = add_user_uploads(user, filename)
-        return result
+        users.update({
+            "plan": "PRO",
+            "purchase date": data["sales"][0]["daystamp"]
+        }, user_id)
+
+        return {"status": "Passed"}
     except:
-        return "Failed"
-
-
-@app.post("/create-reminder")
-def _handle_create_reminder():
-
-    return
+        return {"status": "Failed"}

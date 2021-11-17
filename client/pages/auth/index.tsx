@@ -16,7 +16,7 @@ const MainAuthPage: React.FC = (): JSX.Element => {
   const [name, setName] = React.useState<string>("");
   const [email, setEmail] = React.useState<string>("");
 
-  console.log(AUTH_SERVICE_URI);
+  //console.log(AUTH_SERVICE_URI);
 
   function handleRegistration(): void {
     fetch(`${AUTH_SERVICE_URI}/register`, {
@@ -60,7 +60,7 @@ const MainAuthPage: React.FC = (): JSX.Element => {
             clearable
             placeholder="Kylee"
           >
-            Name
+            User Name
           </Input>
           <Input
             value={email}

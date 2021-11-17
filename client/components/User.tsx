@@ -4,6 +4,8 @@ import styles from "../styles/components.module.css";
 
 import ColorToggle from "./colorToggle";
 import { LogOut, Settings } from "@geist-ui/react-icons";
+import toast from "react-hot-toast";
+import router from "next/router";
 
 const AUTH_SERVICE: string = process.env.NEXT_PUBLIC_AUTH_SERVICE;
 
@@ -16,7 +18,10 @@ const User: React.FC<UserButtonProps> = ({
   name,
   toggleSettings,
 }): JSX.Element => {
+
   async function logOut(): Promise<any> {
+    toast("Logging you out...");
+
     await fetch(`${AUTH_SERVICE}/sign-out`, {
       method: "POST",
       headers: {
@@ -27,7 +32,11 @@ const User: React.FC<UserButtonProps> = ({
     });
     // remove auth token
     localStorage.removeItem("token");
+
+    // reload page
+    router.reload();
   }
+
   return (
     <>
       <div className={styles.userPrefMenu}>

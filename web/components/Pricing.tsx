@@ -47,7 +47,7 @@ const Pricing: React.FC<PricingProps> = ({ price, features, callToAction }): JSX
                     <Spacer />
 
                     <div style={{ position: "relative", top: "-25px" }}>
-                        <a href="https://vajoozk816i.typeform.com/to/IAJVR4D6" target="_blank">
+                        <a target={"_blank"} href="https://app.linksbook.me/auth">
                             <Button type="success">
                                 {callToAction}
                             </Button>

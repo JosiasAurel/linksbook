@@ -2,8 +2,6 @@ import React, {
   FunctionComponent,
   useState,
   useEffect,
-  useContext,
-  FormEvent,
 } from "react";
 // import { AuthCtx } from "../contexts/auth";
 import { useQuery } from "@apollo/client";
@@ -31,8 +29,10 @@ import {
   Tree,
   Display,
   Image,
+  Card
 } from "vercel-style";
 import { Home } from "@geist-ui/react-icons";
+import Link from "next/link";
 
 // import graphql actions
 import { FETCH_ALL } from "../graphql/actions";
@@ -45,29 +45,36 @@ const AUTH_SERVICE_URI: string = process.env.NEXT_PUBLIC_AUTH_SERVICE;
 const HomePage: FunctionComponent = (): JSX.Element => {
   const [isAuth, setIsAuth] = React.useState<boolean>(false);
   const [name, setName] = React.useState<string>("");
+  const [hasToken, setHasToken] = useState<boolean>(false);
 
   React.useEffect(() => {
     /* Request... Check if user is authenticated */
     /* Is token in localstorage */
     const authToken = localStorage.getItem("token") ?? undefined;
 
-    fetch(`${AUTH_SERVICE_URI}/is-authenticated`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ token: authToken }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (authToken !== undefined && data.status !== "Failed") {
-          setIsAuth(true);
-          setName(data.userName);
-        }
-        /* console.log("Auth Data");
-                console.log(data); */
-      });
-  }, []);
+    if (authToken !== undefined) {
+      setHasToken(true);
+      fetch(`${AUTH_SERVICE_URI}/is-authenticated`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ token: authToken }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (authToken !== undefined && data.status !== "Failed") {
+            setIsAuth(true);
+            setName(data.userName);
+          }
+          /* console.log("Auth Data");
+                  console.log(data); */
+        });
+    } else {
+      setHasToken(false);
+    }
+
+  }, [hasToken]);
 
   /* The user and theme contexts */
   const [theme, setTheme] = useState<string>("");
@@ -83,6 +90,8 @@ const HomePage: FunctionComponent = (): JSX.Element => {
 
   async function saveUserPref() {
     localStorage.setItem("bgImage", backgroundImage);
+    setShowSettings(false)
+    toast("Saved Background Image Choice");
   }
   /*  */
   /* ... */
@@ -247,7 +256,7 @@ const HomePage: FunctionComponent = (): JSX.Element => {
   // when the component is mounted
   useEffect(() => {
     if (data) {
-      console.log(data);
+      //console.log(data);
       setDisplayLinks(data.user.links);
     }
   }, [data]);
@@ -263,6 +272,17 @@ const HomePage: FunctionComponent = (): JSX.Element => {
   // update all links after edit
   function getRefreshedData(datav: any): void {
     data = datav;
+  }
+
+  if (!hasToken) {
+    return (
+      <div style={{ height: "100vh", display: "flex", justifyContent: "center", alignItems: "center" }}>
+        <Card style={{ padding: "2em" }} shadow>
+          <h4>You cannot access this page.</h4>
+          Consider <Link href="/auth">Creating an account</Link> or <Link href="/auth/login">Logging In</Link>
+        </Card>
+      </div>
+    )
   }
 
   if (loading) {
@@ -282,7 +302,7 @@ const HomePage: FunctionComponent = (): JSX.Element => {
   }
 
   if (error) {
-    console.log(error);
+    //console.log(error);
     toast.error("Something Wrong Ocurred.");
     toast.error("Could not load data.");
     return (
@@ -297,18 +317,18 @@ const HomePage: FunctionComponent = (): JSX.Element => {
       style={
         theme === "image"
           ? {
-              backgroundImage: `url("${bgImage}")`,
-              backgroundSize: "100vw 100vh",
-            }
+            backgroundImage: `url("${bgImage}")`,
+            backgroundSize: "100vw 100vh",
+          }
           : theme === "image_blur"
-          ? {
+            ? {
               backgroundImage: `url("${bgImage}")`,
               backgroundSize: "100vw 100vh",
               backdropFilter: "blur(4px)",
             }
-          : theme === "dark"
-          ? { backgroundColor: "#0d1117", color: "white" }
-          : { backgroundColor: "white", color: "black" }
+            : theme === "dark"
+              ? { backgroundColor: "#0d1117", color: "white" }
+              : { backgroundColor: "white", color: "black" }
       }
       className={styles.dashboardPage}
     >
@@ -341,7 +361,7 @@ const HomePage: FunctionComponent = (): JSX.Element => {
             </Tooltip>
           </div>
           <div className={styles.folders}>
-            <Tree>
+            <Tree style={{ overflow: "auto" }}>
               {data.user.collections.map((folder, idx) => {
                 if (folder.parent.match(/NONE/)) {
                   return (
@@ -369,7 +389,7 @@ const HomePage: FunctionComponent = (): JSX.Element => {
           <div className={styles.links}>
             {/* <Spacer y={6} /> */}
             {displayLinks.map((link) => {
-              console.log({ link: link });
+              //console.log({ link: link });
               return (
                 <LinkCard
                   key={link.id}
@@ -476,14 +496,16 @@ const HomePage: FunctionComponent = (): JSX.Element => {
           <div className={styles.userMenuBgs}>
             {presetBgs.map((bg) => {
               return (
-                <Display shadow>
-                  <Image
-                    onClick={() => setBackgroundImage(bg)}
-                    src={bg}
-                    width="100px"
-                    height="70px"
-                  />
-                </Display>
+                <div className={styles.aCustomBg}>
+                  <Display shadow>
+                    <Image
+                      onClick={() => setBackgroundImage(bg)}
+                      src={bg}
+                      width="100px"
+                      height="70px"
+                    />
+                  </Display>
+                </div>
               );
             })}
           </div>

@@ -56,7 +56,7 @@ const LinkCard: React.FC<LinkCardProps> = ({
   tagSearchHandler,
   linkData,
 }): JSX.Element => {
-  console.log(linkData);
+  //console.log(linkData);
 
   const [{ isDragging }, drag] = useDrag(() => ({
     type: ItemTypes.BOOKMARK,

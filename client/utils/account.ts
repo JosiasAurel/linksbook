@@ -12,7 +12,7 @@ async function completeAccountCreation(name, email, userId): Promise<void> {
 
   const result = await fetchRes.json();
 
-  console.log(result);
+  //console.log(result);
 }
 
 export { completeAccountCreation };
