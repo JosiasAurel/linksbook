@@ -54,7 +54,7 @@ const HomePage: FunctionComponent = (): JSX.Element => {
 
     if (authToken !== undefined) {
       setHasToken(true);
-      fetch(`${AUTH_SERVICE_URI}/is-authenticated`, {
+      fetch(`${AUTH_SERVICE}/is-authenticated`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
