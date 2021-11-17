@@ -9,7 +9,7 @@ pinsdb = deta.Base("pins")
 
 
 def generate_pin() -> str:
-    return secrets.token_hex(5)
+    return secrets.token_hex(3)
 
 
 def create_pin() -> T.Dict[str, str]:
