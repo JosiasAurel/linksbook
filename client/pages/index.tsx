@@ -40,7 +40,7 @@ import { FETCH_ALL } from "../graphql/actions";
 import { truncateStr } from "../utils/string";
 import { presetBgs } from "../utils/presets";
 
-const AUTH_SERVICE_URI: string = process.env.NEXT_PUBLIC_AUTH_SERVICE;
+const AUTH_SERVICE: string = "https://auth.linksbook.me";
 
 const HomePage: FunctionComponent = (): JSX.Element => {
   const [isAuth, setIsAuth] = React.useState<boolean>(false);

@@ -7,7 +7,7 @@ import { LogOut, Settings } from "@geist-ui/react-icons";
 import toast from "react-hot-toast";
 import router from "next/router";
 
-const AUTH_SERVICE: string = process.env.NEXT_PUBLIC_AUTH_SERVICE;
+const AUTH_SERVICE: string = "https://auth.linksbook.me";
 
 interface UserButtonProps {
   name: string;
