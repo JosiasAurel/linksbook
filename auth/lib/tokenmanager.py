@@ -2,8 +2,12 @@ from deta import Deta
 import jwt
 import datetime
 import typing as T
+import dotenv
+import os
 
-deta = Deta("a0ojq87u_xgq3dQQLkXj3YBsJ5iJKZ5MTAtYmCLoF")
+dotenv.load_dotenv()
+PROJECT_KEY = os.getenv("DETA_BASE_KEY")
+deta = Deta(PROJECT_KEY)
 
 # create or access JWT db
 tokensdb = deta.Base("tokens")
