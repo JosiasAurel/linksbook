@@ -369,6 +369,7 @@ const HomePage: FunctionComponent = (): JSX.Element => {
                   return (
                     <Folder
                       key={folder.id}
+                      plan={plan}
                       label={folder.name}
                       index={idx}
                       id={folder.id}
