@@ -146,14 +146,14 @@ const HomePage: React.FC = (): JSX.Element => {
                 <Pricing
                     price={25}
                     features={["All in Free plan", "Nested Collections", "Reminders", "Custom Themes", "Share collections"]}
-                    callToAction="Buy Now"
+                    callToAction="One time purchase"
                     plantType="Pro"
                     selectRedirect="https://linksbook.gumroad.com/l/idwZX"
                 />
                 <Pricing
                     price={35}
                     features={["All in Pro plan", "Access to beta stage features", "Request features/changes"]}
-                    callToAction="Buy Now"
+                    callToAction="One time purchase"
                     plantType="Pro++"
                     selectRedirect="https://linksbook.gumroad.com/l/idwZX"
                 />
