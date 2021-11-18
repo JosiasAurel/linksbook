@@ -65,7 +65,7 @@ const HomePage: React.FC = (): JSX.Element => {
                         title={"Nested Collections"}
                         content="Organize your bookmarks in a way that makes sense to you.
                 Linksbook enables you to organise your bookmarks into collections and nest them however you want."
-                        icon={"foler.png"}
+                        icon={"folder.png"}
                         badge="free, wip"
                     />
 
