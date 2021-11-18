@@ -144,14 +144,14 @@ const HomePage: React.FC = (): JSX.Element => {
                     selectRedirect="https://app.linksbook.me/auth"
                 />
                 <Pricing
-                    price={30}
+                    price={25}
                     features={["All in Free plan", "Nested Collections", "Reminders", "Custom Themes", "Share collections"]}
                     callToAction="Buy Now"
                     plantType="Pro"
                     selectRedirect="https://linksbook.gumroad.com/l/idwZX"
                 />
                 <Pricing
-                    price={45}
+                    price={35}
                     features={["All in Pro plan", "Access to beta stage features", "Request features/changes"]}
                     callToAction="Buy Now"
                     plantType="Pro++"
