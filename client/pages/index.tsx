@@ -65,6 +65,7 @@ const HomePage: FunctionComponent = (): JSX.Element => {
         .then((res) => res.json())
         .then((data) => {
           if (authToken !== undefined && data.status !== "Failed") {
+            console.log(data);
             setIsAuth(true);
             setName(data.userName);
             setPlan(data.plan);
