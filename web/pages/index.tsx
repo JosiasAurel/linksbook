@@ -4,10 +4,11 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import Feature from "../components/Feature";
 import Pricing from "../components/Pricing";
-import { Button } from "@geist-ui/react";
+import { Button, Badge, Card } from "@geist-ui/react";
 import styles from "../styles/index.module.css";
 
 import Head from "next/head";
+import Image from "next/image";
 
 const HomePage: React.FC = (): JSX.Element => {
     return (
@@ -24,14 +25,14 @@ const HomePage: React.FC = (): JSX.Element => {
                         <h2 className={styles.copy}>
                             Power up your browsing experience by using linksbook.
                         </h2>
-                        <p style={{ color: "gray", fontSize: "0.5em", maxWidth: "80%" }}>
+                        <p style={{ color: "gray", fontSize: "0.8em", maxWidth: "80%" }}>
                             Save time and clicks by powering your workflow with linksbook.
                             A clean and feature full app to give you the best bookmarking experience.
                         </p>
                     </h2>
-                    <div style={{ margin: "5em", display: "flex", justifyContent: "center", alignItems: "center" }}>
-                        <a href="https://vajoozk816i.typeform.com/to/IAJVR4D6" target="_blank">
-                            <Button type="success-light" shadow>
+                    <div style={{ margin: "4em", display: "flex", justifyContent: "center", alignItems: "center" }}>
+                        <a href="https://app.linksbook.me/auth" target="_blank">
+                            <Button scale={1.8} type="success-light" shadow>
                                 Get Started
                             </Button>
                         </a>
@@ -45,15 +46,17 @@ const HomePage: React.FC = (): JSX.Element => {
                 </main>
             </div>
 
-            <div className={styles.description}>
-                <p>
-                    Linksbook is an app to help you manage all of your browser bookmarks in one place.
-                    <br />
-                </p>
-                <p style={{ fontSize: "0.6em", color: "gray" }}>
-                    Linksbook aim at providing a better bookmark management experience by serving
-                    a customizable environment with a number of useful features.
-                </p>
+            <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+                <div className={styles.description}>
+                    <p>
+                        Linksbook is an app to help you manage all of your browser bookmarks in one place.
+                        <br />
+                    </p>
+                    <p style={{ fontSize: "0.6em", color: "gray" }}>
+                        Linksbook aim at providing a better bookmark management experience by serving
+                        a customizable environment with a number of useful features.
+                    </p>
+                </div>
             </div>
 
             <div id="features" className={styles.featuresContainer}>
@@ -103,6 +106,31 @@ const HomePage: React.FC = (): JSX.Element => {
                 </div>
             </div>
 
+            <h1 style={{ textAlign: "center" }}>Get the browser extensions</h1>
+            <div className={styles.extensions} id="extensions">
+                <Card style={{ textAlign: "center" }}>
+                    <Card shadow>
+                        <Badge.Anchor>
+                            <Badge>
+                                Soon
+                            </Badge>
+                            <Image src="/chrome.png" width="40" height="40" />
+                        </Badge.Anchor>
+                    </Card>
+                    Chrome
+                </Card>
+                <Card style={{ textAlign: "center" }}>
+                    <a target={"_blank"} href="https://addons.mozilla.org/en-GB/firefox/addon/linksbook/">
+                        <Card shadow>
+                            <Badge.Anchor>
+                                <Image src="/firefox.png" width="40" height="40" />
+                            </Badge.Anchor>
+                        </Card>
+                    </a>
+                    Firefox
+                </Card>
+            </div>
+
             <div style={{ marginTop: "3em" }}>
                 <h1 style={{ textAlign: "center" }}>Start free. Upgrade when needed.</h1>
             </div>
@@ -112,15 +140,26 @@ const HomePage: React.FC = (): JSX.Element => {
                     price={0}
                     features={["Unlimited Bookmarks", "Unlimited Collections", "Tags & Search", "Drag-n-Drop", "Notes"]}
                     callToAction="Sign Up"
+                    plantType="Free"
+                    selectRedirect="https://app.linksbook.me/auth"
                 />
-
-                <div className="gumroad-product-embed">
-                    <a href="https://gumroad.com/l/dWEbL">Loading...</a>
-                </div>
+                <Pricing
+                    price={30}
+                    features={["All in Free plan", "Nested Collections", "Reminders", "Custom Themes", "Share collections"]}
+                    callToAction="Buy Now"
+                    plantType="Pro"
+                    selectRedirect="https://linksbook.gumroad.com/l/idwZX"
+                />
+                <Pricing
+                    price={45}
+                    features={["All in Pro plan", "Access to beta stage features", "Request features/changes"]}
+                    callToAction="Buy Now"
+                    plantType="Pro++"
+                    selectRedirect="https://linksbook.gumroad.com/l/idwZX"
+                />
             </div>
 
             <Footer />
-            <script src="https://gumroad.com/js/gumroad-embed.js"></script>
         </div >
     )
 }

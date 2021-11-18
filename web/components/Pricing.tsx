@@ -9,9 +9,11 @@ interface PricingProps {
     price: number;
     features: Array<string>;
     callToAction: string;
+    plantType: string;
+    selectRedirect: string;
 }
 
-const Pricing: React.FC<PricingProps> = ({ price, features, callToAction }): JSX.Element => {
+const Pricing: React.FC<PricingProps> = ({ price, features, callToAction, plantType, selectRedirect }): JSX.Element => {
 
     const theme = useTheme();
 
@@ -19,13 +21,13 @@ const Pricing: React.FC<PricingProps> = ({ price, features, callToAction }): JSX
         <div style={{ margin: "1em" }}>
             <Badge.Anchor>
                 <Badge style={{ backgroundColor: theme.palette.alert }}>
-                    {price === 0 ? "Free" : "Pro"}
+                    {plantType}
                 </Badge>
 
                 <div className={styles.pricing}>
                     <div className={styles.pricing__header}>
                         <h1>
-                            <h1> ${price} </h1> /month
+                            <h1> ${price} </h1>
                         </h1>
                     </div>
                     <div className={styles.pricing__body}>
@@ -47,7 +49,7 @@ const Pricing: React.FC<PricingProps> = ({ price, features, callToAction }): JSX
                     <Spacer />
 
                     <div style={{ position: "relative", top: "-25px" }}>
-                        <a target={"_blank"} href="https://app.linksbook.me/auth">
+                        <a target={"_blank"} href={selectRedirect}>
                             <Button type="success">
                                 {callToAction}
                             </Button>
