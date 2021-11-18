@@ -82,12 +82,11 @@ function UpdateReminderComponent({
           }
         )
         .then((_) => getUpdatedData(data));
+
+      finishAction(false);
     } else {
-      toast("Buy Pro plan");
+      toast("You need to Buy Pro plan 💰", { duration: 5000 });
     }
-
-
-    finishAction(false);
   }
 
   return (
