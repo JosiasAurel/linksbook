@@ -8,6 +8,7 @@ import os
 dotenv.load_dotenv()
 PROJECT_KEY = os.getenv("DETA_BASE_KEY")
 deta = Deta(PROJECT_KEY)
+SECRET = os.getenv("SECRET")
 
 # create or access JWT db
 tokensdb = deta.Base("tokens")
@@ -25,14 +26,15 @@ def create_token(name, email) -> str:
     expiry_date = set_token_expiry_date_to(29)
     issue_time = datetime.datetime.utcnow()
     auth_token = jwt.encode(
-        {"name": name, "email": email, "exp": expiry_date, "iat": issue_time, "iss": "LinksBook"}, "SECRET")
+        {"name": name, "email": email, "exp": expiry_date, "iat": issue_time, "iss": "LinksBook"}, SECRET)
+    print(auth_token)
     return auth_token
 
 
 def save_token(name: str, email: str) -> T.Dict[str, str]:
     new_token = create_token(name, email)
     try:
-        tokensdb.put(f" {new_token} ", key=new_token)
+        save_t = tokensdb.put(f" {new_token} ", key=f"{new_token}")
         return {"status": "Success", "token": new_token}
     except:
         return {"status": "Failed"}
@@ -45,7 +47,7 @@ def verify_token(token: str) -> str:
         # check if token is in database
         # will return none if not found
         token_in_db = tokensdb.get(token)
-        print(token_in_db)
+        # print(token_in_db)
         if token_in_db != None:
             return "Valid"
 
@@ -54,10 +56,10 @@ def verify_token(token: str) -> str:
         return "Invalid"
 
 
-def data_from_token(token: str, owner: str, plan: str) -> any:
+def data_from_token(token: str, plan: str) -> any:
     verification = verify_token(token)
     if verification == "Valid":
-        data = jwt.decode(token, "SECRET", algorithms=["HS256"])
+        data = jwt.decode(token, SECRET, algorithms=["HS256"])
         # print(f" NAME FROM TOKEN {data}")
         return {"status": "Success", "userName": data.get("name"), "userEmail": data.get("email"), "plan": plan}
 

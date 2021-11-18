@@ -87,11 +87,11 @@ async def _complete_user_login(request: Request):
 
         # fetch current user info
         user = get_user_by_email(email)
-        print(f"user : {user} ")
+        #print(f"user : {user} ")
 
         # generate token using user info
         user_token = save_token(user["name"], user["email"])
-
+        print(user_token)
         if user_token["status"] == "Success":
             return {"status": "Success", "token": user_token["token"]}
         else:
@@ -109,7 +109,7 @@ async def _check_is_auth(request: Request):
 
     user = get_user_by_email(data.get("email"))
 
-    result = data_from_token(auth_token, user.get("key"), user.get("plan"))
+    result = data_from_token(auth_token, user.get("plan"))
 
     return result
 

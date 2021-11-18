@@ -40,11 +40,12 @@ import { FETCH_ALL } from "../graphql/actions";
 import { truncateStr } from "../utils/string";
 import { presetBgs } from "../utils/presets";
 
-const AUTH_SERVICE: string = "https://auth.linksbook.me";
+const AUTH_SERVICE: string = "http://localhost:8000" // "https://auth.linksbook.me";
 
 const HomePage: FunctionComponent = (): JSX.Element => {
   const [isAuth, setIsAuth] = React.useState<boolean>(false);
   const [name, setName] = React.useState<string>("");
+  const [plan, setPlan] = React.useState<string>("");
   const [hasToken, setHasToken] = useState<boolean>(false);
 
   React.useEffect(() => {
@@ -66,6 +67,7 @@ const HomePage: FunctionComponent = (): JSX.Element => {
           if (authToken !== undefined && data.status !== "Failed") {
             setIsAuth(true);
             setName(data.userName);
+            setPlan(data.plan);
           }
           /* console.log("Auth Data");
                   console.log(data); */
