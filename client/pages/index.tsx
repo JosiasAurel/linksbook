@@ -363,7 +363,7 @@ const HomePage: FunctionComponent = (): JSX.Element => {
             </Tooltip>
           </div>
           <div className={styles.folders}>
-            <Tree style={{ overflow: "auto" }}>
+            <Tree style={{ overflow: "scroll" }}>
               {data.user.collections.map((folder, idx) => {
                 if (folder.parent.match(/NONE/)) {
                   return (
