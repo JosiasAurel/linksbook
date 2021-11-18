@@ -40,7 +40,7 @@ import { FETCH_ALL } from "../graphql/actions";
 import { truncateStr } from "../utils/string";
 import { presetBgs } from "../utils/presets";
 
-const AUTH_SERVICE: string = "http://localhost:8000" // "https://auth.linksbook.me";
+const AUTH_SERVICE: string = "https://auth.linksbook.me" // "https://auth.linksbook.me";
 
 const HomePage: FunctionComponent = (): JSX.Element => {
   const [isAuth, setIsAuth] = React.useState<boolean>(false);
@@ -395,6 +395,7 @@ const HomePage: FunctionComponent = (): JSX.Element => {
               return (
                 <LinkCard
                   key={link.id}
+                  plan={plan}
                   linkData={link}
                   id={link.id}
                   name={link.annotation}

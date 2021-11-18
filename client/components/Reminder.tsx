@@ -32,6 +32,7 @@ interface ReminderProps {
   getUpdatedData?: Function;
   linkId: string;
   data: any;
+  plan: any;
 }
 
 function UpdateReminderComponent({
@@ -39,6 +40,7 @@ function UpdateReminderComponent({
   finishAction,
   reminder,
   oldData,
+  plan
 }): JSX.Element {
   const [updateReminder, { data, loading, error }] =
     useMutation(UPDATE_REMINDER);
@@ -62,23 +64,28 @@ function UpdateReminderComponent({
   }
 
   function handleUpdateReminder(): void {
-    toast
-      .promise(
-        updateReminder({
-          variables: {
-            reminderId: reminder,
-            remindDate: prepareUTCRemindDate(),
-            recipients: recipients.join(" ").trim().split(" "),
-          },
-          refetchQueries: [{ query: FETCH_ALL }],
-        }),
-        {
-          success: "Reminder Updated",
-          error: "Something went wrong",
-          loading: "Updating Reminder...",
-        }
-      )
-      .then((_) => getUpdatedData(data));
+    if (plan === "PRO") {
+      toast
+        .promise(
+          updateReminder({
+            variables: {
+              reminderId: reminder,
+              remindDate: prepareUTCRemindDate(),
+              recipients: recipients.join(" ").trim().split(" "),
+            },
+            refetchQueries: [{ query: FETCH_ALL }],
+          }),
+          {
+            success: "Reminder Updated",
+            error: "Something went wrong",
+            loading: "Updating Reminder...",
+          }
+        )
+        .then((_) => getUpdatedData(data));
+    } else {
+      toast("Buy Pro plan");
+    }
+
 
     finishAction(false);
   }
@@ -110,6 +117,7 @@ function ReminderTooltipBody({
   reminder,
   getUpdatedData,
   linkId,
+  plan
 }): JSX.Element {
   const [updateModal, setUpdateModal] = React.useState<boolean>(false);
 
@@ -165,6 +173,7 @@ function ReminderTooltipBody({
         <Modal.Title>Update Reminder</Modal.Title>
         <Modal.Content>
           <UpdateReminderComponent
+            plan={plan}
             getUpdatedData={(d) => getUpdatedData(d)}
             finishAction={(v) => setUpdateModal(v)}
             reminder={reminder}
@@ -183,6 +192,7 @@ const Reminder: React.FC<ReminderProps> = ({
   id,
   getUpdatedData,
   linkId,
+  plan
 }): JSX.Element => {
   return (
     <Tooltip
@@ -194,6 +204,7 @@ const Reminder: React.FC<ReminderProps> = ({
           reminder={id}
           recipients={recipients}
           date={date}
+          plan={plan}
         />
       }
       placement="left"

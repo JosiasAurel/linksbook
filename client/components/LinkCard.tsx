@@ -37,6 +37,7 @@ interface LinkCardProps {
   readonly linkData: any;
   readonly inFolder: boolean;
   readonly folderId?: string;
+  readonly plan?: any;
   viewAction?: Function;
   editAction?: Function;
   getUpdatedData?: Function;
@@ -55,6 +56,7 @@ const LinkCard: React.FC<LinkCardProps> = ({
   folderId,
   tagSearchHandler,
   linkData,
+  plan
 }): JSX.Element => {
   //console.log(linkData);
 
@@ -230,6 +232,7 @@ const LinkCard: React.FC<LinkCardProps> = ({
                     <>
                       <Reminder
                         key={reminder.id}
+                        plan={plan}
                         recipients={reminder.recipients}
                         date={reminder.remindDate}
                         id={reminder.id}
@@ -252,6 +255,7 @@ const LinkCard: React.FC<LinkCardProps> = ({
             finishAction={(v) => setReminderModal(v)}
             bookmarkId={id}
             getUpdatedData={getUpdatedData}
+            plan={plan}
           />
         </Modal.Content>
       </Modal>
