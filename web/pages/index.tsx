@@ -14,6 +14,21 @@ const HomePage: React.FC = (): JSX.Element => {
     return (
         <div className={styles.homePage}>
             <Head>
+                <meta name="title" content="LinksBook" />
+                <meta name="description" content="" />
+
+                <meta property="og:type" content="website" />
+                <meta property="og:url" content="https://linksbook.me/" />
+                <meta property="og:title" content="LinksBook" />
+                <meta property="og:description" content="LinksBook - Bookmark tool for bookmark power users" />
+                <meta property="og:image" content="https://i.ibb.co/zVYT4tp/web-screenshot-1637272839752.png" />
+
+                <meta property="twitter:card" content="summary_large_image" />
+                <meta property="twitter:url" content="https://linksbook.me/" />
+                <meta property="twitter:title" content="LinksBook" />
+                <meta property="twitter:description" content="LinksBook - Bookmark tool for bookmark power users" />
+                <meta property="twitter:image" content="https://i.ibb.co/zVYT4tp/web-screenshot-1637272839752.png" />
+
                 <title>LinksBook</title>
                 <link rel="shortcut icon" href="LinksBook.svg" type="image/x-icon" />
             </Head>
