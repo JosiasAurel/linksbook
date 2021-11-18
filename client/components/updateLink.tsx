@@ -15,6 +15,7 @@ interface UpdateLinkProps {
   tags: string;
   note: string;
   currentLink: string;
+  plan?: any;
   handleFormSubmit?: Function;
   getUpdatedData?: Function;
 }
@@ -27,6 +28,7 @@ const UpdateLink: React.FC<UpdateLinkProps> = ({
   handleFormSubmit,
   currentLink,
   getUpdatedData,
+  plan
 }): JSX.Element => {
   const [updateLink, { data, loading, error }] = useMutation(UPDATE_LINK);
 
@@ -96,12 +98,24 @@ const UpdateLink: React.FC<UpdateLinkProps> = ({
         placeholder="Tags separated by spaces"
       />
       <Spacer />
-      <Textarea
-        width="100%"
-        h="100px"
-        value={eNote}
-        onChange={(e) => handleChange(e, setENote)}
-      />
+      <div>
+        {plan === "PRO" ?
+          <Textarea
+            width="100%"
+            h="100px"
+            value={eNote}
+            onChange={(e) => handleChange(e, setENote)}
+          /> :
+          <>
+            <p>You need to be on PRO plan to add notes</p>
+            <Textarea disabled
+              width="100%"
+              h="100px"
+              value={eNote}
+              onChange={(e) => handleChange(e, setENote)}
+            />
+          </>}
+      </div>
       <Spacer />
       <Button htmlType="submit">Save</Button>
     </form>

@@ -1,2 +1,6 @@
+import dotenv
+import os
 
-SECRET = "30cf2e5b76ec25099293c0295ff2f711f51a5154865b90965b48fb838dd76c7af7184d47077ad90d74ef084e72d5ae3b8f40dd3da6d6be52ab5c18f2d8c77b14"
+dotenv.load_dotenv()
+PROJECT_KEY = os.getenv("DETA_BASE_KEY")
+SECRET = os.getenv("SECRET")

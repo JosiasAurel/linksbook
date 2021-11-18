@@ -40,11 +40,12 @@ import { FETCH_ALL } from "../graphql/actions";
 import { truncateStr } from "../utils/string";
 import { presetBgs } from "../utils/presets";
 
-const AUTH_SERVICE_URI: string = process.env.NEXT_PUBLIC_AUTH_SERVICE;
+const AUTH_SERVICE: string = "https://auth.linksbook.me" // "https://auth.linksbook.me";
 
 const HomePage: FunctionComponent = (): JSX.Element => {
   const [isAuth, setIsAuth] = React.useState<boolean>(false);
   const [name, setName] = React.useState<string>("");
+  const [plan, setPlan] = React.useState<string>("");
   const [hasToken, setHasToken] = useState<boolean>(false);
 
   React.useEffect(() => {
@@ -54,7 +55,7 @@ const HomePage: FunctionComponent = (): JSX.Element => {
 
     if (authToken !== undefined) {
       setHasToken(true);
-      fetch(`${AUTH_SERVICE_URI}/is-authenticated`, {
+      fetch(`${AUTH_SERVICE}/is-authenticated`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -66,6 +67,7 @@ const HomePage: FunctionComponent = (): JSX.Element => {
           if (authToken !== undefined && data.status !== "Failed") {
             setIsAuth(true);
             setName(data.userName);
+            setPlan(data.plan);
           }
           /* console.log("Auth Data");
                   console.log(data); */
@@ -361,12 +363,13 @@ const HomePage: FunctionComponent = (): JSX.Element => {
             </Tooltip>
           </div>
           <div className={styles.folders}>
-            <Tree style={{ overflow: "auto" }}>
+            <Tree style={{ overflow: "scroll" }}>
               {data.user.collections.map((folder, idx) => {
                 if (folder.parent.match(/NONE/)) {
                   return (
                     <Folder
                       key={folder.id}
+                      plan={plan}
                       label={folder.name}
                       index={idx}
                       id={folder.id}
@@ -393,6 +396,7 @@ const HomePage: FunctionComponent = (): JSX.Element => {
               return (
                 <LinkCard
                   key={link.id}
+                  plan={plan}
                   linkData={link}
                   id={link.id}
                   name={link.annotation}
@@ -472,6 +476,7 @@ const HomePage: FunctionComponent = (): JSX.Element => {
         <Modal.Title>Edit Link</Modal.Title>
         <Modal.Content>
           <UpdateLink
+            plan={plan}
             title={spTitle}
             url={spLink}
             tags={spTags.join(" ")}

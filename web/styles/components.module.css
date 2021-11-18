@@ -131,9 +131,9 @@
   align-items: center;
   box-shadow: 0 0 2px 1px rgba(238, 238, 238, 0.582);
   border-radius: 10px;
-  min-width: 250px;
+  min-width: 300px;
   min-height: 400px;
-  max-width: 250px;
+  max-width: 300px;
   max-height: 450px;
   padding: 1em;
 }

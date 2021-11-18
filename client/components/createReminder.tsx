@@ -19,12 +19,14 @@ interface CreateReminderProps {
   bookmarkId: string;
   getUpdatedData?: Function;
   finishAction?: Function;
+  plan: any;
 }
 
 const CreateReminder: React.FC<CreateReminderProps> = ({
   bookmarkId,
   getUpdatedData,
   finishAction,
+  plan
 }): JSX.Element => {
   const [createReminder, { data, loading, error }] =
     useMutation(CREATE_REMINDER);
@@ -46,25 +48,28 @@ const CreateReminder: React.FC<CreateReminderProps> = ({
   }
 
   function handleCreateReminder(): void {
-    toast
-      .promise(
-        createReminder({
-          variables: {
-            linkId: bookmarkId,
-            remindDate: prepareUTCRemindDate(),
-            recipients: recipients.join(" ").trim().split(" "),
-          },
-          refetchQueries: [{ query: FETCH_ALL }],
-        }),
-        {
-          success: "Reminder Added",
-          error: "Something went wrong",
-          loading: "Saving Reminder",
-        }
-      )
-      .then((_) => getUpdatedData(data));
-
-    finishAction(false);
+    if (plan === "PRO") {
+      toast
+        .promise(
+          createReminder({
+            variables: {
+              linkId: bookmarkId,
+              remindDate: prepareUTCRemindDate(),
+              recipients: recipients.join(" ").trim().split(" "),
+            },
+            refetchQueries: [{ query: FETCH_ALL }],
+          }),
+          {
+            success: "Reminder Added",
+            error: "Something went wrong",
+            loading: "Saving Reminder",
+          }
+        )
+        .then((_) => getUpdatedData(data));
+      finishAction(false);
+    } else {
+      toast("You need to Buy Pro plan 💰", { duration: 5000 });
+    }
   }
 
   return (

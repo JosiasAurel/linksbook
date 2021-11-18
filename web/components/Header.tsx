@@ -39,13 +39,11 @@ const Header: React.FC = (): JSX.Element => {
                     <nav>
                         <a href="#features">Features</a>
                         <a href="#pricing">Pricing</a>
-                        <Link href="/">
-                            <a>About</a>
-                        </Link>
+                        <a href="#extensions">Extension</a>
                     </nav>
-                    <a href="https://vajoozk816i.typeform.com/to/IAJVR4D6">
+                    <a href="https://app.linksbook.me">
                         <Button type="success">
-                            Take Action
+                            Open App
                         </Button>
                     </a>
                 </>

@@ -24,6 +24,7 @@ interface FolderProps {
   readonly id: string;
   readonly index: number;
   readonly folder: any;
+  readonly plan?: any;
   // thirdPartyAction?: Function
   getUpdatedData?: Function;
   setLinks?: Function;
@@ -118,7 +119,7 @@ function AddChild({ collectionId, getUpdatedData }): JSX.Element {
   );
 }
 
-function FolerOptions({ collectionId, getUpdatedData }): JSX.Element {
+function FolerOptions({ collectionId, getUpdatedData, plan }): JSX.Element {
   const [deleteCollection, { data, loading, error }] =
     useMutation(DELETE_COLLECTION);
 
@@ -169,18 +170,13 @@ function FolerOptions({ collectionId, getUpdatedData }): JSX.Element {
         <GButton>Add Child</GButton>
       </Tooltip>
       <Spacer />
-      <Tooltip trigger="click" text={<div className={styles.shareFolderCard}>
-        <a href={`https://app.linksbook.me/p/${collectionId}`}>
-          {`https://app.linksbook.me/p/${collectionId}`}
-        </a>
-        <GButton onClick={() => copyToClipboard(`https://app.linksbook.me/p/${collectionId}`)} auto scale={0.75} type="success">
-          Share
-        </GButton>
-      </div>}>
-        <GButton>
-          Share Folder
-        </GButton>
-      </Tooltip>
+      <GButton onClick={() => {
+        if (plan === "PRO") {
+          copyToClipboard(`https://app.linksbook.me/p/${collectionId}`);
+        } else { toast("You need to Buy Pro plan 💰", { duration: 5000 }); }
+      }}>
+        Share Folder
+      </GButton>
       <Spacer />
       <GButton color="error" onClick={(_) => handleDeleteFolder()}>
         Delete Folder
@@ -197,6 +193,7 @@ const Folder: React.FC<FolderProps> = ({
   index,
   folder,
   setLinks,
+  plan
 }): JSX.Element => {
   const [dropLink, { data, loading, error }] = useMutation(
     DROP_LINK_IN_COLLECTION
@@ -254,6 +251,7 @@ const Folder: React.FC<FolderProps> = ({
             <Tooltip
               text={
                 <FolerOptions
+                  plan={plan}
                   collectionId={id}
                   getUpdatedData={getUpdatedData}
                 />
@@ -276,6 +274,7 @@ const Folder: React.FC<FolderProps> = ({
           return (
             <Folder
               key={i}
+              plan={plan}
               label={f.name}
               index={i}
               id={f.id}

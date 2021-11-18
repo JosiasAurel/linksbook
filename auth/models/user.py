@@ -1,8 +1,13 @@
 from lib.genid import generate_id
 from deta import Deta
 import typing as T
+import dotenv
+import os
 
-deta = Deta("a0ojq87u_xgq3dQQLkXj3YBsJ5iJKZ5MTAtYmCLoF")
+dotenv.load_dotenv()
+PROJECT_KEY = os.getenv("DETA_BASE_KEY")
+SECRET = os.getenv("SECRET")
+deta = Deta(PROJECT_KEY)
 
 usersdb = deta.Base("users")
 
@@ -17,8 +22,7 @@ def create_user(name: str, email: str) -> T.Dict[str, str]:
         return {"status": "Failed", "type": "Email Exists"}
     else:
         try:
-            user = {"email": email, "name": name,
-                    "theme": "https://products.ls.graphics/mesh-gradients/images/32.-Banana-Mania.jpg"}
+            user = {"email": email, "name": name}
             usersdb.put(user, user_id)
             return {"status": "Success"}
         except:
