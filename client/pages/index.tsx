@@ -476,6 +476,7 @@ const HomePage: FunctionComponent = (): JSX.Element => {
         <Modal.Title>Edit Link</Modal.Title>
         <Modal.Content>
           <UpdateLink
+            plan={plan}
             title={spTitle}
             url={spLink}
             tags={spTags.join(" ")}
