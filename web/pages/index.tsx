@@ -62,6 +62,11 @@ const HomePage: React.FC = (): JSX.Element => {
             </div>
 
             <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+                <a href="https://www.producthunt.com/posts/linksbook-2-0?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-linksbook-2-0" target="_blank">
+                    <img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=320172&theme=light" alt="LinksBook 2.0 - Power up your browsing experience | Product Hunt" style={{ width: "250px", height: "54px" }} width="250" height="54" />
+                </a>
+            </div>
+            <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
                 <div className={styles.description}>
                     <p>
                         Linksbook is an app to help you manage all of your browser bookmarks in one place.
