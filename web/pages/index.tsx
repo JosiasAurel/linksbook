@@ -157,6 +157,7 @@ const HomePage: React.FC = (): JSX.Element => {
 
             <div id="pricing" className={styles.pricings}>
                 <Pricing
+                    basis="month"
                     price={0}
                     features={["Unlimited Bookmarks", "Unlimited Collections", "Tags & Search", "Drag-n-Drop", "Notes"]}
                     callToAction="Sign Up"
@@ -164,20 +165,23 @@ const HomePage: React.FC = (): JSX.Element => {
                     selectRedirect="https://app.linksbook.me/auth"
                 />
                 <Pricing
-                    price={25}
+                    basis="month"
+                    price={2}
                     features={["All in Free plan", "Nested Collections", "Reminders", "Custom Themes", "Share collections"]}
-                    callToAction="One time purchase"
+                    callToAction="Subscribe Now"
                     plantType="Pro"
-                    selectRedirect="https://linksbook.gumroad.com/l/idwZX"
+                    selectRedirect="https://linksbook.gumroad.com/l/PjZmO"
                 />
                 <Pricing
-                    price={35}
-                    features={["All in Pro plan", "Access to beta stage features", "Request features/changes"]}
-                    callToAction="One time purchase"
-                    plantType="Pro++"
-                    selectRedirect="https://linksbook.gumroad.com/l/idwZX"
+                    basis="year"
+                    price={21}
+                    features={["All in Pro plan", "Save 17%"]}
+                    callToAction="Subscribe Now"
+                    plantType="Pro, Billed Yearly"
+                    selectRedirect="https://linksbook.gumroad.com/l/PjZmO"
                 />
             </div>
+
 
             <Footer />
         </div >

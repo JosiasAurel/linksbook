@@ -11,9 +11,10 @@ interface PricingProps {
     callToAction: string;
     plantType: string;
     selectRedirect: string;
+    basis: string;
 }
 
-const Pricing: React.FC<PricingProps> = ({ price, features, callToAction, plantType, selectRedirect }): JSX.Element => {
+const Pricing: React.FC<PricingProps> = ({ price, features, callToAction, plantType, selectRedirect, basis }): JSX.Element => {
 
     const theme = useTheme();
 
@@ -27,7 +28,7 @@ const Pricing: React.FC<PricingProps> = ({ price, features, callToAction, plantT
                 <div className={styles.pricing}>
                     <div className={styles.pricing__header}>
                         <h1>
-                            <h1> ${price} </h1>
+                            <h1> ${price} </h1>/{basis}
                         </h1>
                     </div>
                     <div className={styles.pricing__body}>
