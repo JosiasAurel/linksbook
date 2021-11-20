@@ -131,10 +131,20 @@
   margin: 3em 0;
 }
 
+.copy {
+  font-size: 150%;
+  text-align: center;
+}
+
+@media screen and (max-width: 500px) {
+  .copy {
+    max-width: 80%;
+  }
+}
+
 @media screen and (min-width: 1200px) {
   .copy {
-    max-width: 40vw;
-    text-align: center;
+    max-width: 40%;
   }
   .features {
     display: grid;
@@ -148,6 +158,9 @@
 }
 
 @media screen and (min-width: 1000px) {
+  .copy {
+    max-width: 40%;
+  }
   .features {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
