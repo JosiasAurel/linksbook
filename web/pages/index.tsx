@@ -61,6 +61,13 @@ const HomePage: React.FC = (): JSX.Element => {
                 </main>
             </div>
 
+            <div style={{ width: "100%", display: "flex", justifyContent: "center", alignItems: "center" }}>
+                <div style={{ width: "80%" }}>
+                    <iframe style={{ border: "solid transparent", borderRadius: "4px" }} width="100%" height="415"
+                        src="https://youtube.com/embed/aN59RG0_rWA">
+                    </iframe>
+                </div>
+            </div>
             <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
                 <a href="https://www.producthunt.com/posts/linksbook-2-0?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-linksbook-2-0" target="_blank">
                     <img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=320172&theme=light" alt="LinksBook 2.0 - Power up your browsing experience | Product Hunt" style={{ width: "250px", height: "54px" }} width="250" height="54" />
