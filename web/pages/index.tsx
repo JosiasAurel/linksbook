@@ -33,17 +33,11 @@ const HomePage: React.FC = (): JSX.Element => {
                 <link rel="shortcut icon" href="LinksBook.svg" type="image/x-icon" />
 
                 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2538365482154405"
-     crossorigin="anonymous"></script>
-<!-- linksbook ads -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2538365482154405"
-     data-ad-slot="9873770459"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+                    crossOrigin="anonymous"></script>
+
+                <script>
+                    (adsbygoogle = window.adsbygoogle || []).push({ });
+                </script>
             </Head>
             <Header />
 
@@ -74,6 +68,16 @@ const HomePage: React.FC = (): JSX.Element => {
                 </main>
             </div>
 
+            <div style={{ width: "100%", display: "flex", justifyContent: "center", alignItems: "center" }}>
+                <div className="googleAdUnit">
+                    <ins className="adsbygoogle"
+                        style={{ display: "block" }}
+                        data-ad-client="ca-pub-2538365482154405"
+                        data-ad-slot="9873770459"
+                        data-ad-format="auto"
+                        data-full-width-responsive="true"></ins>
+                </div>
+            </div>
             <div style={{ width: "100%", display: "flex", justifyContent: "center", alignItems: "center" }}>
                 <div style={{ width: "80%" }}>
                     <iframe style={{ border: "solid transparent", borderRadius: "4px" }} width="100%" height="415"
