@@ -31,6 +31,19 @@ const HomePage: React.FC = (): JSX.Element => {
 
                 <title>LinksBook</title>
                 <link rel="shortcut icon" href="LinksBook.svg" type="image/x-icon" />
+
+                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2538365482154405"
+     crossorigin="anonymous"></script>
+<!-- linksbook ads -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2538365482154405"
+     data-ad-slot="9873770459"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
             </Head>
             <Header />
 
