@@ -22,7 +22,7 @@ const app: Application = express();
 // Plugins
 app.use(
   cors({
-    origin: "*",
+    origin: "https://app.linksbook.me",
     credentials: true,
   })
 );

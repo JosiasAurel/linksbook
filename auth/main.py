@@ -109,6 +109,9 @@ async def _check_is_auth(request: Request):
 
     user = get_user_by_email(data.get("email"))
 
+    print("is auth user")
+    print(user)
+
     result = data_from_token(auth_token, user.get("plan"))
 
     return result
