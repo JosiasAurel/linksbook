@@ -25,7 +25,7 @@ app.add_middleware(
 
 PROJECT_KEY = os.getenv("PROJECT_KEY")
 GUMROAD_ACCESS_TOKEN = os.getenv("GUMROAD_APP_ACCESS_TOKEN")
-PRODUCT_ID = "RQ9D5OF9--AWjboGFRLghQ=="
+PRODUCT_ID = "mNBNolJ9Xowz64Ve2bgCMg=="
 deta = Deta("a0ojq87u_xgq3dQQLkXj3YBsJ5iJKZ5MTAtYmCLoF")
 
 # connect to users
@@ -57,7 +57,7 @@ def successful_purchae():
 def _save_new_purchase():
     prods = requests.get(
         f"https://api.gumroad.com/v2/products?access_token={GUMROAD_ACCESS_TOKEN}")
-    # pprint(prods.content)
+    #pprint(prods.content)
     req = requests.get(
         f"https://api.gumroad.com/v2/sales?access_token={GUMROAD_ACCESS_TOKEN}&product_id={PRODUCT_ID}")
     data = req.json()

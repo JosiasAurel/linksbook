@@ -38,7 +38,7 @@ def update_user(name: str, email: str) -> T.Dict[str, str]:
 
 def get_user_by_email(email: str) -> any:
     try:
-        users = usersdb.fetch({"email": email}).__next__()
+        users = usersdb.fetch({"email": email}).items
         users[0]["status"] = "Success"
         return users[0]
     except:

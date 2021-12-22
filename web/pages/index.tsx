@@ -31,6 +31,13 @@ const HomePage: React.FC = (): JSX.Element => {
 
                 <title>LinksBook</title>
                 <link rel="shortcut icon" href="LinksBook.svg" type="image/x-icon" />
+
+                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2538365482154405"
+                    crossOrigin="anonymous"></script>
+
+                <script>
+                    (adsbygoogle = window.adsbygoogle || []).push({ });
+                </script>
             </Head>
             <Header />
 
@@ -61,6 +68,28 @@ const HomePage: React.FC = (): JSX.Element => {
                 </main>
             </div>
 
+            <div style={{ width: "100%", display: "flex", justifyContent: "center", alignItems: "center" }}>
+                <div className="googleAdUnit">
+                    <ins className="adsbygoogle"
+                        style={{ display: "block" }}
+                        data-ad-client="ca-pub-2538365482154405"
+                        data-ad-slot="9873770459"
+                        data-ad-format="auto"
+                        data-full-width-responsive="true"></ins>
+                </div>
+            </div>
+            <div style={{ width: "100%", display: "flex", justifyContent: "center", alignItems: "center" }}>
+                <div style={{ width: "80%" }}>
+                    <iframe style={{ border: "solid transparent", borderRadius: "4px" }} width="100%" height="415"
+                        src="https://youtube.com/embed/aN59RG0_rWA">
+                    </iframe>
+                </div>
+            </div>
+            <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+                <a href="https://www.producthunt.com/posts/linksbook-2-0?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-linksbook-2-0" target="_blank">
+                    <img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=320172&theme=light" alt="LinksBook 2.0 - Power up your browsing experience | Product Hunt" style={{ width: "250px", height: "54px" }} width="250" height="54" />
+                </a>
+            </div>
             <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
                 <div className={styles.description}>
                     <p>
@@ -152,6 +181,7 @@ const HomePage: React.FC = (): JSX.Element => {
 
             <div id="pricing" className={styles.pricings}>
                 <Pricing
+                    basis="month"
                     price={0}
                     features={["Unlimited Bookmarks", "Unlimited Collections", "Tags & Search", "Drag-n-Drop", "Notes"]}
                     callToAction="Sign Up"
@@ -159,20 +189,23 @@ const HomePage: React.FC = (): JSX.Element => {
                     selectRedirect="https://app.linksbook.me/auth"
                 />
                 <Pricing
-                    price={25}
+                    basis="month"
+                    price={2}
                     features={["All in Free plan", "Nested Collections", "Reminders", "Custom Themes", "Share collections"]}
-                    callToAction="One time purchase"
+                    callToAction="Subscribe Now"
                     plantType="Pro"
-                    selectRedirect="https://linksbook.gumroad.com/l/idwZX"
+                    selectRedirect="https://linksbook.gumroad.com/l/PjZmO"
                 />
                 <Pricing
-                    price={35}
-                    features={["All in Pro plan", "Access to beta stage features", "Request features/changes"]}
-                    callToAction="One time purchase"
-                    plantType="Pro++"
-                    selectRedirect="https://linksbook.gumroad.com/l/idwZX"
+                    basis="year"
+                    price={21}
+                    features={["All in Pro plan", "Save 17%"]}
+                    callToAction="Subscribe Now"
+                    plantType="Pro, Billed Yearly"
+                    selectRedirect="https://linksbook.gumroad.com/l/PjZmO"
                 />
             </div>
+
 
             <Footer />
         </div >

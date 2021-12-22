@@ -1,6 +1,6 @@
 const app = document.getElementById("app");
 
-const SERVER_URI = "http://localhost:5000"; //"https://server.linksbook.me";
+const SERVER_URI = "https://server.linksbook.me" //"http://localhost:5000"; //"https://server.linksbook.me";
 
 /* Utils */
 
@@ -62,7 +62,7 @@ function init() {
   chrome.storage.local.get("email", (res) => {
     console.log("init res");
     console.log(res);
-    if (res.email === undefined) {
+    if (res.email === undefined || res.email === null) {
       Setup();
     } else {
       chrome.tabs.query({ active: true, lastFocusedWindow: true }, (tabs) => {
